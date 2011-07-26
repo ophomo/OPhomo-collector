@@ -1,0 +1,16 @@
+JeeLabs collectors.
+===================
+Introduction:
+-------------
+
+This directory contains the OPhomo code to use JeeLabs JeeNodes as sensors for monitoring. It contains three parts:
+ - The SensorNodes
+   Arduino code for sensors. 
+ - The CollectorNodes
+   Arduino code for a collector, a JeeNode which communicates with the SensorNodes.
+ - The CollectorHost
+   Standard C/C++ code to communicate between a host and a collector node.
+
+Directories:
+------------
+
