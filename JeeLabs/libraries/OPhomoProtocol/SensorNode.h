@@ -10,11 +10,11 @@
 #ifndef SENSORNODE_H_
 #define SENSORNODE_H_
 
-
 #include "JeeNode.h"
 #include "OPhomoProtocolHeader.h"
 #include "MilliTimer.h"
 #include "RF12Concatenator.h"
+#include "SensorNodeState.h"
 
 namespace OPhomo {
 
@@ -53,8 +53,14 @@ public:
 
 	RF12Concatenator rf12Transmitter;
 
+	void setStateHandler(SensorNodeState*);
+
 protected:
-	ProtocolStatus status;
+	SensorNodeState* stateHandler;
+
+	SensorNodeData data;
+
+	friend class SensorNodeState;
 
 	/**
 	 * This will send a solicitation for a configuration message.
@@ -66,21 +72,8 @@ protected:
 	 */
 	void AcceptConfig();
 
-
 	bool ApplyConfig(byte* message, byte len);
 
-	// The message we use to send the data.
-	byte message[RF12_MAXDATA];
-
-	// Timer used to see if when we need to send a message.
-	MilliTimer timer;
-
-	ConfigurationController** controllers;
-
-
-	byte controllersSize;
-
-	byte collectorNodeId;
 };
 
 }
