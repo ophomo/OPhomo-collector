@@ -18,7 +18,11 @@ public:
 
 	void handleMessage(byte* message, byte length);
 
+	void tick();
+
 	virtual ~SensorNodeConfigAcceptState();
+
+	void sendAccept();
 };
 
 }

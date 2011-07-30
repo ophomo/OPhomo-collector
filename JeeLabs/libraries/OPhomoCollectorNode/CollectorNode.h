@@ -31,6 +31,8 @@ protected:
 
 	// This will handle a
 	void handleConfigSolicit( byte node );
+	void handleConfigAccept (byte node );
+	void handleConfigReject (byte node );
 
 };
 

@@ -12,10 +12,9 @@
 #include "HardwareSerial.h"
 #include "wiring.h"
 #include "SerialConfigEncoder.h"
+#include "SerialHandlerState.h"
 
 namespace OPhomo {
-
-#define SERIAL_BUFFER_SIZE 128
 
 class SerialHandler {
 public:
@@ -24,35 +23,19 @@ public:
 	// This will try to handle incoming message. If no \CR is received, we wait until we see one.
 	void Try();
 
-	void RegisterEncoder( const byte* type, SerialConfigEncoder* encoder);
+	void RegisterEncoder(const byte* type, SerialConfigEncoder* encoder);
 
 	virtual ~SerialHandler();
 
+	void setHandler(SerialHandlerState* newState);
 
 protected:
-	byte readBuffer[ SERIAL_BUFFER_SIZE ];
-	byte pos;
+	SerialHandlerState* state;
 
-	// This will handle a full command line.
-	void Handle();
+	SerialHandlerData data;
 
-	// This is a mapping between a string and the encoder. E.g. RF12 will use the RF12SerialConfigEncoder.
-	struct ConfigEncoderMapping {
-		const byte* type; // Must be 4 bytes.
-		SerialConfigEncoder *encoder;
-	};
+	friend class SerialHandlerState;
 
-	/**
-	 * This is the mapping of installed SerialConfigEncoders and there config strings.
-	 */
-	ConfigEncoderMapping* encoders;
-	byte encoderSize;
-
-
-
-
-	byte status;
-	byte destinationNode;
 };
 
 }

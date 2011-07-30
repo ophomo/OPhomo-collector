@@ -62,17 +62,11 @@ protected:
 
 	friend class SensorNodeState;
 
-	/**
-	 * This will send a solicitation for a configuration message.
-	 */
-	void SolicitConfig();
 
 	/**
 	 * This will send a config accept with details about the config, like sensors, ...
 	 */
 	void AcceptConfig();
-
-	bool ApplyConfig(byte* message, byte len);
 
 };
 

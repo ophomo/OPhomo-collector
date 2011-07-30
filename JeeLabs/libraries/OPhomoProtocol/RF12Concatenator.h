@@ -44,6 +44,7 @@ protected:
 
 	RF12Module* rf12Module;
 	byte buffer[RF12_MAXDATA];
+	byte destination;
     // position in the current buffer
 	byte pos;
 

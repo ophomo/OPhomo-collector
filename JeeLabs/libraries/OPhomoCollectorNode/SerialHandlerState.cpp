@@ -6,12 +6,12 @@
  */
 
 #include "SerialHandlerState.h"
-
+#include "SerialHandler.h"
 namespace OPhomo {
 
-SerialHandlerState::SerialHandlerState(SerialHandler* handler) : pos(handler->pos) {
-	readBuffer = handler->readBuffer;
+SerialHandlerState::SerialHandlerState(SerialHandler* handler) {
 	serialHandler = handler;
+	data = &(handler->data);
 }
 
 SerialHandlerState::~SerialHandlerState() {

@@ -10,7 +10,39 @@
 
 #define SERIAL_BUFFER_SIZE 128
 
+#define ASSERT_MIN_LENGTH(length) if ( data->pos <= length) { \
+	ERROR("Assertion failed: length is smaller then "); \
+	Serial.println(length); \
+	return; \
+}
+
+#include "HardwareSerial.h"
+#include "wiring.h"
+#include "SerialConfigEncoder.h"
+
+
 namespace OPhomo {
+
+struct ConfigEncoderMapping {
+	const byte* type; // Must be 4 bytes.
+	SerialConfigEncoder *encoder;
+};
+
+struct SerialHandlerData {
+
+	byte readBuffer[SERIAL_BUFFER_SIZE];
+	byte pos;
+
+	/**
+	 * This is the mapping of installed SerialConfigEncoders and there config strings.
+	 */
+	ConfigEncoderMapping* encoders;
+	byte encoderSize;
+
+//		byte status;
+//		byte destinationNode;
+};
+
 
 class SerialHandler;
 
@@ -24,8 +56,8 @@ public:
 
 protected:
 	SerialHandler* serialHandler;
-	byte* readBuffer;
-	byte& pos;
+	SerialHandlerData* data;
+
 };
 
 }

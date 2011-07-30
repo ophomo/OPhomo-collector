@@ -12,32 +12,34 @@
 
 namespace OPhomo {
 
-SerialHandlerIdleState::SerialHandlerIdleState(SerialHandler* handler) :  SerialHandlerState(handler) {
 
+
+SerialHandlerIdleState::SerialHandlerIdleState(SerialHandler* handler) :  SerialHandlerState(handler) {
+LOGLN("<IDLE>")
 }
 
 void SerialHandlerIdleState::handle() {
-	LOGLN("Checking in status idle.");
+//	LOGLN("Checking in status idle.");
 	// We must have one of our COMMANDS
 	ASSERT_MIN_LENGTH (2)
-	if (readBuffer[0] == 'C' && readBuffer[1] == 'A') {
+	if (data->readBuffer[0] == 'C' && data->readBuffer[1] == 'A') {
 		// Configuration request.
 		// Parse the node id.
 		byte destinationNode = 0;
-		for (int i = 2; i < *pos; i++) {
-			if ('0' <= readBuffer[i] && readBuffer[i] <= '9')
-				destinationNode = destinationNode * 10 + readBuffer[i]
+		for (int i = 2; i < data->pos; i++) {
+			if ('0' <= data->readBuffer[i] && data->readBuffer[i] <= '9')
+				destinationNode = destinationNode * 10 + data->readBuffer[i]
 						- '0';
 			else
 				return;
 		}
-		LOG("Configuring node ");
-		Serial.println((int) destinationNode);
+//		LOG("Configuring node ");
+//		Serial.println((int) destinationNode);
 		SerialConfigEncoder::transmitter.SetDestinationNode(destinationNode);
-//		status = SH_CONFIGURING;
+		SerialConfigEncoder::transmitter.SetMessageType(CONFIG_ADVERTISE_TYPE);
 		serialHandler->setHandler(new SerialHandlerConfigState(serialHandler));
 	} else {
-		ERRORLN("UNKNOWN COMMAND!");
+		ERRORLN("IDLE:UNKNOWN COMMAND!");
 	}
 }
 

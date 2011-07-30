@@ -15,6 +15,8 @@ namespace OPhomo {
 
 // This function must be implemented to handle config solicitations.
 extern void handleConfigSolicit(byte node);
+extern void handleConfigAccept(byte node);
+extern void handleConfigReject(byte node);
 
 CollectorNode::CollectorNode() {
 	SerialConfigEncoder::transmitter.SetRF12Module(&rf12);
@@ -38,11 +40,27 @@ void CollectorNode::loop() {
 			handleConfigSolicit(header->SourceNode /*& 0x1F */);
 		}
 			break;
+		case CONFIG_ACCEPT_TYPE: {
+			handleConfigAccept(header->SourceNode /*& 0x1F */);
+		}
+			break;
+		case CONFIG_REJECT_TYPE: {
+			handleConfigReject(header->SourceNode /*& 0x1F */);
+		}
+
+			break;
+		default: {
+			//
+			LOG("UNKNOWN TYPE ");
+			Serial.println((int) header->MessageType);
+		}
+
 		}
 	}
 }
 
-void CollectorNode::SendConfigAdvertise(byte destination, byte* config, byte length) {
+void CollectorNode::SendConfigAdvertise(byte destination, byte* config,
+		byte length) {
 	// A dirty hack to save memory...
 	byte dest = destination;
 	byte* outMessage = config - 1;
@@ -51,7 +69,7 @@ void CollectorNode::SendConfigAdvertise(byte destination, byte* config, byte len
 	header->MessageType = CONFIG_ADVERTISE_TYPE;
 	header->SourceNode = rf12.getNodeId();
 	// Send
-	rf12.Send( dest, outMessage, length + 1, 0 /*false*/);
+	rf12.Send(dest, outMessage, length + 1, 0 /*false*/);
 	outMessage[0] = dest;
 }
 

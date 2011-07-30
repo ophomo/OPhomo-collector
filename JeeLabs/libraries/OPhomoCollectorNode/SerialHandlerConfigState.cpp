@@ -17,30 +17,31 @@ SerialHandlerConfigState::~SerialHandlerConfigState() {
 }
 
 void SerialHandlerConfigState::handle() {
-	LOGLN("Checking in status configuring");
+	//	LOGLN("Checking in status configuring");
 	// First trim spaces and tabs.
 	byte start;
-	for (start = 0; start < *pos; start++) {
-		if (!(readBuffer[start] == 0x20 || readBuffer[start] == 0x9)) {
+	for (start = 0; start < data->pos; start++) {
+		if (!(data->readBuffer[start] == 0x20 || data->readBuffer[start] == 0x9)) {
 			break;
 		}
 	}
 	ASSERT_MIN_LENGTH(start + 2)
 	// Check if we are ending the configuration.
-	if (*pos >= (start + 3) && readBuffer[start] == '/' && readBuffer[start
-			+ 1] == 'C' && readBuffer[start + 2] == 'A') {
+	if (data->pos >= (start + 3) && data->readBuffer[start] == '/'
+			&& data->readBuffer[start + 1] == 'C'
+			&& data->readBuffer[start + 2] == 'A') {
 		SerialConfigEncoder::transmitter.LastPartSend();
-		LOGLN("Finished configuration.");
+		//		LOGLN("Finished configuration.");
 		serialHandler->setHandler(new SerialHandlerIdleState(serialHandler));
 		return;
 	}
-	for (byte i = 0; i < this->encoderSize; i++) {
+	for (byte i = 0; i < data->encoderSize; i++) {
 		// See if any of the
-		if (memcmp(readBuffer + start, encoders[i].type, 4) == 0) {
+		if (memcmp(data->readBuffer + start, data->encoders[i].type, 4) == 0) {
 			// Cool, we have the matching encoder.
-			encoders[i].encoder->Handle(readBuffer + start + 5, pos - start
-					- 5);
-			LOGLN("Handled by Encoder !");
+			data->encoders[i].encoder->Handle(data->readBuffer + start + 5,
+					data->pos - start - 5);
+			//			LOGLN("Handled by Encoder !");
 			// Done
 			return;
 		}
@@ -49,11 +50,10 @@ void SerialHandlerConfigState::handle() {
 	ERRORLN("No Encoder found !");
 }
 
-}
-
-SerialHandlerConfigState::SerialHandlerConfigState(SerialHandler* handler): serialHandlerState(handler) {
+SerialHandlerConfigState::SerialHandlerConfigState(SerialHandler* handler) :
+	SerialHandlerState(handler) {
+	LOGLN("<CONF>");
 	// TODO Auto-generated constructor stub
-
 }
 
 }

@@ -17,12 +17,12 @@ OneWireController::OneWireController(SensorNode& node) :
 }
 
 byte OneWireController::Handle(byte* message, byte length) {
-	DallasPlug* nullPlug = NULL;
-	DallasPlug*& plug = nullPlug;
+//	DallasPlug* nullPlug = NULL;
+	DallasPlug* plug = NULL;
 
 	byte pos;
 	for (pos = 0; pos < length; pos++) {
-		Serial.print("Pos : ");
+		Serial.print("P:");
 		Serial.println((int) pos);
 		switch (message[pos]) {
 		case 0x01: {
@@ -30,7 +30,7 @@ byte OneWireController::Handle(byte* message, byte length) {
 			byte decodedLength = ConfigurationController::DecodeInt(
 					message + pos + 1, length - pos - 2, portId);
 			if (decodedLength == 0) {
-				Serial.println("Decoding error in OneWireController::portID");
+				ERRORLN("Decoding::OneWire::portID");
 				return 0;
 			} else {
 				pos += decodedLength;
@@ -53,7 +53,7 @@ byte OneWireController::Handle(byte* message, byte length) {
 					plug = dallasPlugs[3];
 					break;
 				default:
-					Serial.println("Invalid portId ");
+					ERRORLN("Decoding::OneWire::portID");
 				}
 				if (port) {
 					// If we have a port, we can do something.
@@ -70,13 +70,14 @@ byte OneWireController::Handle(byte* message, byte length) {
 			byte decodedLength = ConfigurationController::DecodeInt(
 					message + pos + 1, length - pos - 2, analog);
 			if (decodedLength == 0) {
-				Serial.println("Decoding error in OneWire::analog");
+				ERRORLN("Decoding::OneWire::analog");
 				return 0;
 			} else {
 				if (plug) {
-
 					if (analog > 0) {
+						LOGLN("A1");
 						plug->EnableAnalogPin();
+						LOGLN("A1DONE");
 					} else {
 						plug->DisableAnalogPin();
 					}
@@ -86,12 +87,12 @@ byte OneWireController::Handle(byte* message, byte length) {
 		}
 			break;
 		case 0x03: {
-			// Analog pin.
+			// Digital pin.
 			int digital = 0;
 			byte decodedLength = ConfigurationController::DecodeInt(
 					message + pos + 1, length - pos - 2, digital);
 			if (decodedLength == 0) {
-				Serial.println("Decoding error in OneWire::digital");
+				ERRORLN("Decoding::OneWire::digital");
 				return 0;
 			} else {
 				if (plug) {
@@ -106,11 +107,13 @@ byte OneWireController::Handle(byte* message, byte length) {
 		}
 			break;
 		default: {
-			Serial.print("OneWireController::Unknown item : ");
+			Serial.print("OneWire::Unknown item : ");
 			Serial.println((int) message[pos]);
 		}
 		}
 	}
+	LOGLN("OW::END");
+	LOGLN((int)pos);
 	return pos;
 }
 
@@ -119,9 +122,11 @@ byte OneWireController::ConfigReply() {
 	byte sensorId = 1;
 	byte message[sizeof(DeviceAddress) + 1];
 	for (byte i = 0; i < MAX_DALLAS_PLUGS; i++) {
+		LOGLN((int) i);
 		if (this->dallasPlugs[i] != NULL) {
 			dallasPlugs[i]->Search();
 			byte nrOfSensors = dallasPlugs[i]->GetDeviceCount();
+			LOGLN((int) nrOfSensors);
 			OneWireSensor** sensors = dallasPlugs[i]->GetSensors();
 			for (byte j = 0; j < nrOfSensors; j++) {
 				// We should return that.
@@ -129,10 +134,11 @@ byte OneWireController::ConfigReply() {
 				// Now, append the address;
 				byte* address = sensors[j]->GetDeviceAddress();
 				for (byte k = 0; k < sizeof(DeviceAddress); k++) {
-					message[k+1] = address[k];
+					message[k + 1] = address[k];
 				}
 				// Send the message.
-				sensorNode->rf12Transmitter.Send (message, sizeof(DeviceAddress) + 1);
+				sensorNode->rf12Transmitter.Send(message,
+						sizeof(DeviceAddress) + 1);
 			}
 		}
 	}

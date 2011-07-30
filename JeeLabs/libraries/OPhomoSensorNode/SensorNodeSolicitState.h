@@ -1,5 +1,5 @@
 /*
- * SensorNodeSollicitState.h
+ * SensorNodeSolicitState.h
  *
  *  Created on: 27 Jul 2011
  *      Author: decock
@@ -12,13 +12,21 @@
 
 namespace OPhomo {
 
-class SensorNodeSollicitState: public OPhomo::SensorNodeState {
+class SensorNodeSolicitState: public OPhomo::SensorNodeState {
 public:
-	SensorNodeSollicitState(SensorNode* inNode);
+	SensorNodeSolicitState(SensorNode* inNode);
 
 	void handleMessage(byte* message, byte length);
 
-	virtual ~SensorNodeSollicitState();
+	void tick();
+
+	virtual ~SensorNodeSolicitState();
+protected:
+	/**
+	 * This will send a solicit for a configuration message.
+	 */
+	void SolicitConfig();
+
 };
 
 }

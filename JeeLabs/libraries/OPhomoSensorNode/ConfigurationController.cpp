@@ -23,20 +23,20 @@ byte ConfigurationController::DecodeInt(byte* message, byte maxLength,
 		int& value) {
 	// Check the length first.
 	if (message[0] > maxLength) {
-		Serial.print("Length is larger then maxLength:");
-		Serial.print((int)message[0]);
+		Serial.print("Length > maxLength:");
+/*		Serial.print((int)message[0]);
 		Serial.print(" vs " );
-		Serial.println((int) maxLength);
+		Serial.println((int) maxLength);*/
 		value = 0;
 		return 0;
 	} else {
-		Serial.print("Length is ");
+		Serial.print("L");
 		Serial.println((int)message[0]);
 		value = 0;
 		byte pos = 0;
 		while (pos < message[0]) {
-			Serial.print("\t");
-			Serial.println((int) message[1 + pos] );
+//			Serial.print("\t");
+//			Serial.println((int) message[1 + pos] );
 			value += (((int) message[1 + pos]) << (pos * 8));
 			pos++;
 		}

@@ -30,6 +30,7 @@ enum ProtocolStatus {
 #define	CONFIG_ADVERTISE_TYPE 1
 #define	CONFIG_REJECT_TYPE 2
 #define	CONFIG_ACCEPT_TYPE 3
+#define CONFIG_ACK_TYPE 4
 
 #define CONFIG_SOLICIT_LENGTH sizeof(OPhomoProtocolHeader)
 

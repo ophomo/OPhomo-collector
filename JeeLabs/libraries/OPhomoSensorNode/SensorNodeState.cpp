@@ -18,4 +18,8 @@ SensorNodeState::~SensorNodeState() {
 	// TODO Auto-generated destructor stub
 }
 
+RF12Module* SensorNodeState::getRF12Module() {
+	return &(node->rf12);
+}
+
 }

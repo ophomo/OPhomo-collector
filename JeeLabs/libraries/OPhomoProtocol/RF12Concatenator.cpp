@@ -9,18 +9,18 @@
 #include "OPhomoProtocolHeader.h"
 #include "HardwareSerial.h"
 
-
 namespace OPhomo {
 
 RF12Concatenator::RF12Concatenator(RF12Module* rf12) {
 	rf12Module = rf12;
+	pos = 1;
 }
 
 RF12Concatenator::RF12Concatenator() {
 }
 
 void RF12Concatenator::SetDestinationNode(byte nodeId) {
-	buffer[0] = nodeId;
+	destination = nodeId;
 }
 
 /**
@@ -35,7 +35,7 @@ void RF12Concatenator::SetMessageType(byte type) {
  * This will add a configuration part and send it if the message is full.
  */
 void RF12Concatenator::Send(byte* newPart, byte length) {
-	if ( length > RF12_MAXDATA - 1 ) {
+	if (length > RF12_MAXDATA - 1) {
 		// Drop this part, it is too long.
 		ERRORLN("ERROR, config too long.");
 		return;
@@ -54,24 +54,23 @@ void RF12Concatenator::Send(byte* newPart, byte length) {
  */
 void RF12Concatenator::LastPartSend() {
 	// We end with a 0 option.
+	LOG("LPS::Pos:");
+	Serial.println((int)pos);
 	buffer[pos++] = 0;
-	buffer[pos] = 0;
+	buffer[pos++] = 0;
 	this->SendPartNow();
 	pos = 1;
 }
 
-
-
 void RF12Concatenator::SendPartNow() {
-	byte dest = buffer[0];
 	OPhomoProtocolHeader* header = (OPhomoProtocolHeader*) buffer;
-//	header->MessageType = type;
+	//	header->MessageType = type;
 	header->SourceNode = rf12Module->getNodeId();
 	// Send
-	rf12Module->Send( dest, buffer, pos, 0 /*false*/);
-	buffer[0] = dest;
+	rf12Module->Send(destination, buffer, pos, 0 /*false*/);
 }
 
-RF12Concatenator::~RF12Concatenator() {}
+RF12Concatenator::~RF12Concatenator() {
+}
 
 }

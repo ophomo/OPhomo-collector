@@ -44,7 +44,11 @@ public:
 
 	virtual void handleMessage(byte* inMessage, byte length) = 0;
 
+	virtual void tick() = 0;
+
 	virtual ~SensorNodeState();
+
+	RF12Module* getRF12Module();
 
 protected:
 	SensorNode* node;

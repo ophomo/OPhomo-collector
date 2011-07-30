@@ -13,4 +13,20 @@ This directory contains the OPhomo code to use JeeLabs JeeNodes as sensors for m
 
 Directories:
 ------------
+This directory contains the following subdirectories:
+CollectorHost
++++++++++++++
+The code for the CollectorHost. Based on autoconf/automake project but probably easy to convert to a MSVC, ... project. I will try mingw soon.
+
+docs
+++++
+Documentation I found interesting for this project.
+
+libraries
++++++++++
+Arduino libraries I use for both Nodes
+
+sketch
+++++++
+Arduino sketches, containing also the sensor and collector node code. 
 
