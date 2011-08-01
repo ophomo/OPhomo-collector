@@ -19,9 +19,13 @@ public:
 
 	static const byte type[4];
 
-	void Handle(byte* buffer, byte length);
+	void EncodeSerial2Bin(byte* buffer, byte length);
+
+	byte DecodeBin2Serial(byte* message, byte messageLength, char* serialBuffer, int* serialLength);
 
 	virtual ~SerialOneWireConfigEncoder();
+
+	byte getType();
 };
 }
 

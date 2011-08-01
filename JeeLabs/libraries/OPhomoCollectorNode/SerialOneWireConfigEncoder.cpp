@@ -14,8 +14,13 @@ SerialOneWireConfigEncoder::SerialOneWireConfigEncoder() {
 
 }
 
+byte
+SerialOneWireConfigEncoder::getType() {
+	return ONEWIRE_SENSOR_CONFIG_TYPE;
+}
 
-void SerialOneWireConfigEncoder::Handle(byte* buffer, byte length) {
+
+void SerialOneWireConfigEncoder::EncodeSerial2Bin(byte* buffer, byte length) {
 // Let's see what we got here...
 	messageLength = 0;
 	byte pos = 2;
@@ -62,21 +67,13 @@ void SerialOneWireConfigEncoder::Handle(byte* buffer, byte length) {
 		}
 			break;
 		case (byte) 0x0D: {
-			LOGLN("Found a end-of-line.");
-			// Force quiting the loop.
-			Serial.print(" at ");
-			Serial.println((int)i);
-			Serial.print(" with length ");
-			Serial.println((int)length);
-
 			i = length;
 			break;
-
 		}
 		break;
 		default:
 			// Unknown entry:
-			ERROR("Unknown item: ");
+			ERROR("Unknown : ");
 			Serial.print(buffer[i]);
 			Serial.print(" at ");
 			Serial.println((int)i);
@@ -85,11 +82,42 @@ void SerialOneWireConfigEncoder::Handle(byte* buffer, byte length) {
 	}
 	encodedMessage[0] = ONEWIRE_SENSOR_CONFIG_TYPE;
 	encodedMessage[1] = messageLength;
-	Serial.print("Encoded message has length : ");
-	Serial.println((int) messageLength);
 	// Send the message.
 	transmitter.SetMessageType(CONFIG_ADVERTISE_TYPE);
 	transmitter.Send(encodedMessage, messageLength + 2);
+}
+
+byte
+SerialOneWireConfigEncoder::DecodeBin2Serial(byte* message, byte messageLength, char* serialBuffer, int* serialLength) {
+	// When comming here, the SEOW header and length are already 'consumed'.
+	if ( messageLength != 9 ) {
+		// FAIL
+		ERRORLN("SEOW::DL");
+		return 0;
+	}
+	int pos = 1;
+	byte id = message[0];
+	itoa((int)id, serialBuffer, 10 );
+	while ( id > 10 ) {
+		id /= 10;
+		pos++;
+	}
+	serialBuffer[pos++] = ' ';
+	for ( byte i = 1; i < 9; i++ ) {
+		if ( message[i] <= 16) {
+			 serialBuffer[pos++] = '0';
+		}
+		itoa((int)message[i],serialBuffer + pos,16);
+		pos++;
+		if ( message[i] > 16) {
+			pos++;
+		}
+		if ( i < 8 )
+		 serialBuffer[pos++] = ':';
+	}
+	serialBuffer[pos++]='\0';
+	*serialLength = pos;
+	return 9;
 }
 
 

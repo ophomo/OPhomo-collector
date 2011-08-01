@@ -21,8 +21,12 @@ SerialRF12ConfigEncoder::SerialRF12ConfigEncoder() {
 }
 
 
+byte
+SerialRF12ConfigEncoder::getType() {
+	return RF12_CONFIG_TYPE;
+}
 
-void SerialRF12ConfigEncoder::Handle(byte* buffer, byte length) {
+void SerialRF12ConfigEncoder::EncodeSerial2Bin(byte* buffer, byte length) {
 	// Let's see what we got here...
 	messageLength = 0;
 	byte pos = 2;
@@ -73,12 +77,12 @@ void SerialRF12ConfigEncoder::Handle(byte* buffer, byte length) {
 		}
 			break;
 		case (byte) 0x0D: {
-			LOGLN("Found a end-of-line.");
+//			LOGLN("Found a end-of-line.");
 			// Force quiting the loop.
-			Serial.print(" at ");
+	/*		Serial.print(" at ");
 			Serial.println((int)i);
 			Serial.print(" with length ");
-			Serial.println((int)length);
+			Serial.println((int)length);*/
 
 			i = length;
 			break;
@@ -87,16 +91,16 @@ void SerialRF12ConfigEncoder::Handle(byte* buffer, byte length) {
 		break;
 		default:
 			// Unknown entry:
-			ERROR("Unknown item: ");
+			ERROR("Unknown:");
 			Serial.print(buffer[i]);
-			Serial.print(" at ");
+			Serial.print(" P:");
 			Serial.println((int)i);
 			return;
 		}
 	}
 	encodedMessage[0] = RF12_CONFIG_TYPE;
 	encodedMessage[1] = messageLength;
-	Serial.print("Encoded message has length : ");
+	Serial.print("EM L:");
 	Serial.println((int) messageLength);
 	// Send the message.
 	transmitter.SetMessageType(CONFIG_ADVERTISE_TYPE);

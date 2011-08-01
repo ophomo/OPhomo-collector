@@ -39,7 +39,7 @@ void SerialHandlerConfigState::handle() {
 		// See if any of the
 		if (memcmp(data->readBuffer + start, data->encoders[i].type, 4) == 0) {
 			// Cool, we have the matching encoder.
-			data->encoders[i].encoder->Handle(data->readBuffer + start + 5,
+			data->encoders[i].encoder->EncodeSerial2Bin(data->readBuffer + start + 5,
 					data->pos - start - 5);
 			//			LOGLN("Handled by Encoder !");
 			// Done

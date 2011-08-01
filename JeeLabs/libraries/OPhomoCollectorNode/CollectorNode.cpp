@@ -15,8 +15,8 @@ namespace OPhomo {
 
 // This function must be implemented to handle config solicitations.
 extern void handleConfigSolicit(byte node);
-extern void handleConfigAccept(byte node);
-extern void handleConfigReject(byte node);
+extern void handleConfigAccept(byte node, byte*, byte );
+extern void handleConfigReject(byte node, byte*, byte );
 
 CollectorNode::CollectorNode() {
 	SerialConfigEncoder::transmitter.SetRF12Module(&rf12);
@@ -33,7 +33,7 @@ void CollectorNode::loop() {
 	// Receive data...
 	byte* messagePtr;
 	byte len = rf12.TryReceive(messagePtr);
-	OPhomoProtocolHeader* header = (OPhomoProtocolHeader*) (messagePtr + 3);
+	OPhomoProtocolHeader* header = (OPhomoProtocolHeader*) (messagePtr + RF12_HDR_SIZE);
 	if (len) {
 		switch (header->MessageType) {
 		case CONFIG_SOLICIT_TYPE: {
@@ -41,11 +41,11 @@ void CollectorNode::loop() {
 		}
 			break;
 		case CONFIG_ACCEPT_TYPE: {
-			handleConfigAccept(header->SourceNode /*& 0x1F */);
+			handleConfigAccept(header->SourceNode /*& 0x1F */, messagePtr + RF12_HDR_SIZE + sizeof(OPhomoProtocolHeader), len - sizeof(OPhomoProtocolHeader) );
 		}
 			break;
 		case CONFIG_REJECT_TYPE: {
-			handleConfigReject(header->SourceNode /*& 0x1F */);
+			handleConfigReject(header->SourceNode /*& 0x1F */, messagePtr + RF12_HDR_SIZE + sizeof(OPhomoProtocolHeader), len - sizeof(OPhomoProtocolHeader) );
 		}
 
 			break;

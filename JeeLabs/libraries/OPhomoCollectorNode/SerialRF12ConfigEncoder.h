@@ -18,7 +18,9 @@ public:
 
 	SerialRF12ConfigEncoder();
 
-	void Handle(byte* buffer, byte length);
+	void EncodeSerial2Bin(byte* buffer, byte length);
+
+	byte getType();
 
 	virtual ~SerialRF12ConfigEncoder();
 protected:

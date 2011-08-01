@@ -17,6 +17,7 @@ RF12Concatenator::RF12Concatenator(RF12Module* rf12) {
 }
 
 RF12Concatenator::RF12Concatenator() {
+	pos = 1;
 }
 
 void RF12Concatenator::SetDestinationNode(byte nodeId) {

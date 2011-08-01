@@ -16,6 +16,7 @@
 
 namespace OPhomo {
 
+class CollectorNode;
 class SerialHandler {
 public:
 	SerialHandler();
@@ -35,6 +36,7 @@ protected:
 	SerialHandlerData data;
 
 	friend class SerialHandlerState;
+	friend class CollectorNode;
 
 };
 

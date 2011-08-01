@@ -63,13 +63,14 @@ void SensorNodeSolicitState::handleMessage(byte* message, byte length) {
 			}
 		}
 	} else {
-		Serial.print("Ignoring::Type is ");
+		Serial.print("Ignoring ");
 		Serial.println((int) header->MessageType);
 	}
 }
 
 void SensorNodeSolicitState::tick() {
 	if (data->timer.idle()) {
+		Serial.print(".");
 		SolicitConfig();
 		data->timer.set(5000);
 	}

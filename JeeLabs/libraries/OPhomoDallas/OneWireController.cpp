@@ -59,6 +59,7 @@ byte OneWireController::Handle(byte* message, byte length) {
 					// If we have a port, we can do something.
 					if (plug == NULL) {
 						plug = new DallasPlug(port);
+						dallasPlugs[portId -1] = plug;
 					}
 				}
 			}
@@ -120,25 +121,44 @@ byte OneWireController::Handle(byte* message, byte length) {
 byte OneWireController::ConfigReply() {
 	byte pos = 0;
 	byte sensorId = 1;
-	byte message[sizeof(DeviceAddress) + 1];
+	byte message[sizeof(DeviceAddress) + 3];
+	message[0] = getType();
+	message[1] = sizeof(DeviceAddress) + 1;
+	// First, search all OneWire
 	for (byte i = 0; i < MAX_DALLAS_PLUGS; i++) {
 		LOGLN((int) i);
 		if (this->dallasPlugs[i] != NULL) {
 			dallasPlugs[i]->Search();
 			byte nrOfSensors = dallasPlugs[i]->GetDeviceCount();
-			LOGLN((int) nrOfSensors);
+			Serial.print("\n[Found ");
+			Serial.print((int) nrOfSensors);
+			Serial.print(" devices] ");
 			OneWireSensor** sensors = dallasPlugs[i]->GetSensors();
 			for (byte j = 0; j < nrOfSensors; j++) {
+				/*
+				 * Each sensor will be encoded as:
+				 * _________________________________
+				 * |   0   |   1   |   2   |   3   |
+				 * =================================
+				 * |  SEOW |   L:7 |  id   |  ADD  |
+				 * |          RESS OF SENSOR       |
+				 * |                       |
+				 * Where :
+				 * SEOW is the type of the message.
+				 * L:7 is the length being 7 bytes.
+				 * id is the id used for the sensor.
+				 * ADDRESS OF SENSOR is the physical hardware address of the sensor.
+				 */
 				// We should return that.
-				message[0] = sensorId++;
+				message[2] = sensorId++;
 				// Now, append the address;
 				byte* address = sensors[j]->GetDeviceAddress();
 				for (byte k = 0; k < sizeof(DeviceAddress); k++) {
-					message[k + 1] = address[k];
+					message[k + 3] = address[k];
 				}
 				// Send the message.
 				sensorNode->rf12Transmitter.Send(message,
-						sizeof(DeviceAddress) + 1);
+						sizeof(DeviceAddress) + 3);
 			}
 		}
 	}
