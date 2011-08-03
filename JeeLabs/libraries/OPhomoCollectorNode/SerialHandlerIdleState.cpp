@@ -38,6 +38,19 @@ void SerialHandlerIdleState::handle() {
 		SerialConfigEncoder::transmitter.SetDestinationNode(destinationNode);
 		SerialConfigEncoder::transmitter.SetMessageType(CONFIG_ADVERTISE_TYPE);
 		serialHandler->setHandler(new SerialHandlerConfigState(serialHandler));
+	} else if (data->readBuffer[0] == 'C' && data->readBuffer[1] == 'O') {
+		// Configuration Acknowledgement
+		byte destinationNode = 0;
+		for (int i = 2; i < data->pos; i++) {
+			if ('0' <= data->readBuffer[i] && data->readBuffer[i] <= '9')
+				destinationNode = destinationNode * 10 + data->readBuffer[i]
+						- '0';
+			else
+				return;
+		}
+		SerialConfigEncoder::transmitter.SetDestinationNode(destinationNode);
+		SerialConfigEncoder::transmitter.SetMessageType(CONFIG_ACK_TYPE);
+		SerialConfigEncoder::transmitter.LastPartSend();
 	} else {
 		ERRORLN("IDLE:UNKNOWN COMMAND!");
 	}

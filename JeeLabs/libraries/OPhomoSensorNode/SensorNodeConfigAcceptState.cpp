@@ -7,7 +7,7 @@
 
 #include "SensorNodeConfigAcceptState.h"
 #include "ConfigurationController.h"
-
+#include "SensorNodeActiveState.h"
 namespace OPhomo {
 
 SensorNodeConfigAcceptState::SensorNodeConfigAcceptState(SensorNode* inNode) :
@@ -17,7 +17,18 @@ SensorNodeConfigAcceptState::SensorNodeConfigAcceptState(SensorNode* inNode) :
 }
 
 void SensorNodeConfigAcceptState::handleMessage(byte* message, byte length) {
-	// Which messages do we accept here ?
+	OPhomoProtocolHeader* header = (OPhomoProtocolHeader*) (message
+			+ RF12_HDR_SIZE);
+	byte pos = RF12_HDR_SIZE + sizeof(OPhomoProtocolHeader);
+	bool handled;
+	// This is probably a config message ?
+	if (header->MessageType == CONFIG_ACK_TYPE) {
+		node->setStateHandler(new SensorNodeActiveState(node));
+		return;
+	} else {
+		Serial.print("Ignoring ");
+		Serial.println((int) header->MessageType);
+	}
 }
 
 void SensorNodeConfigAcceptState::tick() {

@@ -37,10 +37,10 @@ public:
 		return 0;
 	}
 
+	virtual byte getType() = 0;
+
 	virtual ~SerialConfigEncoder() {
 	}
-
-	virtual byte getType() = 0;
 
 	static RF12Concatenator transmitter;
 

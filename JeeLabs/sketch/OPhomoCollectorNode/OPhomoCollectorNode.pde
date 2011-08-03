@@ -34,46 +34,51 @@ void CollectorNode::handleConfigSolicit(byte inNode) {
 	printAction("CS", inNode);
 }
 
-void CollectorNode::handleConfigAccept(byte inNode, byte* message, byte totalLen ) {
+void CollectorNode::handleConfigAccept(byte inNode, byte* message,
+		byte totalLen) {
 	// Here, we will need to send a reply base on the information we have on this node.
 	// To get this information from the application, we send the request on the Serial port interface.
 	printAction("CY", inNode);
 	// Walk the message and the decoders.
-    byte len, type;
+	byte len, type;
 	byte pos = 0;
 	char serialBuffer[64];
 	int serialLength = 64;
 	for (;;) {
 		type = message[pos];
-		len = message [ pos + 1];
-		 LOGLN((int)type);
-		 LOGLN((int)len);
-		 if ( type == 0 && len == 0 )
-			 break;
+		len = message[pos + 1];
+		LOGLN((int) type);
+		LOGLN((int) len);
+		if (type == 0 && len == 0)
+			break;
 		for (byte i = 0; i < serialHandler.data.encoderSize; i++) {
 			// See if any of the encoders knows this type
 			if (serialHandler.data.encoders[i].encoder-> getType() == type) {
 
 				serialLength = 64;
-				if ( serialHandler.data.encoders[i].encoder->DecodeBin2Serial( message + pos + 2, len, serialBuffer, &serialLength) ) {
+				if (serialHandler.data.encoders[i].encoder->DecodeBin2Serial(
+						message + pos + 2, len, serialBuffer, &serialLength)) {
 					Serial.print("\t");
-				    Serial.print("here comes the type\t");
-				    Serial.println(serialBuffer);
+    				Serial.write(serialHandler.data.encoders[i].type, 4);
+					Serial.print(" ");
+					Serial.println(serialBuffer);
 				}
 			}
 		}
 		pos += 2 + len;
-		if ( pos >= totalLen ) {
-			Serial.print((int) pos);;
-		    Serial.print(" <-> ");
-		    Serial.println((int) totalLen);
+		if (pos >= totalLen) {
+			Serial.print((int) pos);
+			;
+			Serial.print(" <-> ");
+			Serial.println((int) totalLen);
 			break;
 		}
 	}
-
+	Serial.print("/");
+	printAction("CY", inNode);
 }
 
-void CollectorNode::handleConfigReject(byte inNode, byte* message, byte len ) {
+void CollectorNode::handleConfigReject(byte inNode, byte* message, byte len) {
 	// Here, we will need to send a reply base on the information we have on this node.
 	// To get this information from the application, we send the request on the Serial port interface.
 	printAction("CN", inNode);
@@ -83,10 +88,11 @@ void setup(void) {
 	Serial.begin(57600);
 	Serial.print("\n[OPHOMO COLLECTOR NODE v");
 	Serial.print(VERSION);
-	Serial.println( "]");
+	Serial.println("]");
 	node.setup();
-	serialHandler.RegisterEncoder(SerialRF12ConfigEncoder::type, &rf12encoder );
-	serialHandler.RegisterEncoder(SerialOneWireConfigEncoder::type, &oneWireEncoder );
+	serialHandler.RegisterEncoder(SerialRF12ConfigEncoder::type, &rf12encoder);
+	serialHandler.RegisterEncoder(SerialOneWireConfigEncoder::type,
+			&oneWireEncoder);
 
 }
 
