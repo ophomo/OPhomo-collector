@@ -1,0 +1,1958 @@
+In archive libTLV.a:
+
+EncoderCore.o:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000024e  00000000  00000000  00000034  2**0
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  1 .data         00000010  00000000  00000000  00000282  2**0
+                  CONTENTS, ALLOC, LOAD, RELOC, DATA
+  2 .bss          00000000  00000000  00000000  00000292  2**0
+                  ALLOC
+  3 .stab         000004a4  00000000  00000000  00000294  2**2
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+  4 .stabstr      0000068a  00000000  00000000  00000738  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <_ZN3TLV11EncoderCoreD0Ev>:
+	memcpy( to, &value, sizeof(double) );
+	return sizeof(double);
+}
+
+
+EncoderCore::~EncoderCore() {
+   0:	df 93       	push	r29
+   2:	cf 93       	push	r28
+   4:	00 d0       	rcall	.+0      	; 0x6 <_ZN3TLV11EncoderCoreD0Ev+0x6>
+   6:	cd b7       	in	r28, 0x3d	; 61
+   8:	de b7       	in	r29, 0x3e	; 62
+   a:	9a 83       	std	Y+2, r25	; 0x02
+   c:	89 83       	std	Y+1, r24	; 0x01
+   e:	e9 81       	ldd	r30, Y+1	; 0x01
+  10:	fa 81       	ldd	r31, Y+2	; 0x02
+  12:	80 e0       	ldi	r24, 0x00	; 0
+  14:	90 e0       	ldi	r25, 0x00	; 0
+  16:	91 83       	std	Z+1, r25	; 0x01
+  18:	80 83       	st	Z, r24
+}
+  1a:	89 81       	ldd	r24, Y+1	; 0x01
+  1c:	9a 81       	ldd	r25, Y+2	; 0x02
+  1e:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV11EncoderCoreD0Ev>
+  22:	81 e0       	ldi	r24, 0x01	; 1
+  24:	90 e0       	ldi	r25, 0x00	; 0
+  26:	88 23       	and	r24, r24
+  28:	01 f0       	breq	.+0      	; 0x2a <_ZN3TLV11EncoderCoreD0Ev+0x2a>
+  2a:	89 81       	ldd	r24, Y+1	; 0x01
+  2c:	9a 81       	ldd	r25, Y+2	; 0x02
+  2e:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV11EncoderCoreD0Ev>
+  32:	0f 90       	pop	r0
+  34:	0f 90       	pop	r0
+  36:	cf 91       	pop	r28
+  38:	df 91       	pop	r29
+  3a:	08 95       	ret
+
+0000003c <_ZN3TLV11EncoderCoreD1Ev>:
+	memcpy( to, &value, sizeof(double) );
+	return sizeof(double);
+}
+
+
+EncoderCore::~EncoderCore() {
+  3c:	df 93       	push	r29
+  3e:	cf 93       	push	r28
+  40:	00 d0       	rcall	.+0      	; 0x42 <_ZN3TLV11EncoderCoreD1Ev+0x6>
+  42:	cd b7       	in	r28, 0x3d	; 61
+  44:	de b7       	in	r29, 0x3e	; 62
+  46:	9a 83       	std	Y+2, r25	; 0x02
+  48:	89 83       	std	Y+1, r24	; 0x01
+  4a:	e9 81       	ldd	r30, Y+1	; 0x01
+  4c:	fa 81       	ldd	r31, Y+2	; 0x02
+  4e:	80 e0       	ldi	r24, 0x00	; 0
+  50:	90 e0       	ldi	r25, 0x00	; 0
+  52:	91 83       	std	Z+1, r25	; 0x01
+  54:	80 83       	st	Z, r24
+}
+  56:	89 81       	ldd	r24, Y+1	; 0x01
+  58:	9a 81       	ldd	r25, Y+2	; 0x02
+  5a:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV11EncoderCoreD0Ev>
+  5e:	80 e0       	ldi	r24, 0x00	; 0
+  60:	90 e0       	ldi	r25, 0x00	; 0
+  62:	88 23       	and	r24, r24
+  64:	01 f0       	breq	.+0      	; 0x66 <_ZN3TLV11EncoderCoreD1Ev+0x2a>
+  66:	89 81       	ldd	r24, Y+1	; 0x01
+  68:	9a 81       	ldd	r25, Y+2	; 0x02
+  6a:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV11EncoderCoreD0Ev>
+  6e:	0f 90       	pop	r0
+  70:	0f 90       	pop	r0
+  72:	cf 91       	pop	r28
+  74:	df 91       	pop	r29
+  76:	08 95       	ret
+
+00000078 <_ZN3TLV11EncoderCoreD2Ev>:
+	memcpy( to, &value, sizeof(double) );
+	return sizeof(double);
+}
+
+
+EncoderCore::~EncoderCore() {
+  78:	df 93       	push	r29
+  7a:	cf 93       	push	r28
+  7c:	00 d0       	rcall	.+0      	; 0x7e <_ZN3TLV11EncoderCoreD2Ev+0x6>
+  7e:	cd b7       	in	r28, 0x3d	; 61
+  80:	de b7       	in	r29, 0x3e	; 62
+  82:	9a 83       	std	Y+2, r25	; 0x02
+  84:	89 83       	std	Y+1, r24	; 0x01
+  86:	e9 81       	ldd	r30, Y+1	; 0x01
+  88:	fa 81       	ldd	r31, Y+2	; 0x02
+  8a:	80 e0       	ldi	r24, 0x00	; 0
+  8c:	90 e0       	ldi	r25, 0x00	; 0
+  8e:	91 83       	std	Z+1, r25	; 0x01
+  90:	80 83       	st	Z, r24
+}
+  92:	89 81       	ldd	r24, Y+1	; 0x01
+  94:	9a 81       	ldd	r25, Y+2	; 0x02
+  96:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV11EncoderCoreD0Ev>
+  9a:	80 e0       	ldi	r24, 0x00	; 0
+  9c:	90 e0       	ldi	r25, 0x00	; 0
+  9e:	88 23       	and	r24, r24
+  a0:	01 f0       	breq	.+0      	; 0xa2 <_ZN3TLV11EncoderCoreD2Ev+0x2a>
+  a2:	89 81       	ldd	r24, Y+1	; 0x01
+  a4:	9a 81       	ldd	r25, Y+2	; 0x02
+  a6:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV11EncoderCoreD0Ev>
+  aa:	0f 90       	pop	r0
+  ac:	0f 90       	pop	r0
+  ae:	cf 91       	pop	r28
+  b0:	df 91       	pop	r29
+  b2:	08 95       	ret
+
+000000b4 <_ZN3TLV11EncoderCore6EncodeEPhd>:
+byte EncoderCore::Encode(byte* to, byte* value, byte length ) {
+	memcpy( to, value, length );
+	return length;
+}
+
+byte EncoderCore::Encode(byte* to, double value) {
+  b4:	df 93       	push	r29
+  b6:	cf 93       	push	r28
+  b8:	cd b7       	in	r28, 0x3d	; 61
+  ba:	de b7       	in	r29, 0x3e	; 62
+  bc:	28 97       	sbiw	r28, 0x08	; 8
+  be:	0f b6       	in	r0, 0x3f	; 63
+  c0:	f8 94       	cli
+  c2:	de bf       	out	0x3e, r29	; 62
+  c4:	0f be       	out	0x3f, r0	; 63
+  c6:	cd bf       	out	0x3d, r28	; 61
+  c8:	9a 83       	std	Y+2, r25	; 0x02
+  ca:	89 83       	std	Y+1, r24	; 0x01
+  cc:	7c 83       	std	Y+4, r23	; 0x04
+  ce:	6b 83       	std	Y+3, r22	; 0x03
+  d0:	2d 83       	std	Y+5, r18	; 0x05
+  d2:	3e 83       	std	Y+6, r19	; 0x06
+  d4:	4f 83       	std	Y+7, r20	; 0x07
+  d6:	58 87       	std	Y+8, r21	; 0x08
+	memcpy( to, &value, sizeof(double) );
+  d8:	8b 81       	ldd	r24, Y+3	; 0x03
+  da:	9c 81       	ldd	r25, Y+4	; 0x04
+  dc:	9e 01       	movw	r18, r28
+  de:	2b 5f       	subi	r18, 0xFB	; 251
+  e0:	3f 4f       	sbci	r19, 0xFF	; 255
+  e2:	b9 01       	movw	r22, r18
+  e4:	44 e0       	ldi	r20, 0x04	; 4
+  e6:	50 e0       	ldi	r21, 0x00	; 0
+  e8:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV11EncoderCoreD0Ev>
+	return sizeof(double);
+  ec:	84 e0       	ldi	r24, 0x04	; 4
+}
+  ee:	28 96       	adiw	r28, 0x08	; 8
+  f0:	0f b6       	in	r0, 0x3f	; 63
+  f2:	f8 94       	cli
+  f4:	de bf       	out	0x3e, r29	; 62
+  f6:	0f be       	out	0x3f, r0	; 63
+  f8:	cd bf       	out	0x3d, r28	; 61
+  fa:	cf 91       	pop	r28
+  fc:	df 91       	pop	r29
+  fe:	08 95       	ret
+
+00000100 <_ZN3TLV11EncoderCore6EncodeEPhS1_h>:
+	}
+	memcpy( to, value, pos );
+	return pos;
+}
+
+byte EncoderCore::Encode(byte* to, byte* value, byte length ) {
+ 100:	df 93       	push	r29
+ 102:	cf 93       	push	r28
+ 104:	cd b7       	in	r28, 0x3d	; 61
+ 106:	de b7       	in	r29, 0x3e	; 62
+ 108:	27 97       	sbiw	r28, 0x07	; 7
+ 10a:	0f b6       	in	r0, 0x3f	; 63
+ 10c:	f8 94       	cli
+ 10e:	de bf       	out	0x3e, r29	; 62
+ 110:	0f be       	out	0x3f, r0	; 63
+ 112:	cd bf       	out	0x3d, r28	; 61
+ 114:	9a 83       	std	Y+2, r25	; 0x02
+ 116:	89 83       	std	Y+1, r24	; 0x01
+ 118:	7c 83       	std	Y+4, r23	; 0x04
+ 11a:	6b 83       	std	Y+3, r22	; 0x03
+ 11c:	5e 83       	std	Y+6, r21	; 0x06
+ 11e:	4d 83       	std	Y+5, r20	; 0x05
+ 120:	2f 83       	std	Y+7, r18	; 0x07
+	memcpy( to, value, length );
+ 122:	8f 81       	ldd	r24, Y+7	; 0x07
+ 124:	48 2f       	mov	r20, r24
+ 126:	50 e0       	ldi	r21, 0x00	; 0
+ 128:	8b 81       	ldd	r24, Y+3	; 0x03
+ 12a:	9c 81       	ldd	r25, Y+4	; 0x04
+ 12c:	2d 81       	ldd	r18, Y+5	; 0x05
+ 12e:	3e 81       	ldd	r19, Y+6	; 0x06
+ 130:	b9 01       	movw	r22, r18
+ 132:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV11EncoderCoreD0Ev>
+	return length;
+ 136:	8f 81       	ldd	r24, Y+7	; 0x07
+}
+ 138:	27 96       	adiw	r28, 0x07	; 7
+ 13a:	0f b6       	in	r0, 0x3f	; 63
+ 13c:	f8 94       	cli
+ 13e:	de bf       	out	0x3e, r29	; 62
+ 140:	0f be       	out	0x3f, r0	; 63
+ 142:	cd bf       	out	0x3d, r28	; 61
+ 144:	cf 91       	pop	r28
+ 146:	df 91       	pop	r29
+ 148:	08 95       	ret
+
+0000014a <_ZN3TLV11EncoderCore6EncodeEPhPc>:
+byte EncoderCore::Encode(byte* to, int value ) {
+	memcpy(to, &value, sizeof(int));
+	return sizeof(int);
+}
+
+byte EncoderCore::Encode(byte* to, char* value) {
+ 14a:	df 93       	push	r29
+ 14c:	cf 93       	push	r28
+ 14e:	cd b7       	in	r28, 0x3d	; 61
+ 150:	de b7       	in	r29, 0x3e	; 62
+ 152:	27 97       	sbiw	r28, 0x07	; 7
+ 154:	0f b6       	in	r0, 0x3f	; 63
+ 156:	f8 94       	cli
+ 158:	de bf       	out	0x3e, r29	; 62
+ 15a:	0f be       	out	0x3f, r0	; 63
+ 15c:	cd bf       	out	0x3d, r28	; 61
+ 15e:	9b 83       	std	Y+3, r25	; 0x03
+ 160:	8a 83       	std	Y+2, r24	; 0x02
+ 162:	7d 83       	std	Y+5, r23	; 0x05
+ 164:	6c 83       	std	Y+4, r22	; 0x04
+ 166:	5f 83       	std	Y+7, r21	; 0x07
+ 168:	4e 83       	std	Y+6, r20	; 0x06
+	byte pos = 0;
+ 16a:	19 82       	std	Y+1, r1	; 0x01
+	for (pos = 0; pos <= 255; pos++ ) {
+ 16c:	19 82       	std	Y+1, r1	; 0x01
+		if ( value[pos] == '\0')
+ 16e:	89 81       	ldd	r24, Y+1	; 0x01
+ 170:	28 2f       	mov	r18, r24
+ 172:	30 e0       	ldi	r19, 0x00	; 0
+ 174:	8e 81       	ldd	r24, Y+6	; 0x06
+ 176:	9f 81       	ldd	r25, Y+7	; 0x07
+ 178:	fc 01       	movw	r30, r24
+ 17a:	e2 0f       	add	r30, r18
+ 17c:	f3 1f       	adc	r31, r19
+ 17e:	80 81       	ld	r24, Z
+ 180:	88 23       	and	r24, r24
+ 182:	01 f0       	breq	.+0      	; 0x184 <_ZN3TLV11EncoderCore6EncodeEPhPc+0x3a>
+	return sizeof(int);
+}
+
+byte EncoderCore::Encode(byte* to, char* value) {
+	byte pos = 0;
+	for (pos = 0; pos <= 255; pos++ ) {
+ 184:	89 81       	ldd	r24, Y+1	; 0x01
+ 186:	8f 5f       	subi	r24, 0xFF	; 255
+ 188:	89 83       	std	Y+1, r24	; 0x01
+ 18a:	00 c0       	rjmp	.+0      	; 0x18c <_ZN3TLV11EncoderCore6EncodeEPhPc+0x42>
+		if ( value[pos] == '\0')
+			break;
+	}
+	memcpy( to, value, pos );
+ 18c:	89 81       	ldd	r24, Y+1	; 0x01
+ 18e:	48 2f       	mov	r20, r24
+ 190:	50 e0       	ldi	r21, 0x00	; 0
+ 192:	8c 81       	ldd	r24, Y+4	; 0x04
+ 194:	9d 81       	ldd	r25, Y+5	; 0x05
+ 196:	2e 81       	ldd	r18, Y+6	; 0x06
+ 198:	3f 81       	ldd	r19, Y+7	; 0x07
+ 19a:	b9 01       	movw	r22, r18
+ 19c:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV11EncoderCoreD0Ev>
+	return pos;
+ 1a0:	89 81       	ldd	r24, Y+1	; 0x01
+}
+ 1a2:	27 96       	adiw	r28, 0x07	; 7
+ 1a4:	0f b6       	in	r0, 0x3f	; 63
+ 1a6:	f8 94       	cli
+ 1a8:	de bf       	out	0x3e, r29	; 62
+ 1aa:	0f be       	out	0x3f, r0	; 63
+ 1ac:	cd bf       	out	0x3d, r28	; 61
+ 1ae:	cf 91       	pop	r28
+ 1b0:	df 91       	pop	r29
+ 1b2:	08 95       	ret
+
+000001b4 <_ZN3TLV11EncoderCore6EncodeEPhi>:
+namespace TLV {
+
+EncoderCore::EncoderCore() {
+}
+
+byte EncoderCore::Encode(byte* to, int value ) {
+ 1b4:	df 93       	push	r29
+ 1b6:	cf 93       	push	r28
+ 1b8:	00 d0       	rcall	.+0      	; 0x1ba <_ZN3TLV11EncoderCore6EncodeEPhi+0x6>
+ 1ba:	00 d0       	rcall	.+0      	; 0x1bc <_ZN3TLV11EncoderCore6EncodeEPhi+0x8>
+ 1bc:	00 d0       	rcall	.+0      	; 0x1be <_ZN3TLV11EncoderCore6EncodeEPhi+0xa>
+ 1be:	cd b7       	in	r28, 0x3d	; 61
+ 1c0:	de b7       	in	r29, 0x3e	; 62
+ 1c2:	9a 83       	std	Y+2, r25	; 0x02
+ 1c4:	89 83       	std	Y+1, r24	; 0x01
+ 1c6:	7c 83       	std	Y+4, r23	; 0x04
+ 1c8:	6b 83       	std	Y+3, r22	; 0x03
+ 1ca:	5e 83       	std	Y+6, r21	; 0x06
+ 1cc:	4d 83       	std	Y+5, r20	; 0x05
+	memcpy(to, &value, sizeof(int));
+ 1ce:	8b 81       	ldd	r24, Y+3	; 0x03
+ 1d0:	9c 81       	ldd	r25, Y+4	; 0x04
+ 1d2:	9e 01       	movw	r18, r28
+ 1d4:	2b 5f       	subi	r18, 0xFB	; 251
+ 1d6:	3f 4f       	sbci	r19, 0xFF	; 255
+ 1d8:	b9 01       	movw	r22, r18
+ 1da:	42 e0       	ldi	r20, 0x02	; 2
+ 1dc:	50 e0       	ldi	r21, 0x00	; 0
+ 1de:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV11EncoderCoreD0Ev>
+	return sizeof(int);
+ 1e2:	82 e0       	ldi	r24, 0x02	; 2
+}
+ 1e4:	26 96       	adiw	r28, 0x06	; 6
+ 1e6:	0f b6       	in	r0, 0x3f	; 63
+ 1e8:	f8 94       	cli
+ 1ea:	de bf       	out	0x3e, r29	; 62
+ 1ec:	0f be       	out	0x3f, r0	; 63
+ 1ee:	cd bf       	out	0x3d, r28	; 61
+ 1f0:	cf 91       	pop	r28
+ 1f2:	df 91       	pop	r29
+ 1f4:	08 95       	ret
+
+000001f6 <_ZN3TLV11EncoderCoreC1Ev>:
+#include "EncoderCore.h"
+#include "string.h"
+
+namespace TLV {
+
+EncoderCore::EncoderCore() {
+ 1f6:	df 93       	push	r29
+ 1f8:	cf 93       	push	r28
+ 1fa:	00 d0       	rcall	.+0      	; 0x1fc <_ZN3TLV11EncoderCoreC1Ev+0x6>
+ 1fc:	cd b7       	in	r28, 0x3d	; 61
+ 1fe:	de b7       	in	r29, 0x3e	; 62
+ 200:	9a 83       	std	Y+2, r25	; 0x02
+ 202:	89 83       	std	Y+1, r24	; 0x01
+ 204:	89 81       	ldd	r24, Y+1	; 0x01
+ 206:	9a 81       	ldd	r25, Y+2	; 0x02
+ 208:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV11EncoderCoreD0Ev>
+ 20c:	e9 81       	ldd	r30, Y+1	; 0x01
+ 20e:	fa 81       	ldd	r31, Y+2	; 0x02
+ 210:	80 e0       	ldi	r24, 0x00	; 0
+ 212:	90 e0       	ldi	r25, 0x00	; 0
+ 214:	91 83       	std	Z+1, r25	; 0x01
+ 216:	80 83       	st	Z, r24
+}
+ 218:	0f 90       	pop	r0
+ 21a:	0f 90       	pop	r0
+ 21c:	cf 91       	pop	r28
+ 21e:	df 91       	pop	r29
+ 220:	08 95       	ret
+
+00000222 <_ZN3TLV11EncoderCoreC2Ev>:
+#include "EncoderCore.h"
+#include "string.h"
+
+namespace TLV {
+
+EncoderCore::EncoderCore() {
+ 222:	df 93       	push	r29
+ 224:	cf 93       	push	r28
+ 226:	00 d0       	rcall	.+0      	; 0x228 <_ZN3TLV11EncoderCoreC2Ev+0x6>
+ 228:	cd b7       	in	r28, 0x3d	; 61
+ 22a:	de b7       	in	r29, 0x3e	; 62
+ 22c:	9a 83       	std	Y+2, r25	; 0x02
+ 22e:	89 83       	std	Y+1, r24	; 0x01
+ 230:	89 81       	ldd	r24, Y+1	; 0x01
+ 232:	9a 81       	ldd	r25, Y+2	; 0x02
+ 234:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV11EncoderCoreD0Ev>
+ 238:	e9 81       	ldd	r30, Y+1	; 0x01
+ 23a:	fa 81       	ldd	r31, Y+2	; 0x02
+ 23c:	80 e0       	ldi	r24, 0x00	; 0
+ 23e:	90 e0       	ldi	r25, 0x00	; 0
+ 240:	91 83       	std	Z+1, r25	; 0x01
+ 242:	80 83       	st	Z, r24
+}
+ 244:	0f 90       	pop	r0
+ 246:	0f 90       	pop	r0
+ 248:	cf 91       	pop	r28
+ 24a:	df 91       	pop	r29
+ 24c:	08 95       	ret
+
+EncoderDecorator.o:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000000  00000000  00000000  00000034  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00000000  00000000  00000034  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000000  00000000  00000000  00000034  2**0
+                  ALLOC
+  3 .stab         0000018c  00000000  00000000  00000034  2**2
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+  4 .stabstr      00000455  00000000  00000000  000001c0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+EncoderInterface.o:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000e4  00000000  00000000  00000034  2**0
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  1 .data         00000010  00000000  00000000  00000118  2**0
+                  CONTENTS, ALLOC, LOAD, RELOC, DATA
+  2 .bss          00000000  00000000  00000000  00000128  2**0
+                  ALLOC
+  3 .stab         000002b8  00000000  00000000  00000128  2**2
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+  4 .stabstr      00000535  00000000  00000000  000003e0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <_ZN3TLV16EncoderInterfaceC2Ev>:
+
+#include "EncoderInterface.h"
+
+namespace TLV {
+
+EncoderInterface::EncoderInterface() {
+   0:	df 93       	push	r29
+   2:	cf 93       	push	r28
+   4:	00 d0       	rcall	.+0      	; 0x6 <_ZN3TLV16EncoderInterfaceC2Ev+0x6>
+   6:	cd b7       	in	r28, 0x3d	; 61
+   8:	de b7       	in	r29, 0x3e	; 62
+   a:	9a 83       	std	Y+2, r25	; 0x02
+   c:	89 83       	std	Y+1, r24	; 0x01
+   e:	e9 81       	ldd	r30, Y+1	; 0x01
+  10:	fa 81       	ldd	r31, Y+2	; 0x02
+  12:	80 e0       	ldi	r24, 0x00	; 0
+  14:	90 e0       	ldi	r25, 0x00	; 0
+  16:	91 83       	std	Z+1, r25	; 0x01
+  18:	80 83       	st	Z, r24
+}
+  1a:	0f 90       	pop	r0
+  1c:	0f 90       	pop	r0
+  1e:	cf 91       	pop	r28
+  20:	df 91       	pop	r29
+  22:	08 95       	ret
+
+00000024 <_ZN3TLV16EncoderInterfaceC1Ev>:
+
+#include "EncoderInterface.h"
+
+namespace TLV {
+
+EncoderInterface::EncoderInterface() {
+  24:	df 93       	push	r29
+  26:	cf 93       	push	r28
+  28:	00 d0       	rcall	.+0      	; 0x2a <_ZN3TLV16EncoderInterfaceC1Ev+0x6>
+  2a:	cd b7       	in	r28, 0x3d	; 61
+  2c:	de b7       	in	r29, 0x3e	; 62
+  2e:	9a 83       	std	Y+2, r25	; 0x02
+  30:	89 83       	std	Y+1, r24	; 0x01
+  32:	e9 81       	ldd	r30, Y+1	; 0x01
+  34:	fa 81       	ldd	r31, Y+2	; 0x02
+  36:	80 e0       	ldi	r24, 0x00	; 0
+  38:	90 e0       	ldi	r25, 0x00	; 0
+  3a:	91 83       	std	Z+1, r25	; 0x01
+  3c:	80 83       	st	Z, r24
+}
+  3e:	0f 90       	pop	r0
+  40:	0f 90       	pop	r0
+  42:	cf 91       	pop	r28
+  44:	df 91       	pop	r29
+  46:	08 95       	ret
+
+00000048 <_ZN3TLV16EncoderInterfaceD0Ev>:
+
+EncoderInterface::~EncoderInterface() {
+  48:	df 93       	push	r29
+  4a:	cf 93       	push	r28
+  4c:	00 d0       	rcall	.+0      	; 0x4e <_ZN3TLV16EncoderInterfaceD0Ev+0x6>
+  4e:	cd b7       	in	r28, 0x3d	; 61
+  50:	de b7       	in	r29, 0x3e	; 62
+  52:	9a 83       	std	Y+2, r25	; 0x02
+  54:	89 83       	std	Y+1, r24	; 0x01
+  56:	e9 81       	ldd	r30, Y+1	; 0x01
+  58:	fa 81       	ldd	r31, Y+2	; 0x02
+  5a:	80 e0       	ldi	r24, 0x00	; 0
+  5c:	90 e0       	ldi	r25, 0x00	; 0
+  5e:	91 83       	std	Z+1, r25	; 0x01
+  60:	80 83       	st	Z, r24
+}
+  62:	81 e0       	ldi	r24, 0x01	; 1
+  64:	90 e0       	ldi	r25, 0x00	; 0
+  66:	88 23       	and	r24, r24
+  68:	01 f0       	breq	.+0      	; 0x6a <_ZN3TLV16EncoderInterfaceD0Ev+0x22>
+  6a:	89 81       	ldd	r24, Y+1	; 0x01
+  6c:	9a 81       	ldd	r25, Y+2	; 0x02
+  6e:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV16EncoderInterfaceC2Ev>
+  72:	0f 90       	pop	r0
+  74:	0f 90       	pop	r0
+  76:	cf 91       	pop	r28
+  78:	df 91       	pop	r29
+  7a:	08 95       	ret
+
+0000007c <_ZN3TLV16EncoderInterfaceD1Ev>:
+namespace TLV {
+
+EncoderInterface::EncoderInterface() {
+}
+
+EncoderInterface::~EncoderInterface() {
+  7c:	df 93       	push	r29
+  7e:	cf 93       	push	r28
+  80:	00 d0       	rcall	.+0      	; 0x82 <_ZN3TLV16EncoderInterfaceD1Ev+0x6>
+  82:	cd b7       	in	r28, 0x3d	; 61
+  84:	de b7       	in	r29, 0x3e	; 62
+  86:	9a 83       	std	Y+2, r25	; 0x02
+  88:	89 83       	std	Y+1, r24	; 0x01
+  8a:	e9 81       	ldd	r30, Y+1	; 0x01
+  8c:	fa 81       	ldd	r31, Y+2	; 0x02
+  8e:	80 e0       	ldi	r24, 0x00	; 0
+  90:	90 e0       	ldi	r25, 0x00	; 0
+  92:	91 83       	std	Z+1, r25	; 0x01
+  94:	80 83       	st	Z, r24
+}
+  96:	80 e0       	ldi	r24, 0x00	; 0
+  98:	90 e0       	ldi	r25, 0x00	; 0
+  9a:	88 23       	and	r24, r24
+  9c:	01 f0       	breq	.+0      	; 0x9e <_ZN3TLV16EncoderInterfaceD1Ev+0x22>
+  9e:	89 81       	ldd	r24, Y+1	; 0x01
+  a0:	9a 81       	ldd	r25, Y+2	; 0x02
+  a2:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV16EncoderInterfaceC2Ev>
+  a6:	0f 90       	pop	r0
+  a8:	0f 90       	pop	r0
+  aa:	cf 91       	pop	r28
+  ac:	df 91       	pop	r29
+  ae:	08 95       	ret
+
+000000b0 <_ZN3TLV16EncoderInterfaceD2Ev>:
+namespace TLV {
+
+EncoderInterface::EncoderInterface() {
+}
+
+EncoderInterface::~EncoderInterface() {
+  b0:	df 93       	push	r29
+  b2:	cf 93       	push	r28
+  b4:	00 d0       	rcall	.+0      	; 0xb6 <_ZN3TLV16EncoderInterfaceD2Ev+0x6>
+  b6:	cd b7       	in	r28, 0x3d	; 61
+  b8:	de b7       	in	r29, 0x3e	; 62
+  ba:	9a 83       	std	Y+2, r25	; 0x02
+  bc:	89 83       	std	Y+1, r24	; 0x01
+  be:	e9 81       	ldd	r30, Y+1	; 0x01
+  c0:	fa 81       	ldd	r31, Y+2	; 0x02
+  c2:	80 e0       	ldi	r24, 0x00	; 0
+  c4:	90 e0       	ldi	r25, 0x00	; 0
+  c6:	91 83       	std	Z+1, r25	; 0x01
+  c8:	80 83       	st	Z, r24
+}
+  ca:	80 e0       	ldi	r24, 0x00	; 0
+  cc:	90 e0       	ldi	r25, 0x00	; 0
+  ce:	88 23       	and	r24, r24
+  d0:	01 f0       	breq	.+0      	; 0xd2 <_ZN3TLV16EncoderInterfaceD2Ev+0x22>
+  d2:	89 81       	ldd	r24, Y+1	; 0x01
+  d4:	9a 81       	ldd	r25, Y+2	; 0x02
+  d6:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV16EncoderInterfaceC2Ev>
+  da:	0f 90       	pop	r0
+  dc:	0f 90       	pop	r0
+  de:	cf 91       	pop	r28
+  e0:	df 91       	pop	r29
+  e2:	08 95       	ret
+
+EncoderLengthDecorator.o:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000047a  00000000  00000000  00000034  2**0
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  1 .data         00000020  00000000  00000000  000004ae  2**0
+                  CONTENTS, ALLOC, LOAD, RELOC, DATA
+  2 .bss          00000000  00000000  00000000  000004ce  2**0
+                  ALLOC
+  3 .stab         000005d0  00000000  00000000  000004d0  2**2
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+  4 .stabstr      00000913  00000000  00000000  00000aa0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <_ZN3TLV22EncoderLengthDecorator6EncodeEPhi>:
+namespace TLV {
+
+EncoderLengthDecorator::EncoderLengthDecorator(EncoderInterface* c) : EncoderDecorator(c) {
+}
+
+byte EncoderLengthDecorator::Encode(byte* to, int value ) {
+   0:	df 93       	push	r29
+   2:	cf 93       	push	r28
+   4:	00 d0       	rcall	.+0      	; 0x6 <_ZN3TLV22EncoderLengthDecorator6EncodeEPhi+0x6>
+   6:	00 d0       	rcall	.+0      	; 0x8 <_ZN3TLV22EncoderLengthDecorator6EncodeEPhi+0x8>
+   8:	00 d0       	rcall	.+0      	; 0xa <_ZN3TLV22EncoderLengthDecorator6EncodeEPhi+0xa>
+   a:	cd b7       	in	r28, 0x3d	; 61
+   c:	de b7       	in	r29, 0x3e	; 62
+   e:	9a 83       	std	Y+2, r25	; 0x02
+  10:	89 83       	std	Y+1, r24	; 0x01
+  12:	7c 83       	std	Y+4, r23	; 0x04
+  14:	6b 83       	std	Y+3, r22	; 0x03
+  16:	5e 83       	std	Y+6, r21	; 0x06
+  18:	4d 83       	std	Y+5, r20	; 0x05
+	*to = inner->Encode(to+1,value);
+  1a:	e9 81       	ldd	r30, Y+1	; 0x01
+  1c:	fa 81       	ldd	r31, Y+2	; 0x02
+  1e:	02 80       	ldd	r0, Z+2	; 0x02
+  20:	f3 81       	ldd	r31, Z+3	; 0x03
+  22:	e0 2d       	mov	r30, r0
+  24:	01 90       	ld	r0, Z+
+  26:	f0 81       	ld	r31, Z
+  28:	e0 2d       	mov	r30, r0
+  2a:	a0 81       	ld	r26, Z
+  2c:	b1 81       	ldd	r27, Z+1	; 0x01
+  2e:	e9 81       	ldd	r30, Y+1	; 0x01
+  30:	fa 81       	ldd	r31, Y+2	; 0x02
+  32:	62 81       	ldd	r22, Z+2	; 0x02
+  34:	73 81       	ldd	r23, Z+3	; 0x03
+  36:	8b 81       	ldd	r24, Y+3	; 0x03
+  38:	9c 81       	ldd	r25, Y+4	; 0x04
+  3a:	9c 01       	movw	r18, r24
+  3c:	2f 5f       	subi	r18, 0xFF	; 255
+  3e:	3f 4f       	sbci	r19, 0xFF	; 255
+  40:	4d 81       	ldd	r20, Y+5	; 0x05
+  42:	5e 81       	ldd	r21, Y+6	; 0x06
+  44:	cb 01       	movw	r24, r22
+  46:	b9 01       	movw	r22, r18
+  48:	fd 01       	movw	r30, r26
+  4a:	09 95       	icall
+  4c:	eb 81       	ldd	r30, Y+3	; 0x03
+  4e:	fc 81       	ldd	r31, Y+4	; 0x04
+  50:	80 83       	st	Z, r24
+	return (*to) + 1;
+  52:	eb 81       	ldd	r30, Y+3	; 0x03
+  54:	fc 81       	ldd	r31, Y+4	; 0x04
+  56:	80 81       	ld	r24, Z
+  58:	8f 5f       	subi	r24, 0xFF	; 255
+}
+  5a:	26 96       	adiw	r28, 0x06	; 6
+  5c:	0f b6       	in	r0, 0x3f	; 63
+  5e:	f8 94       	cli
+  60:	de bf       	out	0x3e, r29	; 62
+  62:	0f be       	out	0x3f, r0	; 63
+  64:	cd bf       	out	0x3d, r28	; 61
+  66:	cf 91       	pop	r28
+  68:	df 91       	pop	r29
+  6a:	08 95       	ret
+
+0000006c <_ZN3TLV22EncoderLengthDecorator6EncodeEPhPc>:
+
+byte EncoderLengthDecorator::Encode(byte* to, char* value) {
+  6c:	df 93       	push	r29
+  6e:	cf 93       	push	r28
+  70:	00 d0       	rcall	.+0      	; 0x72 <_ZN3TLV22EncoderLengthDecorator6EncodeEPhPc+0x6>
+  72:	00 d0       	rcall	.+0      	; 0x74 <_ZN3TLV22EncoderLengthDecorator6EncodeEPhPc+0x8>
+  74:	00 d0       	rcall	.+0      	; 0x76 <_ZN3TLV22EncoderLengthDecorator6EncodeEPhPc+0xa>
+  76:	cd b7       	in	r28, 0x3d	; 61
+  78:	de b7       	in	r29, 0x3e	; 62
+  7a:	9a 83       	std	Y+2, r25	; 0x02
+  7c:	89 83       	std	Y+1, r24	; 0x01
+  7e:	7c 83       	std	Y+4, r23	; 0x04
+  80:	6b 83       	std	Y+3, r22	; 0x03
+  82:	5e 83       	std	Y+6, r21	; 0x06
+  84:	4d 83       	std	Y+5, r20	; 0x05
+	*to = inner->Encode(to+1,value);
+  86:	e9 81       	ldd	r30, Y+1	; 0x01
+  88:	fa 81       	ldd	r31, Y+2	; 0x02
+  8a:	02 80       	ldd	r0, Z+2	; 0x02
+  8c:	f3 81       	ldd	r31, Z+3	; 0x03
+  8e:	e0 2d       	mov	r30, r0
+  90:	80 81       	ld	r24, Z
+  92:	91 81       	ldd	r25, Z+1	; 0x01
+  94:	fc 01       	movw	r30, r24
+  96:	32 96       	adiw	r30, 0x02	; 2
+  98:	a0 81       	ld	r26, Z
+  9a:	b1 81       	ldd	r27, Z+1	; 0x01
+  9c:	e9 81       	ldd	r30, Y+1	; 0x01
+  9e:	fa 81       	ldd	r31, Y+2	; 0x02
+  a0:	62 81       	ldd	r22, Z+2	; 0x02
+  a2:	73 81       	ldd	r23, Z+3	; 0x03
+  a4:	8b 81       	ldd	r24, Y+3	; 0x03
+  a6:	9c 81       	ldd	r25, Y+4	; 0x04
+  a8:	9c 01       	movw	r18, r24
+  aa:	2f 5f       	subi	r18, 0xFF	; 255
+  ac:	3f 4f       	sbci	r19, 0xFF	; 255
+  ae:	4d 81       	ldd	r20, Y+5	; 0x05
+  b0:	5e 81       	ldd	r21, Y+6	; 0x06
+  b2:	cb 01       	movw	r24, r22
+  b4:	b9 01       	movw	r22, r18
+  b6:	fd 01       	movw	r30, r26
+  b8:	09 95       	icall
+  ba:	eb 81       	ldd	r30, Y+3	; 0x03
+  bc:	fc 81       	ldd	r31, Y+4	; 0x04
+  be:	80 83       	st	Z, r24
+	return (*to) + 1;
+  c0:	eb 81       	ldd	r30, Y+3	; 0x03
+  c2:	fc 81       	ldd	r31, Y+4	; 0x04
+  c4:	80 81       	ld	r24, Z
+  c6:	8f 5f       	subi	r24, 0xFF	; 255
+}
+  c8:	26 96       	adiw	r28, 0x06	; 6
+  ca:	0f b6       	in	r0, 0x3f	; 63
+  cc:	f8 94       	cli
+  ce:	de bf       	out	0x3e, r29	; 62
+  d0:	0f be       	out	0x3f, r0	; 63
+  d2:	cd bf       	out	0x3d, r28	; 61
+  d4:	cf 91       	pop	r28
+  d6:	df 91       	pop	r29
+  d8:	08 95       	ret
+
+000000da <_ZN3TLV22EncoderLengthDecorator6EncodeEPhS1_h>:
+
+byte EncoderLengthDecorator::Encode(byte* to, byte* value, byte length ) {
+  da:	df 93       	push	r29
+  dc:	cf 93       	push	r28
+  de:	cd b7       	in	r28, 0x3d	; 61
+  e0:	de b7       	in	r29, 0x3e	; 62
+  e2:	27 97       	sbiw	r28, 0x07	; 7
+  e4:	0f b6       	in	r0, 0x3f	; 63
+  e6:	f8 94       	cli
+  e8:	de bf       	out	0x3e, r29	; 62
+  ea:	0f be       	out	0x3f, r0	; 63
+  ec:	cd bf       	out	0x3d, r28	; 61
+  ee:	9a 83       	std	Y+2, r25	; 0x02
+  f0:	89 83       	std	Y+1, r24	; 0x01
+  f2:	7c 83       	std	Y+4, r23	; 0x04
+  f4:	6b 83       	std	Y+3, r22	; 0x03
+  f6:	5e 83       	std	Y+6, r21	; 0x06
+  f8:	4d 83       	std	Y+5, r20	; 0x05
+  fa:	2f 83       	std	Y+7, r18	; 0x07
+	*to = inner->Encode(to+1,value, length);
+  fc:	e9 81       	ldd	r30, Y+1	; 0x01
+  fe:	fa 81       	ldd	r31, Y+2	; 0x02
+ 100:	02 80       	ldd	r0, Z+2	; 0x02
+ 102:	f3 81       	ldd	r31, Z+3	; 0x03
+ 104:	e0 2d       	mov	r30, r0
+ 106:	80 81       	ld	r24, Z
+ 108:	91 81       	ldd	r25, Z+1	; 0x01
+ 10a:	fc 01       	movw	r30, r24
+ 10c:	34 96       	adiw	r30, 0x04	; 4
+ 10e:	a0 81       	ld	r26, Z
+ 110:	b1 81       	ldd	r27, Z+1	; 0x01
+ 112:	e9 81       	ldd	r30, Y+1	; 0x01
+ 114:	fa 81       	ldd	r31, Y+2	; 0x02
+ 116:	62 81       	ldd	r22, Z+2	; 0x02
+ 118:	73 81       	ldd	r23, Z+3	; 0x03
+ 11a:	8b 81       	ldd	r24, Y+3	; 0x03
+ 11c:	9c 81       	ldd	r25, Y+4	; 0x04
+ 11e:	9c 01       	movw	r18, r24
+ 120:	2f 5f       	subi	r18, 0xFF	; 255
+ 122:	3f 4f       	sbci	r19, 0xFF	; 255
+ 124:	4d 81       	ldd	r20, Y+5	; 0x05
+ 126:	5e 81       	ldd	r21, Y+6	; 0x06
+ 128:	cb 01       	movw	r24, r22
+ 12a:	b9 01       	movw	r22, r18
+ 12c:	2f 81       	ldd	r18, Y+7	; 0x07
+ 12e:	fd 01       	movw	r30, r26
+ 130:	09 95       	icall
+ 132:	eb 81       	ldd	r30, Y+3	; 0x03
+ 134:	fc 81       	ldd	r31, Y+4	; 0x04
+ 136:	80 83       	st	Z, r24
+	return (*to) + 1;
+ 138:	eb 81       	ldd	r30, Y+3	; 0x03
+ 13a:	fc 81       	ldd	r31, Y+4	; 0x04
+ 13c:	80 81       	ld	r24, Z
+ 13e:	8f 5f       	subi	r24, 0xFF	; 255
+}
+ 140:	27 96       	adiw	r28, 0x07	; 7
+ 142:	0f b6       	in	r0, 0x3f	; 63
+ 144:	f8 94       	cli
+ 146:	de bf       	out	0x3e, r29	; 62
+ 148:	0f be       	out	0x3f, r0	; 63
+ 14a:	cd bf       	out	0x3d, r28	; 61
+ 14c:	cf 91       	pop	r28
+ 14e:	df 91       	pop	r29
+ 150:	08 95       	ret
+
+00000152 <_ZN3TLV22EncoderLengthDecorator6EncodeEPhd>:
+
+byte EncoderLengthDecorator::Encode(byte* to, double value) {
+ 152:	df 93       	push	r29
+ 154:	cf 93       	push	r28
+ 156:	cd b7       	in	r28, 0x3d	; 61
+ 158:	de b7       	in	r29, 0x3e	; 62
+ 15a:	28 97       	sbiw	r28, 0x08	; 8
+ 15c:	0f b6       	in	r0, 0x3f	; 63
+ 15e:	f8 94       	cli
+ 160:	de bf       	out	0x3e, r29	; 62
+ 162:	0f be       	out	0x3f, r0	; 63
+ 164:	cd bf       	out	0x3d, r28	; 61
+ 166:	9a 83       	std	Y+2, r25	; 0x02
+ 168:	89 83       	std	Y+1, r24	; 0x01
+ 16a:	7c 83       	std	Y+4, r23	; 0x04
+ 16c:	6b 83       	std	Y+3, r22	; 0x03
+ 16e:	2d 83       	std	Y+5, r18	; 0x05
+ 170:	3e 83       	std	Y+6, r19	; 0x06
+ 172:	4f 83       	std	Y+7, r20	; 0x07
+ 174:	58 87       	std	Y+8, r21	; 0x08
+	*to = inner->Encode(to+1,value);
+ 176:	e9 81       	ldd	r30, Y+1	; 0x01
+ 178:	fa 81       	ldd	r31, Y+2	; 0x02
+ 17a:	02 80       	ldd	r0, Z+2	; 0x02
+ 17c:	f3 81       	ldd	r31, Z+3	; 0x03
+ 17e:	e0 2d       	mov	r30, r0
+ 180:	80 81       	ld	r24, Z
+ 182:	91 81       	ldd	r25, Z+1	; 0x01
+ 184:	fc 01       	movw	r30, r24
+ 186:	36 96       	adiw	r30, 0x06	; 6
+ 188:	a0 81       	ld	r26, Z
+ 18a:	b1 81       	ldd	r27, Z+1	; 0x01
+ 18c:	e9 81       	ldd	r30, Y+1	; 0x01
+ 18e:	fa 81       	ldd	r31, Y+2	; 0x02
+ 190:	02 80       	ldd	r0, Z+2	; 0x02
+ 192:	f3 81       	ldd	r31, Z+3	; 0x03
+ 194:	e0 2d       	mov	r30, r0
+ 196:	8b 81       	ldd	r24, Y+3	; 0x03
+ 198:	9c 81       	ldd	r25, Y+4	; 0x04
+ 19a:	bc 01       	movw	r22, r24
+ 19c:	6f 5f       	subi	r22, 0xFF	; 255
+ 19e:	7f 4f       	sbci	r23, 0xFF	; 255
+ 1a0:	2d 81       	ldd	r18, Y+5	; 0x05
+ 1a2:	3e 81       	ldd	r19, Y+6	; 0x06
+ 1a4:	4f 81       	ldd	r20, Y+7	; 0x07
+ 1a6:	58 85       	ldd	r21, Y+8	; 0x08
+ 1a8:	cf 01       	movw	r24, r30
+ 1aa:	fd 01       	movw	r30, r26
+ 1ac:	09 95       	icall
+ 1ae:	eb 81       	ldd	r30, Y+3	; 0x03
+ 1b0:	fc 81       	ldd	r31, Y+4	; 0x04
+ 1b2:	80 83       	st	Z, r24
+	return (*to) + 1;
+ 1b4:	eb 81       	ldd	r30, Y+3	; 0x03
+ 1b6:	fc 81       	ldd	r31, Y+4	; 0x04
+ 1b8:	80 81       	ld	r24, Z
+ 1ba:	8f 5f       	subi	r24, 0xFF	; 255
+}
+ 1bc:	28 96       	adiw	r28, 0x08	; 8
+ 1be:	0f b6       	in	r0, 0x3f	; 63
+ 1c0:	f8 94       	cli
+ 1c2:	de bf       	out	0x3e, r29	; 62
+ 1c4:	0f be       	out	0x3f, r0	; 63
+ 1c6:	cd bf       	out	0x3d, r28	; 61
+ 1c8:	cf 91       	pop	r28
+ 1ca:	df 91       	pop	r29
+ 1cc:	08 95       	ret
+
+000001ce <_ZN3TLV16EncoderDecoratorD2Ev>:
+
+public:
+	EncoderDecorator(EncoderInterface *c) : EncoderInterface() {
+		inner = c;
+	}
+	~EncoderDecorator() {
+ 1ce:	df 93       	push	r29
+ 1d0:	cf 93       	push	r28
+ 1d2:	00 d0       	rcall	.+0      	; 0x1d4 <_ZN3TLV16EncoderDecoratorD2Ev+0x6>
+ 1d4:	cd b7       	in	r28, 0x3d	; 61
+ 1d6:	de b7       	in	r29, 0x3e	; 62
+ 1d8:	9a 83       	std	Y+2, r25	; 0x02
+ 1da:	89 83       	std	Y+1, r24	; 0x01
+ 1dc:	e9 81       	ldd	r30, Y+1	; 0x01
+ 1de:	fa 81       	ldd	r31, Y+2	; 0x02
+ 1e0:	80 e0       	ldi	r24, 0x00	; 0
+ 1e2:	90 e0       	ldi	r25, 0x00	; 0
+ 1e4:	91 83       	std	Z+1, r25	; 0x01
+ 1e6:	80 83       	st	Z, r24
+		delete inner;
+ 1e8:	e9 81       	ldd	r30, Y+1	; 0x01
+ 1ea:	fa 81       	ldd	r31, Y+2	; 0x02
+ 1ec:	82 81       	ldd	r24, Z+2	; 0x02
+ 1ee:	93 81       	ldd	r25, Z+3	; 0x03
+ 1f0:	00 97       	sbiw	r24, 0x00	; 0
+ 1f2:	01 f0       	breq	.+0      	; 0x1f4 <_ZN3TLV16EncoderDecoratorD2Ev+0x26>
+ 1f4:	e9 81       	ldd	r30, Y+1	; 0x01
+ 1f6:	fa 81       	ldd	r31, Y+2	; 0x02
+ 1f8:	02 80       	ldd	r0, Z+2	; 0x02
+ 1fa:	f3 81       	ldd	r31, Z+3	; 0x03
+ 1fc:	e0 2d       	mov	r30, r0
+ 1fe:	80 81       	ld	r24, Z
+ 200:	91 81       	ldd	r25, Z+1	; 0x01
+ 202:	fc 01       	movw	r30, r24
+ 204:	3a 96       	adiw	r30, 0x0a	; 10
+ 206:	20 81       	ld	r18, Z
+ 208:	31 81       	ldd	r19, Z+1	; 0x01
+ 20a:	e9 81       	ldd	r30, Y+1	; 0x01
+ 20c:	fa 81       	ldd	r31, Y+2	; 0x02
+ 20e:	82 81       	ldd	r24, Z+2	; 0x02
+ 210:	93 81       	ldd	r25, Z+3	; 0x03
+ 212:	f9 01       	movw	r30, r18
+ 214:	09 95       	icall
+	}
+ 216:	89 81       	ldd	r24, Y+1	; 0x01
+ 218:	9a 81       	ldd	r25, Y+2	; 0x02
+ 21a:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV22EncoderLengthDecorator6EncodeEPhi>
+ 21e:	80 e0       	ldi	r24, 0x00	; 0
+ 220:	90 e0       	ldi	r25, 0x00	; 0
+ 222:	88 23       	and	r24, r24
+ 224:	01 f0       	breq	.+0      	; 0x226 <_ZN3TLV16EncoderDecoratorD2Ev+0x58>
+ 226:	89 81       	ldd	r24, Y+1	; 0x01
+ 228:	9a 81       	ldd	r25, Y+2	; 0x02
+ 22a:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV22EncoderLengthDecorator6EncodeEPhi>
+ 22e:	0f 90       	pop	r0
+ 230:	0f 90       	pop	r0
+ 232:	cf 91       	pop	r28
+ 234:	df 91       	pop	r29
+ 236:	08 95       	ret
+
+00000238 <_ZN3TLV22EncoderLengthDecoratorD0Ev>:
+
+
+EncoderLengthDecorator::~EncoderLengthDecorator() {
+ 238:	df 93       	push	r29
+ 23a:	cf 93       	push	r28
+ 23c:	00 d0       	rcall	.+0      	; 0x23e <_ZN3TLV22EncoderLengthDecoratorD0Ev+0x6>
+ 23e:	cd b7       	in	r28, 0x3d	; 61
+ 240:	de b7       	in	r29, 0x3e	; 62
+ 242:	9a 83       	std	Y+2, r25	; 0x02
+ 244:	89 83       	std	Y+1, r24	; 0x01
+ 246:	e9 81       	ldd	r30, Y+1	; 0x01
+ 248:	fa 81       	ldd	r31, Y+2	; 0x02
+ 24a:	80 e0       	ldi	r24, 0x00	; 0
+ 24c:	90 e0       	ldi	r25, 0x00	; 0
+ 24e:	91 83       	std	Z+1, r25	; 0x01
+ 250:	80 83       	st	Z, r24
+}
+ 252:	89 81       	ldd	r24, Y+1	; 0x01
+ 254:	9a 81       	ldd	r25, Y+2	; 0x02
+ 256:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV22EncoderLengthDecorator6EncodeEPhi>
+ 25a:	81 e0       	ldi	r24, 0x01	; 1
+ 25c:	90 e0       	ldi	r25, 0x00	; 0
+ 25e:	88 23       	and	r24, r24
+ 260:	01 f0       	breq	.+0      	; 0x262 <_ZN3TLV22EncoderLengthDecoratorD0Ev+0x2a>
+ 262:	89 81       	ldd	r24, Y+1	; 0x01
+ 264:	9a 81       	ldd	r25, Y+2	; 0x02
+ 266:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV22EncoderLengthDecorator6EncodeEPhi>
+ 26a:	0f 90       	pop	r0
+ 26c:	0f 90       	pop	r0
+ 26e:	cf 91       	pop	r28
+ 270:	df 91       	pop	r29
+ 272:	08 95       	ret
+
+00000274 <_ZN3TLV22EncoderLengthDecoratorD1Ev>:
+	*to = inner->Encode(to+1,value);
+	return (*to) + 1;
+}
+
+
+EncoderLengthDecorator::~EncoderLengthDecorator() {
+ 274:	df 93       	push	r29
+ 276:	cf 93       	push	r28
+ 278:	00 d0       	rcall	.+0      	; 0x27a <_ZN3TLV22EncoderLengthDecoratorD1Ev+0x6>
+ 27a:	cd b7       	in	r28, 0x3d	; 61
+ 27c:	de b7       	in	r29, 0x3e	; 62
+ 27e:	9a 83       	std	Y+2, r25	; 0x02
+ 280:	89 83       	std	Y+1, r24	; 0x01
+ 282:	e9 81       	ldd	r30, Y+1	; 0x01
+ 284:	fa 81       	ldd	r31, Y+2	; 0x02
+ 286:	80 e0       	ldi	r24, 0x00	; 0
+ 288:	90 e0       	ldi	r25, 0x00	; 0
+ 28a:	91 83       	std	Z+1, r25	; 0x01
+ 28c:	80 83       	st	Z, r24
+}
+ 28e:	89 81       	ldd	r24, Y+1	; 0x01
+ 290:	9a 81       	ldd	r25, Y+2	; 0x02
+ 292:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV22EncoderLengthDecorator6EncodeEPhi>
+ 296:	80 e0       	ldi	r24, 0x00	; 0
+ 298:	90 e0       	ldi	r25, 0x00	; 0
+ 29a:	88 23       	and	r24, r24
+ 29c:	01 f0       	breq	.+0      	; 0x29e <_ZN3TLV22EncoderLengthDecoratorD1Ev+0x2a>
+ 29e:	89 81       	ldd	r24, Y+1	; 0x01
+ 2a0:	9a 81       	ldd	r25, Y+2	; 0x02
+ 2a2:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV22EncoderLengthDecorator6EncodeEPhi>
+ 2a6:	0f 90       	pop	r0
+ 2a8:	0f 90       	pop	r0
+ 2aa:	cf 91       	pop	r28
+ 2ac:	df 91       	pop	r29
+ 2ae:	08 95       	ret
+
+000002b0 <_ZN3TLV22EncoderLengthDecoratorD2Ev>:
+	*to = inner->Encode(to+1,value);
+	return (*to) + 1;
+}
+
+
+EncoderLengthDecorator::~EncoderLengthDecorator() {
+ 2b0:	df 93       	push	r29
+ 2b2:	cf 93       	push	r28
+ 2b4:	00 d0       	rcall	.+0      	; 0x2b6 <_ZN3TLV22EncoderLengthDecoratorD2Ev+0x6>
+ 2b6:	cd b7       	in	r28, 0x3d	; 61
+ 2b8:	de b7       	in	r29, 0x3e	; 62
+ 2ba:	9a 83       	std	Y+2, r25	; 0x02
+ 2bc:	89 83       	std	Y+1, r24	; 0x01
+ 2be:	e9 81       	ldd	r30, Y+1	; 0x01
+ 2c0:	fa 81       	ldd	r31, Y+2	; 0x02
+ 2c2:	80 e0       	ldi	r24, 0x00	; 0
+ 2c4:	90 e0       	ldi	r25, 0x00	; 0
+ 2c6:	91 83       	std	Z+1, r25	; 0x01
+ 2c8:	80 83       	st	Z, r24
+}
+ 2ca:	89 81       	ldd	r24, Y+1	; 0x01
+ 2cc:	9a 81       	ldd	r25, Y+2	; 0x02
+ 2ce:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV22EncoderLengthDecorator6EncodeEPhi>
+ 2d2:	80 e0       	ldi	r24, 0x00	; 0
+ 2d4:	90 e0       	ldi	r25, 0x00	; 0
+ 2d6:	88 23       	and	r24, r24
+ 2d8:	01 f0       	breq	.+0      	; 0x2da <_ZN3TLV22EncoderLengthDecoratorD2Ev+0x2a>
+ 2da:	89 81       	ldd	r24, Y+1	; 0x01
+ 2dc:	9a 81       	ldd	r25, Y+2	; 0x02
+ 2de:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV22EncoderLengthDecorator6EncodeEPhi>
+ 2e2:	0f 90       	pop	r0
+ 2e4:	0f 90       	pop	r0
+ 2e6:	cf 91       	pop	r28
+ 2e8:	df 91       	pop	r29
+ 2ea:	08 95       	ret
+
+000002ec <_ZN3TLV16EncoderDecoratorD0Ev>:
+
+public:
+	EncoderDecorator(EncoderInterface *c) : EncoderInterface() {
+		inner = c;
+	}
+	~EncoderDecorator() {
+ 2ec:	df 93       	push	r29
+ 2ee:	cf 93       	push	r28
+ 2f0:	00 d0       	rcall	.+0      	; 0x2f2 <_ZN3TLV16EncoderDecoratorD0Ev+0x6>
+ 2f2:	cd b7       	in	r28, 0x3d	; 61
+ 2f4:	de b7       	in	r29, 0x3e	; 62
+ 2f6:	9a 83       	std	Y+2, r25	; 0x02
+ 2f8:	89 83       	std	Y+1, r24	; 0x01
+ 2fa:	e9 81       	ldd	r30, Y+1	; 0x01
+ 2fc:	fa 81       	ldd	r31, Y+2	; 0x02
+ 2fe:	80 e0       	ldi	r24, 0x00	; 0
+ 300:	90 e0       	ldi	r25, 0x00	; 0
+ 302:	91 83       	std	Z+1, r25	; 0x01
+ 304:	80 83       	st	Z, r24
+		delete inner;
+ 306:	e9 81       	ldd	r30, Y+1	; 0x01
+ 308:	fa 81       	ldd	r31, Y+2	; 0x02
+ 30a:	82 81       	ldd	r24, Z+2	; 0x02
+ 30c:	93 81       	ldd	r25, Z+3	; 0x03
+ 30e:	00 97       	sbiw	r24, 0x00	; 0
+ 310:	01 f0       	breq	.+0      	; 0x312 <_ZN3TLV16EncoderDecoratorD0Ev+0x26>
+ 312:	e9 81       	ldd	r30, Y+1	; 0x01
+ 314:	fa 81       	ldd	r31, Y+2	; 0x02
+ 316:	02 80       	ldd	r0, Z+2	; 0x02
+ 318:	f3 81       	ldd	r31, Z+3	; 0x03
+ 31a:	e0 2d       	mov	r30, r0
+ 31c:	80 81       	ld	r24, Z
+ 31e:	91 81       	ldd	r25, Z+1	; 0x01
+ 320:	fc 01       	movw	r30, r24
+ 322:	3a 96       	adiw	r30, 0x0a	; 10
+ 324:	20 81       	ld	r18, Z
+ 326:	31 81       	ldd	r19, Z+1	; 0x01
+ 328:	e9 81       	ldd	r30, Y+1	; 0x01
+ 32a:	fa 81       	ldd	r31, Y+2	; 0x02
+ 32c:	82 81       	ldd	r24, Z+2	; 0x02
+ 32e:	93 81       	ldd	r25, Z+3	; 0x03
+ 330:	f9 01       	movw	r30, r18
+ 332:	09 95       	icall
+	}
+ 334:	89 81       	ldd	r24, Y+1	; 0x01
+ 336:	9a 81       	ldd	r25, Y+2	; 0x02
+ 338:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV22EncoderLengthDecorator6EncodeEPhi>
+ 33c:	81 e0       	ldi	r24, 0x01	; 1
+ 33e:	90 e0       	ldi	r25, 0x00	; 0
+ 340:	88 23       	and	r24, r24
+ 342:	01 f0       	breq	.+0      	; 0x344 <_ZN3TLV16EncoderDecoratorD0Ev+0x58>
+ 344:	89 81       	ldd	r24, Y+1	; 0x01
+ 346:	9a 81       	ldd	r25, Y+2	; 0x02
+ 348:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV22EncoderLengthDecorator6EncodeEPhi>
+ 34c:	0f 90       	pop	r0
+ 34e:	0f 90       	pop	r0
+ 350:	cf 91       	pop	r28
+ 352:	df 91       	pop	r29
+ 354:	08 95       	ret
+
+00000356 <_ZN3TLV16EncoderDecoratorD1Ev>:
+
+public:
+	EncoderDecorator(EncoderInterface *c) : EncoderInterface() {
+		inner = c;
+	}
+	~EncoderDecorator() {
+ 356:	df 93       	push	r29
+ 358:	cf 93       	push	r28
+ 35a:	00 d0       	rcall	.+0      	; 0x35c <_ZN3TLV16EncoderDecoratorD1Ev+0x6>
+ 35c:	cd b7       	in	r28, 0x3d	; 61
+ 35e:	de b7       	in	r29, 0x3e	; 62
+ 360:	9a 83       	std	Y+2, r25	; 0x02
+ 362:	89 83       	std	Y+1, r24	; 0x01
+ 364:	e9 81       	ldd	r30, Y+1	; 0x01
+ 366:	fa 81       	ldd	r31, Y+2	; 0x02
+ 368:	80 e0       	ldi	r24, 0x00	; 0
+ 36a:	90 e0       	ldi	r25, 0x00	; 0
+ 36c:	91 83       	std	Z+1, r25	; 0x01
+ 36e:	80 83       	st	Z, r24
+		delete inner;
+ 370:	e9 81       	ldd	r30, Y+1	; 0x01
+ 372:	fa 81       	ldd	r31, Y+2	; 0x02
+ 374:	82 81       	ldd	r24, Z+2	; 0x02
+ 376:	93 81       	ldd	r25, Z+3	; 0x03
+ 378:	00 97       	sbiw	r24, 0x00	; 0
+ 37a:	01 f0       	breq	.+0      	; 0x37c <_ZN3TLV16EncoderDecoratorD1Ev+0x26>
+ 37c:	e9 81       	ldd	r30, Y+1	; 0x01
+ 37e:	fa 81       	ldd	r31, Y+2	; 0x02
+ 380:	02 80       	ldd	r0, Z+2	; 0x02
+ 382:	f3 81       	ldd	r31, Z+3	; 0x03
+ 384:	e0 2d       	mov	r30, r0
+ 386:	80 81       	ld	r24, Z
+ 388:	91 81       	ldd	r25, Z+1	; 0x01
+ 38a:	fc 01       	movw	r30, r24
+ 38c:	3a 96       	adiw	r30, 0x0a	; 10
+ 38e:	20 81       	ld	r18, Z
+ 390:	31 81       	ldd	r19, Z+1	; 0x01
+ 392:	e9 81       	ldd	r30, Y+1	; 0x01
+ 394:	fa 81       	ldd	r31, Y+2	; 0x02
+ 396:	82 81       	ldd	r24, Z+2	; 0x02
+ 398:	93 81       	ldd	r25, Z+3	; 0x03
+ 39a:	f9 01       	movw	r30, r18
+ 39c:	09 95       	icall
+	}
+ 39e:	89 81       	ldd	r24, Y+1	; 0x01
+ 3a0:	9a 81       	ldd	r25, Y+2	; 0x02
+ 3a2:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV22EncoderLengthDecorator6EncodeEPhi>
+ 3a6:	80 e0       	ldi	r24, 0x00	; 0
+ 3a8:	90 e0       	ldi	r25, 0x00	; 0
+ 3aa:	88 23       	and	r24, r24
+ 3ac:	01 f0       	breq	.+0      	; 0x3ae <_ZN3TLV16EncoderDecoratorD1Ev+0x58>
+ 3ae:	89 81       	ldd	r24, Y+1	; 0x01
+ 3b0:	9a 81       	ldd	r25, Y+2	; 0x02
+ 3b2:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV22EncoderLengthDecorator6EncodeEPhi>
+ 3b6:	0f 90       	pop	r0
+ 3b8:	0f 90       	pop	r0
+ 3ba:	cf 91       	pop	r28
+ 3bc:	df 91       	pop	r29
+ 3be:	08 95       	ret
+
+000003c0 <_ZN3TLV16EncoderDecoratorC2EPNS_16EncoderInterfaceE>:
+class EncoderDecorator: public EncoderInterface {
+protected:
+	EncoderInterface *inner;
+
+public:
+	EncoderDecorator(EncoderInterface *c) : EncoderInterface() {
+ 3c0:	df 93       	push	r29
+ 3c2:	cf 93       	push	r28
+ 3c4:	00 d0       	rcall	.+0      	; 0x3c6 <_ZN3TLV16EncoderDecoratorC2EPNS_16EncoderInterfaceE+0x6>
+ 3c6:	00 d0       	rcall	.+0      	; 0x3c8 <_ZN3TLV16EncoderDecoratorC2EPNS_16EncoderInterfaceE+0x8>
+ 3c8:	cd b7       	in	r28, 0x3d	; 61
+ 3ca:	de b7       	in	r29, 0x3e	; 62
+ 3cc:	9a 83       	std	Y+2, r25	; 0x02
+ 3ce:	89 83       	std	Y+1, r24	; 0x01
+ 3d0:	7c 83       	std	Y+4, r23	; 0x04
+ 3d2:	6b 83       	std	Y+3, r22	; 0x03
+ 3d4:	89 81       	ldd	r24, Y+1	; 0x01
+ 3d6:	9a 81       	ldd	r25, Y+2	; 0x02
+ 3d8:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV22EncoderLengthDecorator6EncodeEPhi>
+ 3dc:	e9 81       	ldd	r30, Y+1	; 0x01
+ 3de:	fa 81       	ldd	r31, Y+2	; 0x02
+ 3e0:	80 e0       	ldi	r24, 0x00	; 0
+ 3e2:	90 e0       	ldi	r25, 0x00	; 0
+ 3e4:	91 83       	std	Z+1, r25	; 0x01
+ 3e6:	80 83       	st	Z, r24
+		inner = c;
+ 3e8:	e9 81       	ldd	r30, Y+1	; 0x01
+ 3ea:	fa 81       	ldd	r31, Y+2	; 0x02
+ 3ec:	8b 81       	ldd	r24, Y+3	; 0x03
+ 3ee:	9c 81       	ldd	r25, Y+4	; 0x04
+ 3f0:	93 83       	std	Z+3, r25	; 0x03
+ 3f2:	82 83       	std	Z+2, r24	; 0x02
+	}
+ 3f4:	0f 90       	pop	r0
+ 3f6:	0f 90       	pop	r0
+ 3f8:	0f 90       	pop	r0
+ 3fa:	0f 90       	pop	r0
+ 3fc:	cf 91       	pop	r28
+ 3fe:	df 91       	pop	r29
+ 400:	08 95       	ret
+
+00000402 <_ZN3TLV22EncoderLengthDecoratorC1EPNS_16EncoderInterfaceE>:
+
+#include "EncoderLengthDecorator.h"
+
+namespace TLV {
+
+EncoderLengthDecorator::EncoderLengthDecorator(EncoderInterface* c) : EncoderDecorator(c) {
+ 402:	df 93       	push	r29
+ 404:	cf 93       	push	r28
+ 406:	00 d0       	rcall	.+0      	; 0x408 <_ZN3TLV22EncoderLengthDecoratorC1EPNS_16EncoderInterfaceE+0x6>
+ 408:	00 d0       	rcall	.+0      	; 0x40a <_ZN3TLV22EncoderLengthDecoratorC1EPNS_16EncoderInterfaceE+0x8>
+ 40a:	cd b7       	in	r28, 0x3d	; 61
+ 40c:	de b7       	in	r29, 0x3e	; 62
+ 40e:	9a 83       	std	Y+2, r25	; 0x02
+ 410:	89 83       	std	Y+1, r24	; 0x01
+ 412:	7c 83       	std	Y+4, r23	; 0x04
+ 414:	6b 83       	std	Y+3, r22	; 0x03
+ 416:	89 81       	ldd	r24, Y+1	; 0x01
+ 418:	9a 81       	ldd	r25, Y+2	; 0x02
+ 41a:	2b 81       	ldd	r18, Y+3	; 0x03
+ 41c:	3c 81       	ldd	r19, Y+4	; 0x04
+ 41e:	b9 01       	movw	r22, r18
+ 420:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV22EncoderLengthDecorator6EncodeEPhi>
+ 424:	e9 81       	ldd	r30, Y+1	; 0x01
+ 426:	fa 81       	ldd	r31, Y+2	; 0x02
+ 428:	80 e0       	ldi	r24, 0x00	; 0
+ 42a:	90 e0       	ldi	r25, 0x00	; 0
+ 42c:	91 83       	std	Z+1, r25	; 0x01
+ 42e:	80 83       	st	Z, r24
+}
+ 430:	0f 90       	pop	r0
+ 432:	0f 90       	pop	r0
+ 434:	0f 90       	pop	r0
+ 436:	0f 90       	pop	r0
+ 438:	cf 91       	pop	r28
+ 43a:	df 91       	pop	r29
+ 43c:	08 95       	ret
+
+0000043e <_ZN3TLV22EncoderLengthDecoratorC2EPNS_16EncoderInterfaceE>:
+
+#include "EncoderLengthDecorator.h"
+
+namespace TLV {
+
+EncoderLengthDecorator::EncoderLengthDecorator(EncoderInterface* c) : EncoderDecorator(c) {
+ 43e:	df 93       	push	r29
+ 440:	cf 93       	push	r28
+ 442:	00 d0       	rcall	.+0      	; 0x444 <_ZN3TLV22EncoderLengthDecoratorC2EPNS_16EncoderInterfaceE+0x6>
+ 444:	00 d0       	rcall	.+0      	; 0x446 <_ZN3TLV22EncoderLengthDecoratorC2EPNS_16EncoderInterfaceE+0x8>
+ 446:	cd b7       	in	r28, 0x3d	; 61
+ 448:	de b7       	in	r29, 0x3e	; 62
+ 44a:	9a 83       	std	Y+2, r25	; 0x02
+ 44c:	89 83       	std	Y+1, r24	; 0x01
+ 44e:	7c 83       	std	Y+4, r23	; 0x04
+ 450:	6b 83       	std	Y+3, r22	; 0x03
+ 452:	89 81       	ldd	r24, Y+1	; 0x01
+ 454:	9a 81       	ldd	r25, Y+2	; 0x02
+ 456:	2b 81       	ldd	r18, Y+3	; 0x03
+ 458:	3c 81       	ldd	r19, Y+4	; 0x04
+ 45a:	b9 01       	movw	r22, r18
+ 45c:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV22EncoderLengthDecorator6EncodeEPhi>
+ 460:	e9 81       	ldd	r30, Y+1	; 0x01
+ 462:	fa 81       	ldd	r31, Y+2	; 0x02
+ 464:	80 e0       	ldi	r24, 0x00	; 0
+ 466:	90 e0       	ldi	r25, 0x00	; 0
+ 468:	91 83       	std	Z+1, r25	; 0x01
+ 46a:	80 83       	st	Z, r24
+}
+ 46c:	0f 90       	pop	r0
+ 46e:	0f 90       	pop	r0
+ 470:	0f 90       	pop	r0
+ 472:	0f 90       	pop	r0
+ 474:	cf 91       	pop	r28
+ 476:	df 91       	pop	r29
+ 478:	08 95       	ret
+
+EncoderTypeDecorator.o:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000046a  00000000  00000000  00000034  2**0
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  1 .data         00000020  00000000  00000000  0000049e  2**0
+                  CONTENTS, ALLOC, LOAD, RELOC, DATA
+  2 .bss          00000000  00000000  00000000  000004be  2**0
+                  ALLOC
+  3 .stab         000005dc  00000000  00000000  000004c0  2**2
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+  4 .stabstr      0000093c  00000000  00000000  00000a9c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhi>:
+
+EncoderTypeDecorator::EncoderTypeDecorator(EncoderInterface *c) :
+	EncoderDecorator(c) {
+}
+
+byte EncoderTypeDecorator::Encode(byte* to, int value) {
+   0:	df 93       	push	r29
+   2:	cf 93       	push	r28
+   4:	00 d0       	rcall	.+0      	; 0x6 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhi+0x6>
+   6:	00 d0       	rcall	.+0      	; 0x8 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhi+0x8>
+   8:	00 d0       	rcall	.+0      	; 0xa <_ZN3TLV20EncoderTypeDecorator6EncodeEPhi+0xa>
+   a:	cd b7       	in	r28, 0x3d	; 61
+   c:	de b7       	in	r29, 0x3e	; 62
+   e:	9a 83       	std	Y+2, r25	; 0x02
+  10:	89 83       	std	Y+1, r24	; 0x01
+  12:	7c 83       	std	Y+4, r23	; 0x04
+  14:	6b 83       	std	Y+3, r22	; 0x03
+  16:	5e 83       	std	Y+6, r21	; 0x06
+  18:	4d 83       	std	Y+5, r20	; 0x05
+	*to = INT;
+  1a:	eb 81       	ldd	r30, Y+3	; 0x03
+  1c:	fc 81       	ldd	r31, Y+4	; 0x04
+  1e:	82 e0       	ldi	r24, 0x02	; 2
+  20:	80 83       	st	Z, r24
+	return inner->Encode(to + 1, value) + 1;
+  22:	e9 81       	ldd	r30, Y+1	; 0x01
+  24:	fa 81       	ldd	r31, Y+2	; 0x02
+  26:	02 80       	ldd	r0, Z+2	; 0x02
+  28:	f3 81       	ldd	r31, Z+3	; 0x03
+  2a:	e0 2d       	mov	r30, r0
+  2c:	01 90       	ld	r0, Z+
+  2e:	f0 81       	ld	r31, Z
+  30:	e0 2d       	mov	r30, r0
+  32:	a0 81       	ld	r26, Z
+  34:	b1 81       	ldd	r27, Z+1	; 0x01
+  36:	e9 81       	ldd	r30, Y+1	; 0x01
+  38:	fa 81       	ldd	r31, Y+2	; 0x02
+  3a:	62 81       	ldd	r22, Z+2	; 0x02
+  3c:	73 81       	ldd	r23, Z+3	; 0x03
+  3e:	8b 81       	ldd	r24, Y+3	; 0x03
+  40:	9c 81       	ldd	r25, Y+4	; 0x04
+  42:	9c 01       	movw	r18, r24
+  44:	2f 5f       	subi	r18, 0xFF	; 255
+  46:	3f 4f       	sbci	r19, 0xFF	; 255
+  48:	4d 81       	ldd	r20, Y+5	; 0x05
+  4a:	5e 81       	ldd	r21, Y+6	; 0x06
+  4c:	cb 01       	movw	r24, r22
+  4e:	b9 01       	movw	r22, r18
+  50:	fd 01       	movw	r30, r26
+  52:	09 95       	icall
+  54:	8f 5f       	subi	r24, 0xFF	; 255
+}
+  56:	26 96       	adiw	r28, 0x06	; 6
+  58:	0f b6       	in	r0, 0x3f	; 63
+  5a:	f8 94       	cli
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	0f be       	out	0x3f, r0	; 63
+  60:	cd bf       	out	0x3d, r28	; 61
+  62:	cf 91       	pop	r28
+  64:	df 91       	pop	r29
+  66:	08 95       	ret
+
+00000068 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhPc>:
+
+byte EncoderTypeDecorator::Encode(byte* to, char* value) {
+  68:	df 93       	push	r29
+  6a:	cf 93       	push	r28
+  6c:	00 d0       	rcall	.+0      	; 0x6e <_ZN3TLV20EncoderTypeDecorator6EncodeEPhPc+0x6>
+  6e:	00 d0       	rcall	.+0      	; 0x70 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhPc+0x8>
+  70:	00 d0       	rcall	.+0      	; 0x72 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhPc+0xa>
+  72:	cd b7       	in	r28, 0x3d	; 61
+  74:	de b7       	in	r29, 0x3e	; 62
+  76:	9a 83       	std	Y+2, r25	; 0x02
+  78:	89 83       	std	Y+1, r24	; 0x01
+  7a:	7c 83       	std	Y+4, r23	; 0x04
+  7c:	6b 83       	std	Y+3, r22	; 0x03
+  7e:	5e 83       	std	Y+6, r21	; 0x06
+  80:	4d 83       	std	Y+5, r20	; 0x05
+	*to = CHARP;
+  82:	eb 81       	ldd	r30, Y+3	; 0x03
+  84:	fc 81       	ldd	r31, Y+4	; 0x04
+  86:	85 e0       	ldi	r24, 0x05	; 5
+  88:	80 83       	st	Z, r24
+	return inner->Encode(to + 1, value) + 1;
+  8a:	e9 81       	ldd	r30, Y+1	; 0x01
+  8c:	fa 81       	ldd	r31, Y+2	; 0x02
+  8e:	02 80       	ldd	r0, Z+2	; 0x02
+  90:	f3 81       	ldd	r31, Z+3	; 0x03
+  92:	e0 2d       	mov	r30, r0
+  94:	80 81       	ld	r24, Z
+  96:	91 81       	ldd	r25, Z+1	; 0x01
+  98:	fc 01       	movw	r30, r24
+  9a:	32 96       	adiw	r30, 0x02	; 2
+  9c:	a0 81       	ld	r26, Z
+  9e:	b1 81       	ldd	r27, Z+1	; 0x01
+  a0:	e9 81       	ldd	r30, Y+1	; 0x01
+  a2:	fa 81       	ldd	r31, Y+2	; 0x02
+  a4:	62 81       	ldd	r22, Z+2	; 0x02
+  a6:	73 81       	ldd	r23, Z+3	; 0x03
+  a8:	8b 81       	ldd	r24, Y+3	; 0x03
+  aa:	9c 81       	ldd	r25, Y+4	; 0x04
+  ac:	9c 01       	movw	r18, r24
+  ae:	2f 5f       	subi	r18, 0xFF	; 255
+  b0:	3f 4f       	sbci	r19, 0xFF	; 255
+  b2:	4d 81       	ldd	r20, Y+5	; 0x05
+  b4:	5e 81       	ldd	r21, Y+6	; 0x06
+  b6:	cb 01       	movw	r24, r22
+  b8:	b9 01       	movw	r22, r18
+  ba:	fd 01       	movw	r30, r26
+  bc:	09 95       	icall
+  be:	8f 5f       	subi	r24, 0xFF	; 255
+}
+  c0:	26 96       	adiw	r28, 0x06	; 6
+  c2:	0f b6       	in	r0, 0x3f	; 63
+  c4:	f8 94       	cli
+  c6:	de bf       	out	0x3e, r29	; 62
+  c8:	0f be       	out	0x3f, r0	; 63
+  ca:	cd bf       	out	0x3d, r28	; 61
+  cc:	cf 91       	pop	r28
+  ce:	df 91       	pop	r29
+  d0:	08 95       	ret
+
+000000d2 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhS1_h>:
+
+byte EncoderTypeDecorator::Encode(byte* to, byte* value, byte length) {
+  d2:	df 93       	push	r29
+  d4:	cf 93       	push	r28
+  d6:	cd b7       	in	r28, 0x3d	; 61
+  d8:	de b7       	in	r29, 0x3e	; 62
+  da:	27 97       	sbiw	r28, 0x07	; 7
+  dc:	0f b6       	in	r0, 0x3f	; 63
+  de:	f8 94       	cli
+  e0:	de bf       	out	0x3e, r29	; 62
+  e2:	0f be       	out	0x3f, r0	; 63
+  e4:	cd bf       	out	0x3d, r28	; 61
+  e6:	9a 83       	std	Y+2, r25	; 0x02
+  e8:	89 83       	std	Y+1, r24	; 0x01
+  ea:	7c 83       	std	Y+4, r23	; 0x04
+  ec:	6b 83       	std	Y+3, r22	; 0x03
+  ee:	5e 83       	std	Y+6, r21	; 0x06
+  f0:	4d 83       	std	Y+5, r20	; 0x05
+  f2:	2f 83       	std	Y+7, r18	; 0x07
+	*to = BYTEP;
+  f4:	eb 81       	ldd	r30, Y+3	; 0x03
+  f6:	fc 81       	ldd	r31, Y+4	; 0x04
+  f8:	86 e0       	ldi	r24, 0x06	; 6
+  fa:	80 83       	st	Z, r24
+	return inner->Encode(to + 1, value, length) + 1;
+  fc:	e9 81       	ldd	r30, Y+1	; 0x01
+  fe:	fa 81       	ldd	r31, Y+2	; 0x02
+ 100:	02 80       	ldd	r0, Z+2	; 0x02
+ 102:	f3 81       	ldd	r31, Z+3	; 0x03
+ 104:	e0 2d       	mov	r30, r0
+ 106:	80 81       	ld	r24, Z
+ 108:	91 81       	ldd	r25, Z+1	; 0x01
+ 10a:	fc 01       	movw	r30, r24
+ 10c:	34 96       	adiw	r30, 0x04	; 4
+ 10e:	a0 81       	ld	r26, Z
+ 110:	b1 81       	ldd	r27, Z+1	; 0x01
+ 112:	e9 81       	ldd	r30, Y+1	; 0x01
+ 114:	fa 81       	ldd	r31, Y+2	; 0x02
+ 116:	62 81       	ldd	r22, Z+2	; 0x02
+ 118:	73 81       	ldd	r23, Z+3	; 0x03
+ 11a:	8b 81       	ldd	r24, Y+3	; 0x03
+ 11c:	9c 81       	ldd	r25, Y+4	; 0x04
+ 11e:	9c 01       	movw	r18, r24
+ 120:	2f 5f       	subi	r18, 0xFF	; 255
+ 122:	3f 4f       	sbci	r19, 0xFF	; 255
+ 124:	4d 81       	ldd	r20, Y+5	; 0x05
+ 126:	5e 81       	ldd	r21, Y+6	; 0x06
+ 128:	cb 01       	movw	r24, r22
+ 12a:	b9 01       	movw	r22, r18
+ 12c:	2f 81       	ldd	r18, Y+7	; 0x07
+ 12e:	fd 01       	movw	r30, r26
+ 130:	09 95       	icall
+ 132:	8f 5f       	subi	r24, 0xFF	; 255
+
+}
+ 134:	27 96       	adiw	r28, 0x07	; 7
+ 136:	0f b6       	in	r0, 0x3f	; 63
+ 138:	f8 94       	cli
+ 13a:	de bf       	out	0x3e, r29	; 62
+ 13c:	0f be       	out	0x3f, r0	; 63
+ 13e:	cd bf       	out	0x3d, r28	; 61
+ 140:	cf 91       	pop	r28
+ 142:	df 91       	pop	r29
+ 144:	08 95       	ret
+
+00000146 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhd>:
+
+byte EncoderTypeDecorator::Encode(byte* to, double value) {
+ 146:	df 93       	push	r29
+ 148:	cf 93       	push	r28
+ 14a:	cd b7       	in	r28, 0x3d	; 61
+ 14c:	de b7       	in	r29, 0x3e	; 62
+ 14e:	28 97       	sbiw	r28, 0x08	; 8
+ 150:	0f b6       	in	r0, 0x3f	; 63
+ 152:	f8 94       	cli
+ 154:	de bf       	out	0x3e, r29	; 62
+ 156:	0f be       	out	0x3f, r0	; 63
+ 158:	cd bf       	out	0x3d, r28	; 61
+ 15a:	9a 83       	std	Y+2, r25	; 0x02
+ 15c:	89 83       	std	Y+1, r24	; 0x01
+ 15e:	7c 83       	std	Y+4, r23	; 0x04
+ 160:	6b 83       	std	Y+3, r22	; 0x03
+ 162:	2d 83       	std	Y+5, r18	; 0x05
+ 164:	3e 83       	std	Y+6, r19	; 0x06
+ 166:	4f 83       	std	Y+7, r20	; 0x07
+ 168:	58 87       	std	Y+8, r21	; 0x08
+	*to = DOUBLE;
+ 16a:	eb 81       	ldd	r30, Y+3	; 0x03
+ 16c:	fc 81       	ldd	r31, Y+4	; 0x04
+ 16e:	83 e0       	ldi	r24, 0x03	; 3
+ 170:	80 83       	st	Z, r24
+	return inner->Encode(to + 1, value) + 1;
+ 172:	e9 81       	ldd	r30, Y+1	; 0x01
+ 174:	fa 81       	ldd	r31, Y+2	; 0x02
+ 176:	02 80       	ldd	r0, Z+2	; 0x02
+ 178:	f3 81       	ldd	r31, Z+3	; 0x03
+ 17a:	e0 2d       	mov	r30, r0
+ 17c:	80 81       	ld	r24, Z
+ 17e:	91 81       	ldd	r25, Z+1	; 0x01
+ 180:	fc 01       	movw	r30, r24
+ 182:	36 96       	adiw	r30, 0x06	; 6
+ 184:	a0 81       	ld	r26, Z
+ 186:	b1 81       	ldd	r27, Z+1	; 0x01
+ 188:	e9 81       	ldd	r30, Y+1	; 0x01
+ 18a:	fa 81       	ldd	r31, Y+2	; 0x02
+ 18c:	02 80       	ldd	r0, Z+2	; 0x02
+ 18e:	f3 81       	ldd	r31, Z+3	; 0x03
+ 190:	e0 2d       	mov	r30, r0
+ 192:	8b 81       	ldd	r24, Y+3	; 0x03
+ 194:	9c 81       	ldd	r25, Y+4	; 0x04
+ 196:	bc 01       	movw	r22, r24
+ 198:	6f 5f       	subi	r22, 0xFF	; 255
+ 19a:	7f 4f       	sbci	r23, 0xFF	; 255
+ 19c:	2d 81       	ldd	r18, Y+5	; 0x05
+ 19e:	3e 81       	ldd	r19, Y+6	; 0x06
+ 1a0:	4f 81       	ldd	r20, Y+7	; 0x07
+ 1a2:	58 85       	ldd	r21, Y+8	; 0x08
+ 1a4:	cf 01       	movw	r24, r30
+ 1a6:	fd 01       	movw	r30, r26
+ 1a8:	09 95       	icall
+ 1aa:	8f 5f       	subi	r24, 0xFF	; 255
+}
+ 1ac:	28 96       	adiw	r28, 0x08	; 8
+ 1ae:	0f b6       	in	r0, 0x3f	; 63
+ 1b0:	f8 94       	cli
+ 1b2:	de bf       	out	0x3e, r29	; 62
+ 1b4:	0f be       	out	0x3f, r0	; 63
+ 1b6:	cd bf       	out	0x3d, r28	; 61
+ 1b8:	cf 91       	pop	r28
+ 1ba:	df 91       	pop	r29
+ 1bc:	08 95       	ret
+
+000001be <_ZN3TLV16EncoderDecoratorD2Ev>:
+
+public:
+	EncoderDecorator(EncoderInterface *c) : EncoderInterface() {
+		inner = c;
+	}
+	~EncoderDecorator() {
+ 1be:	df 93       	push	r29
+ 1c0:	cf 93       	push	r28
+ 1c2:	00 d0       	rcall	.+0      	; 0x1c4 <_ZN3TLV16EncoderDecoratorD2Ev+0x6>
+ 1c4:	cd b7       	in	r28, 0x3d	; 61
+ 1c6:	de b7       	in	r29, 0x3e	; 62
+ 1c8:	9a 83       	std	Y+2, r25	; 0x02
+ 1ca:	89 83       	std	Y+1, r24	; 0x01
+ 1cc:	e9 81       	ldd	r30, Y+1	; 0x01
+ 1ce:	fa 81       	ldd	r31, Y+2	; 0x02
+ 1d0:	80 e0       	ldi	r24, 0x00	; 0
+ 1d2:	90 e0       	ldi	r25, 0x00	; 0
+ 1d4:	91 83       	std	Z+1, r25	; 0x01
+ 1d6:	80 83       	st	Z, r24
+		delete inner;
+ 1d8:	e9 81       	ldd	r30, Y+1	; 0x01
+ 1da:	fa 81       	ldd	r31, Y+2	; 0x02
+ 1dc:	82 81       	ldd	r24, Z+2	; 0x02
+ 1de:	93 81       	ldd	r25, Z+3	; 0x03
+ 1e0:	00 97       	sbiw	r24, 0x00	; 0
+ 1e2:	01 f0       	breq	.+0      	; 0x1e4 <_ZN3TLV16EncoderDecoratorD2Ev+0x26>
+ 1e4:	e9 81       	ldd	r30, Y+1	; 0x01
+ 1e6:	fa 81       	ldd	r31, Y+2	; 0x02
+ 1e8:	02 80       	ldd	r0, Z+2	; 0x02
+ 1ea:	f3 81       	ldd	r31, Z+3	; 0x03
+ 1ec:	e0 2d       	mov	r30, r0
+ 1ee:	80 81       	ld	r24, Z
+ 1f0:	91 81       	ldd	r25, Z+1	; 0x01
+ 1f2:	fc 01       	movw	r30, r24
+ 1f4:	3a 96       	adiw	r30, 0x0a	; 10
+ 1f6:	20 81       	ld	r18, Z
+ 1f8:	31 81       	ldd	r19, Z+1	; 0x01
+ 1fa:	e9 81       	ldd	r30, Y+1	; 0x01
+ 1fc:	fa 81       	ldd	r31, Y+2	; 0x02
+ 1fe:	82 81       	ldd	r24, Z+2	; 0x02
+ 200:	93 81       	ldd	r25, Z+3	; 0x03
+ 202:	f9 01       	movw	r30, r18
+ 204:	09 95       	icall
+	}
+ 206:	89 81       	ldd	r24, Y+1	; 0x01
+ 208:	9a 81       	ldd	r25, Y+2	; 0x02
+ 20a:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhi>
+ 20e:	80 e0       	ldi	r24, 0x00	; 0
+ 210:	90 e0       	ldi	r25, 0x00	; 0
+ 212:	88 23       	and	r24, r24
+ 214:	01 f0       	breq	.+0      	; 0x216 <_ZN3TLV16EncoderDecoratorD2Ev+0x58>
+ 216:	89 81       	ldd	r24, Y+1	; 0x01
+ 218:	9a 81       	ldd	r25, Y+2	; 0x02
+ 21a:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhi>
+ 21e:	0f 90       	pop	r0
+ 220:	0f 90       	pop	r0
+ 222:	cf 91       	pop	r28
+ 224:	df 91       	pop	r29
+ 226:	08 95       	ret
+
+00000228 <_ZN3TLV20EncoderTypeDecoratorD0Ev>:
+
+EncoderTypeDecorator::~EncoderTypeDecorator() {
+ 228:	df 93       	push	r29
+ 22a:	cf 93       	push	r28
+ 22c:	00 d0       	rcall	.+0      	; 0x22e <_ZN3TLV20EncoderTypeDecoratorD0Ev+0x6>
+ 22e:	cd b7       	in	r28, 0x3d	; 61
+ 230:	de b7       	in	r29, 0x3e	; 62
+ 232:	9a 83       	std	Y+2, r25	; 0x02
+ 234:	89 83       	std	Y+1, r24	; 0x01
+ 236:	e9 81       	ldd	r30, Y+1	; 0x01
+ 238:	fa 81       	ldd	r31, Y+2	; 0x02
+ 23a:	80 e0       	ldi	r24, 0x00	; 0
+ 23c:	90 e0       	ldi	r25, 0x00	; 0
+ 23e:	91 83       	std	Z+1, r25	; 0x01
+ 240:	80 83       	st	Z, r24
+}
+ 242:	89 81       	ldd	r24, Y+1	; 0x01
+ 244:	9a 81       	ldd	r25, Y+2	; 0x02
+ 246:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhi>
+ 24a:	81 e0       	ldi	r24, 0x01	; 1
+ 24c:	90 e0       	ldi	r25, 0x00	; 0
+ 24e:	88 23       	and	r24, r24
+ 250:	01 f0       	breq	.+0      	; 0x252 <_ZN3TLV20EncoderTypeDecoratorD0Ev+0x2a>
+ 252:	89 81       	ldd	r24, Y+1	; 0x01
+ 254:	9a 81       	ldd	r25, Y+2	; 0x02
+ 256:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhi>
+ 25a:	0f 90       	pop	r0
+ 25c:	0f 90       	pop	r0
+ 25e:	cf 91       	pop	r28
+ 260:	df 91       	pop	r29
+ 262:	08 95       	ret
+
+00000264 <_ZN3TLV20EncoderTypeDecoratorD1Ev>:
+byte EncoderTypeDecorator::Encode(byte* to, double value) {
+	*to = DOUBLE;
+	return inner->Encode(to + 1, value) + 1;
+}
+
+EncoderTypeDecorator::~EncoderTypeDecorator() {
+ 264:	df 93       	push	r29
+ 266:	cf 93       	push	r28
+ 268:	00 d0       	rcall	.+0      	; 0x26a <_ZN3TLV20EncoderTypeDecoratorD1Ev+0x6>
+ 26a:	cd b7       	in	r28, 0x3d	; 61
+ 26c:	de b7       	in	r29, 0x3e	; 62
+ 26e:	9a 83       	std	Y+2, r25	; 0x02
+ 270:	89 83       	std	Y+1, r24	; 0x01
+ 272:	e9 81       	ldd	r30, Y+1	; 0x01
+ 274:	fa 81       	ldd	r31, Y+2	; 0x02
+ 276:	80 e0       	ldi	r24, 0x00	; 0
+ 278:	90 e0       	ldi	r25, 0x00	; 0
+ 27a:	91 83       	std	Z+1, r25	; 0x01
+ 27c:	80 83       	st	Z, r24
+}
+ 27e:	89 81       	ldd	r24, Y+1	; 0x01
+ 280:	9a 81       	ldd	r25, Y+2	; 0x02
+ 282:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhi>
+ 286:	80 e0       	ldi	r24, 0x00	; 0
+ 288:	90 e0       	ldi	r25, 0x00	; 0
+ 28a:	88 23       	and	r24, r24
+ 28c:	01 f0       	breq	.+0      	; 0x28e <_ZN3TLV20EncoderTypeDecoratorD1Ev+0x2a>
+ 28e:	89 81       	ldd	r24, Y+1	; 0x01
+ 290:	9a 81       	ldd	r25, Y+2	; 0x02
+ 292:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhi>
+ 296:	0f 90       	pop	r0
+ 298:	0f 90       	pop	r0
+ 29a:	cf 91       	pop	r28
+ 29c:	df 91       	pop	r29
+ 29e:	08 95       	ret
+
+000002a0 <_ZN3TLV20EncoderTypeDecoratorD2Ev>:
+byte EncoderTypeDecorator::Encode(byte* to, double value) {
+	*to = DOUBLE;
+	return inner->Encode(to + 1, value) + 1;
+}
+
+EncoderTypeDecorator::~EncoderTypeDecorator() {
+ 2a0:	df 93       	push	r29
+ 2a2:	cf 93       	push	r28
+ 2a4:	00 d0       	rcall	.+0      	; 0x2a6 <_ZN3TLV20EncoderTypeDecoratorD2Ev+0x6>
+ 2a6:	cd b7       	in	r28, 0x3d	; 61
+ 2a8:	de b7       	in	r29, 0x3e	; 62
+ 2aa:	9a 83       	std	Y+2, r25	; 0x02
+ 2ac:	89 83       	std	Y+1, r24	; 0x01
+ 2ae:	e9 81       	ldd	r30, Y+1	; 0x01
+ 2b0:	fa 81       	ldd	r31, Y+2	; 0x02
+ 2b2:	80 e0       	ldi	r24, 0x00	; 0
+ 2b4:	90 e0       	ldi	r25, 0x00	; 0
+ 2b6:	91 83       	std	Z+1, r25	; 0x01
+ 2b8:	80 83       	st	Z, r24
+}
+ 2ba:	89 81       	ldd	r24, Y+1	; 0x01
+ 2bc:	9a 81       	ldd	r25, Y+2	; 0x02
+ 2be:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhi>
+ 2c2:	80 e0       	ldi	r24, 0x00	; 0
+ 2c4:	90 e0       	ldi	r25, 0x00	; 0
+ 2c6:	88 23       	and	r24, r24
+ 2c8:	01 f0       	breq	.+0      	; 0x2ca <_ZN3TLV20EncoderTypeDecoratorD2Ev+0x2a>
+ 2ca:	89 81       	ldd	r24, Y+1	; 0x01
+ 2cc:	9a 81       	ldd	r25, Y+2	; 0x02
+ 2ce:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhi>
+ 2d2:	0f 90       	pop	r0
+ 2d4:	0f 90       	pop	r0
+ 2d6:	cf 91       	pop	r28
+ 2d8:	df 91       	pop	r29
+ 2da:	08 95       	ret
+
+000002dc <_ZN3TLV16EncoderDecoratorD0Ev>:
+
+public:
+	EncoderDecorator(EncoderInterface *c) : EncoderInterface() {
+		inner = c;
+	}
+	~EncoderDecorator() {
+ 2dc:	df 93       	push	r29
+ 2de:	cf 93       	push	r28
+ 2e0:	00 d0       	rcall	.+0      	; 0x2e2 <_ZN3TLV16EncoderDecoratorD0Ev+0x6>
+ 2e2:	cd b7       	in	r28, 0x3d	; 61
+ 2e4:	de b7       	in	r29, 0x3e	; 62
+ 2e6:	9a 83       	std	Y+2, r25	; 0x02
+ 2e8:	89 83       	std	Y+1, r24	; 0x01
+ 2ea:	e9 81       	ldd	r30, Y+1	; 0x01
+ 2ec:	fa 81       	ldd	r31, Y+2	; 0x02
+ 2ee:	80 e0       	ldi	r24, 0x00	; 0
+ 2f0:	90 e0       	ldi	r25, 0x00	; 0
+ 2f2:	91 83       	std	Z+1, r25	; 0x01
+ 2f4:	80 83       	st	Z, r24
+		delete inner;
+ 2f6:	e9 81       	ldd	r30, Y+1	; 0x01
+ 2f8:	fa 81       	ldd	r31, Y+2	; 0x02
+ 2fa:	82 81       	ldd	r24, Z+2	; 0x02
+ 2fc:	93 81       	ldd	r25, Z+3	; 0x03
+ 2fe:	00 97       	sbiw	r24, 0x00	; 0
+ 300:	01 f0       	breq	.+0      	; 0x302 <_ZN3TLV16EncoderDecoratorD0Ev+0x26>
+ 302:	e9 81       	ldd	r30, Y+1	; 0x01
+ 304:	fa 81       	ldd	r31, Y+2	; 0x02
+ 306:	02 80       	ldd	r0, Z+2	; 0x02
+ 308:	f3 81       	ldd	r31, Z+3	; 0x03
+ 30a:	e0 2d       	mov	r30, r0
+ 30c:	80 81       	ld	r24, Z
+ 30e:	91 81       	ldd	r25, Z+1	; 0x01
+ 310:	fc 01       	movw	r30, r24
+ 312:	3a 96       	adiw	r30, 0x0a	; 10
+ 314:	20 81       	ld	r18, Z
+ 316:	31 81       	ldd	r19, Z+1	; 0x01
+ 318:	e9 81       	ldd	r30, Y+1	; 0x01
+ 31a:	fa 81       	ldd	r31, Y+2	; 0x02
+ 31c:	82 81       	ldd	r24, Z+2	; 0x02
+ 31e:	93 81       	ldd	r25, Z+3	; 0x03
+ 320:	f9 01       	movw	r30, r18
+ 322:	09 95       	icall
+	}
+ 324:	89 81       	ldd	r24, Y+1	; 0x01
+ 326:	9a 81       	ldd	r25, Y+2	; 0x02
+ 328:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhi>
+ 32c:	81 e0       	ldi	r24, 0x01	; 1
+ 32e:	90 e0       	ldi	r25, 0x00	; 0
+ 330:	88 23       	and	r24, r24
+ 332:	01 f0       	breq	.+0      	; 0x334 <_ZN3TLV16EncoderDecoratorD0Ev+0x58>
+ 334:	89 81       	ldd	r24, Y+1	; 0x01
+ 336:	9a 81       	ldd	r25, Y+2	; 0x02
+ 338:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhi>
+ 33c:	0f 90       	pop	r0
+ 33e:	0f 90       	pop	r0
+ 340:	cf 91       	pop	r28
+ 342:	df 91       	pop	r29
+ 344:	08 95       	ret
+
+00000346 <_ZN3TLV16EncoderDecoratorD1Ev>:
+
+public:
+	EncoderDecorator(EncoderInterface *c) : EncoderInterface() {
+		inner = c;
+	}
+	~EncoderDecorator() {
+ 346:	df 93       	push	r29
+ 348:	cf 93       	push	r28
+ 34a:	00 d0       	rcall	.+0      	; 0x34c <_ZN3TLV16EncoderDecoratorD1Ev+0x6>
+ 34c:	cd b7       	in	r28, 0x3d	; 61
+ 34e:	de b7       	in	r29, 0x3e	; 62
+ 350:	9a 83       	std	Y+2, r25	; 0x02
+ 352:	89 83       	std	Y+1, r24	; 0x01
+ 354:	e9 81       	ldd	r30, Y+1	; 0x01
+ 356:	fa 81       	ldd	r31, Y+2	; 0x02
+ 358:	80 e0       	ldi	r24, 0x00	; 0
+ 35a:	90 e0       	ldi	r25, 0x00	; 0
+ 35c:	91 83       	std	Z+1, r25	; 0x01
+ 35e:	80 83       	st	Z, r24
+		delete inner;
+ 360:	e9 81       	ldd	r30, Y+1	; 0x01
+ 362:	fa 81       	ldd	r31, Y+2	; 0x02
+ 364:	82 81       	ldd	r24, Z+2	; 0x02
+ 366:	93 81       	ldd	r25, Z+3	; 0x03
+ 368:	00 97       	sbiw	r24, 0x00	; 0
+ 36a:	01 f0       	breq	.+0      	; 0x36c <_ZN3TLV16EncoderDecoratorD1Ev+0x26>
+ 36c:	e9 81       	ldd	r30, Y+1	; 0x01
+ 36e:	fa 81       	ldd	r31, Y+2	; 0x02
+ 370:	02 80       	ldd	r0, Z+2	; 0x02
+ 372:	f3 81       	ldd	r31, Z+3	; 0x03
+ 374:	e0 2d       	mov	r30, r0
+ 376:	80 81       	ld	r24, Z
+ 378:	91 81       	ldd	r25, Z+1	; 0x01
+ 37a:	fc 01       	movw	r30, r24
+ 37c:	3a 96       	adiw	r30, 0x0a	; 10
+ 37e:	20 81       	ld	r18, Z
+ 380:	31 81       	ldd	r19, Z+1	; 0x01
+ 382:	e9 81       	ldd	r30, Y+1	; 0x01
+ 384:	fa 81       	ldd	r31, Y+2	; 0x02
+ 386:	82 81       	ldd	r24, Z+2	; 0x02
+ 388:	93 81       	ldd	r25, Z+3	; 0x03
+ 38a:	f9 01       	movw	r30, r18
+ 38c:	09 95       	icall
+	}
+ 38e:	89 81       	ldd	r24, Y+1	; 0x01
+ 390:	9a 81       	ldd	r25, Y+2	; 0x02
+ 392:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhi>
+ 396:	80 e0       	ldi	r24, 0x00	; 0
+ 398:	90 e0       	ldi	r25, 0x00	; 0
+ 39a:	88 23       	and	r24, r24
+ 39c:	01 f0       	breq	.+0      	; 0x39e <_ZN3TLV16EncoderDecoratorD1Ev+0x58>
+ 39e:	89 81       	ldd	r24, Y+1	; 0x01
+ 3a0:	9a 81       	ldd	r25, Y+2	; 0x02
+ 3a2:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhi>
+ 3a6:	0f 90       	pop	r0
+ 3a8:	0f 90       	pop	r0
+ 3aa:	cf 91       	pop	r28
+ 3ac:	df 91       	pop	r29
+ 3ae:	08 95       	ret
+
+000003b0 <_ZN3TLV16EncoderDecoratorC2EPNS_16EncoderInterfaceE>:
+class EncoderDecorator: public EncoderInterface {
+protected:
+	EncoderInterface *inner;
+
+public:
+	EncoderDecorator(EncoderInterface *c) : EncoderInterface() {
+ 3b0:	df 93       	push	r29
+ 3b2:	cf 93       	push	r28
+ 3b4:	00 d0       	rcall	.+0      	; 0x3b6 <_ZN3TLV16EncoderDecoratorC2EPNS_16EncoderInterfaceE+0x6>
+ 3b6:	00 d0       	rcall	.+0      	; 0x3b8 <_ZN3TLV16EncoderDecoratorC2EPNS_16EncoderInterfaceE+0x8>
+ 3b8:	cd b7       	in	r28, 0x3d	; 61
+ 3ba:	de b7       	in	r29, 0x3e	; 62
+ 3bc:	9a 83       	std	Y+2, r25	; 0x02
+ 3be:	89 83       	std	Y+1, r24	; 0x01
+ 3c0:	7c 83       	std	Y+4, r23	; 0x04
+ 3c2:	6b 83       	std	Y+3, r22	; 0x03
+ 3c4:	89 81       	ldd	r24, Y+1	; 0x01
+ 3c6:	9a 81       	ldd	r25, Y+2	; 0x02
+ 3c8:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhi>
+ 3cc:	e9 81       	ldd	r30, Y+1	; 0x01
+ 3ce:	fa 81       	ldd	r31, Y+2	; 0x02
+ 3d0:	80 e0       	ldi	r24, 0x00	; 0
+ 3d2:	90 e0       	ldi	r25, 0x00	; 0
+ 3d4:	91 83       	std	Z+1, r25	; 0x01
+ 3d6:	80 83       	st	Z, r24
+		inner = c;
+ 3d8:	e9 81       	ldd	r30, Y+1	; 0x01
+ 3da:	fa 81       	ldd	r31, Y+2	; 0x02
+ 3dc:	8b 81       	ldd	r24, Y+3	; 0x03
+ 3de:	9c 81       	ldd	r25, Y+4	; 0x04
+ 3e0:	93 83       	std	Z+3, r25	; 0x03
+ 3e2:	82 83       	std	Z+2, r24	; 0x02
+	}
+ 3e4:	0f 90       	pop	r0
+ 3e6:	0f 90       	pop	r0
+ 3e8:	0f 90       	pop	r0
+ 3ea:	0f 90       	pop	r0
+ 3ec:	cf 91       	pop	r28
+ 3ee:	df 91       	pop	r29
+ 3f0:	08 95       	ret
+
+000003f2 <_ZN3TLV20EncoderTypeDecoratorC1EPNS_16EncoderInterfaceE>:
+
+#include "EncoderTypeDecorator.h"
+
+namespace TLV {
+
+EncoderTypeDecorator::EncoderTypeDecorator(EncoderInterface *c) :
+ 3f2:	df 93       	push	r29
+ 3f4:	cf 93       	push	r28
+ 3f6:	00 d0       	rcall	.+0      	; 0x3f8 <_ZN3TLV20EncoderTypeDecoratorC1EPNS_16EncoderInterfaceE+0x6>
+ 3f8:	00 d0       	rcall	.+0      	; 0x3fa <_ZN3TLV20EncoderTypeDecoratorC1EPNS_16EncoderInterfaceE+0x8>
+ 3fa:	cd b7       	in	r28, 0x3d	; 61
+ 3fc:	de b7       	in	r29, 0x3e	; 62
+ 3fe:	9a 83       	std	Y+2, r25	; 0x02
+ 400:	89 83       	std	Y+1, r24	; 0x01
+ 402:	7c 83       	std	Y+4, r23	; 0x04
+ 404:	6b 83       	std	Y+3, r22	; 0x03
+	EncoderDecorator(c) {
+ 406:	89 81       	ldd	r24, Y+1	; 0x01
+ 408:	9a 81       	ldd	r25, Y+2	; 0x02
+ 40a:	2b 81       	ldd	r18, Y+3	; 0x03
+ 40c:	3c 81       	ldd	r19, Y+4	; 0x04
+ 40e:	b9 01       	movw	r22, r18
+ 410:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhi>
+ 414:	e9 81       	ldd	r30, Y+1	; 0x01
+ 416:	fa 81       	ldd	r31, Y+2	; 0x02
+ 418:	80 e0       	ldi	r24, 0x00	; 0
+ 41a:	90 e0       	ldi	r25, 0x00	; 0
+ 41c:	91 83       	std	Z+1, r25	; 0x01
+ 41e:	80 83       	st	Z, r24
+}
+ 420:	0f 90       	pop	r0
+ 422:	0f 90       	pop	r0
+ 424:	0f 90       	pop	r0
+ 426:	0f 90       	pop	r0
+ 428:	cf 91       	pop	r28
+ 42a:	df 91       	pop	r29
+ 42c:	08 95       	ret
+
+0000042e <_ZN3TLV20EncoderTypeDecoratorC2EPNS_16EncoderInterfaceE>:
+
+#include "EncoderTypeDecorator.h"
+
+namespace TLV {
+
+EncoderTypeDecorator::EncoderTypeDecorator(EncoderInterface *c) :
+ 42e:	df 93       	push	r29
+ 430:	cf 93       	push	r28
+ 432:	00 d0       	rcall	.+0      	; 0x434 <_ZN3TLV20EncoderTypeDecoratorC2EPNS_16EncoderInterfaceE+0x6>
+ 434:	00 d0       	rcall	.+0      	; 0x436 <_ZN3TLV20EncoderTypeDecoratorC2EPNS_16EncoderInterfaceE+0x8>
+ 436:	cd b7       	in	r28, 0x3d	; 61
+ 438:	de b7       	in	r29, 0x3e	; 62
+ 43a:	9a 83       	std	Y+2, r25	; 0x02
+ 43c:	89 83       	std	Y+1, r24	; 0x01
+ 43e:	7c 83       	std	Y+4, r23	; 0x04
+ 440:	6b 83       	std	Y+3, r22	; 0x03
+	EncoderDecorator(c) {
+ 442:	89 81       	ldd	r24, Y+1	; 0x01
+ 444:	9a 81       	ldd	r25, Y+2	; 0x02
+ 446:	2b 81       	ldd	r18, Y+3	; 0x03
+ 448:	3c 81       	ldd	r19, Y+4	; 0x04
+ 44a:	b9 01       	movw	r22, r18
+ 44c:	0e 94 00 00 	call	0	; 0x0 <_ZN3TLV20EncoderTypeDecorator6EncodeEPhi>
+ 450:	e9 81       	ldd	r30, Y+1	; 0x01
+ 452:	fa 81       	ldd	r31, Y+2	; 0x02
+ 454:	80 e0       	ldi	r24, 0x00	; 0
+ 456:	90 e0       	ldi	r25, 0x00	; 0
+ 458:	91 83       	std	Z+1, r25	; 0x01
+ 45a:	80 83       	st	Z, r24
+}
+ 45c:	0f 90       	pop	r0
+ 45e:	0f 90       	pop	r0
+ 460:	0f 90       	pop	r0
+ 462:	0f 90       	pop	r0
+ 464:	cf 91       	pop	r28
+ 466:	df 91       	pop	r29
+ 468:	08 95       	ret

@@ -1,4 +1,4 @@
-Things we ar now going to do:
+Things we are now going to do:
 - make the port and plugs using the decorator plugin.
 - logging must be done be combining a logger and some MACROs
 - optional encryption using decorator
