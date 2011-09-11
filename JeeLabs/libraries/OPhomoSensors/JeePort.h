@@ -9,7 +9,6 @@
 
 #ifndef JEEPORT_H_
 #define JEEPORT_H_
-#include "PinController.h"
 #include <stdint.h>
 #include "Pin.h"
 #include "AnalogPin.h"

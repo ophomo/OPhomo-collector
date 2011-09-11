@@ -1,6 +1,6 @@
 // RFM12B driver definitions
 // 2009-02-09 <jcw@equi4.com> http://opensource.org/licenses/mit-license.php
-// $Id: RF12.h 6394 2010-12-10 19:25:04Z jcw $
+// $Id: RF12.h 7501 2011-04-07 10:33:43Z jcw $
 
 #ifndef RF12_h
 #define RF12_h
@@ -37,6 +37,10 @@
 #define RF12_WANTS_ACK ((rf12_hdr & RF12_HDR_ACK) && !(rf12_hdr & RF12_HDR_CTL))
 #define RF12_ACK_REPLY (rf12_hdr & RF12_HDR_DST ? RF12_HDR_CTL : \
             RF12_HDR_CTL | RF12_HDR_DST | (rf12_hdr & RF12_HDR_MASK))
+            
+// options fro RF12_sleep()
+#define RF12_SLEEP 0
+#define RF12_WAKEUP -1
 
 extern volatile uint16_t rf12_crc;  // running crc value, should be zero at end
 extern volatile uint8_t rf12_buf[]; // recv/xmit buf including hdr & crc bytes
@@ -48,7 +52,7 @@ void rf12_initialize(uint8_t id, uint8_t band, uint8_t group=0xD4);
 // initialize the RF12 module from settings stored in EEPROM by "RF12demo"
 // don't call rf12_initialize() if you init the hardware with rf12_config()
 // returns the node ID as 1..31 value (1..26 correspond to nodes 'A'..'Z')
-uint8_t rf12_config(void);
+uint8_t rf12_config(uint8_t show =1);
 
 // call this frequently, returns true if a packet has been received
 uint8_t rf12_recvDone(void);

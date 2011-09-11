@@ -9,12 +9,11 @@
 
 #ifndef LEDPINCONTROLLER_H_
 #define LEDPINCONTROLLER_H_
-
-#include "PinController.h"
+#include "Pin.h"
 
 namespace OPhomo {
 
-class LedPinController: public OPhomo::PinController {
+class LedPinController {
 public:
 	LedPinController(Pin* inPin);
 
@@ -25,6 +24,8 @@ public:
 
 
 	virtual ~LedPinController();
+protected:
+	Pin* pin;
 };
 
 }

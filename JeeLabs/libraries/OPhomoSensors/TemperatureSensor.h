@@ -10,7 +10,7 @@
 #ifndef TEMPERATURESENSOR_H_
 #define TEMPERATURESENSOR_H_
 #include "stdint.h"
-#include "TemperatureSensorData.h"
+#include "TemperatureSensorMeasurement.h"
 
 namespace OPhomo {
 class TemperatureSensor {
@@ -21,7 +21,7 @@ public:
 	 * The most important function of a temperature sensor: reading the temperature.
 	 * We use kelvin as bases. Unit is 1/64 of 1 degree Kelvin.
 	 */
-	virtual TemperatureSensorData ReadTemperature() = 0;
+	virtual TemperatureSensorMeasurement ReadTemperature() = 0;
 
 	virtual ~TemperatureSensor() {};
 

@@ -7,7 +7,7 @@
  *  http://opensource.org/licenses/mit-license.php
 */
 
-#include "TemperatureSensorData.h"
+#include "TemperatureSensorMeasurement.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -15,24 +15,39 @@ namespace OPhomo {
 
 #define commaNotation '.'
 
-TemperatureSensorData::TemperatureSensorData() {
+TemperatureSensorMeasurement::TemperatureSensorMeasurement() :
+	SensorMeasurement() {
 	// TODO Auto-generated constructor stub
 	measurement = 0;
 
 }
 
-void TemperatureSensorData::toStringCelsius(char* result) {
-	DoubleToString(result, GetCelsius(), 3);
+
+TemperatureSensorMeasurement::~TemperatureSensorMeasurement() {
+	// TODO Auto-generated destructor stub
 }
 
-char* TemperatureSensorData::DoubleToString(char* result, double value,
-		uint8_t digits) {
+#ifdef SENSORTOSTRING
+uint8_t TemperatureSensorMeasurement::toStringCelsius(char* result) {
+	return DoubleToString(result, GetCelsius(), 3);
+}
+
+uint8_t TemperatureSensorMeasurement::toString(char* result, uint8_t inSize) {
+	return DoubleToString(result, GetCelsius(), 3, inSize);
+}
+
+byte TemperatureSensorMeasurement::DoubleToString(char* result, double value,
+		uint8_t digits, uint8_t resultSize) {
 	// Handle negative numbers
 	uint8_t pos = 0;
-	if (value < 0.0) {
+	if (value < 0.0 ) {
 		result[pos++] = '-';
 		value = -value;
+		if (!(--resultSize)) {
+			return pos;
+		}
 	}
+
 
 	// Round correctly so that print(1.999, 2) prints as "2.00"
 	double rounding = 0.5;
@@ -48,6 +63,9 @@ char* TemperatureSensorData::DoubleToString(char* result, double value,
     while ( int_part > 0 ) {
     	int_part = int_part / 10;
         pos++;
+		if (!(--resultSize)) {
+			return pos;
+		}
     }
 
 	// Print the decimal point, but only if there are digits beyond
@@ -61,12 +79,12 @@ char* TemperatureSensorData::DoubleToString(char* result, double value,
         itoa(toPrint, result + pos, 10);
         pos++;
 		remainder -= toPrint;
+		if (!(--resultSize)) {
+			return pos;
+		}
 	}
-	return result;
+	return pos;
 }
-
-TemperatureSensorData::~TemperatureSensorData() {
-	// TODO Auto-generated destructor stub
-}
+#endif
 
 }

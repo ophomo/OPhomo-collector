@@ -11,8 +11,8 @@
 
 namespace OPhomo {
 
-LedPinController::LedPinController(Pin* inPin) :
-	PinController(inPin) {
+LedPinController::LedPinController(Pin* inPin) {
+	pin = inPin;
 }
 
 void LedPinController::On() {
