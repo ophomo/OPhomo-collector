@@ -57,8 +57,10 @@
  */
 
 #include "OneWirePinController.h"
+#include "OneWireSensor.h"
 #include "pins_arduino.h"
-#include "OneWireSensorFactory.h"
+#include "DallasTemperatureSensor.h"
+
 //#include "HardwareSerial.h"
 
 extern "C" {
@@ -69,149 +71,10 @@ extern "C" {
 }
 
 namespace OPhomo {
-OneWirePinController::OneWirePinController(Pin* inPin) :
-	OPhomo::PinController(inPin) {
+OneWirePinController::OneWirePinController(OneWireSensorPin* inPin) {
+	pin = inPin;
 }
 
-// Perform the onewire reset function.  We will wait up to 250uS for
-// the bus to come high, if it doesn't then it is broken or shorted
-// and we return a 0;
-//
-// Returns 1 if a device asserted a presence pulse, 0 otherwise.
-//
-uint8_t OneWirePinController::Reset(void) {
-	uint8_t r;
-	uint8_t retries = 125;
-
-	cli();
-	pin->InputMode();
-	sei();
-	// wait until the wire is high... just in case
-	do {
-		if (--retries == 0)
-			return 0;
-		delayMicroseconds(2);
-	} while (!pin->DigitalRead());
-
-	cli();
-	pin->DigitalWrite(0);
-	pin->OutputMode();
-	sei();
-	delayMicroseconds(500);
-	cli();
-	pin->InputMode();
-	delayMicroseconds(80);
-	r = !(pin->DigitalRead());
-	sei();
-	delayMicroseconds(420);
-	return r;
-}
-
-//
-// Write a bit. Port and bit is used to cut lookup time and provide
-// more certain timing.
-//
-void OneWirePinController::WriteBit(uint8_t v) {
-
-	if (v & 1) {
-		cli();
-		pin->DigitalWrite(0);
-		pin->OutputMode();
-		delayMicroseconds(10);
-		pin->DigitalWrite(1);
-		sei();
-		delayMicroseconds(55);
-	} else {
-		cli();
-		pin->DigitalWrite(0);
-		pin->OutputMode();
-		delayMicroseconds(65);
-		pin->DigitalWrite(1);
-		sei();
-		delayMicroseconds(5);
-	}
-}
-
-//
-// Read a bit. Port and bit is used to cut lookup time and provide
-// more certain timing.
-//
-uint8_t OneWirePinController::ReadBit(void) {
-	uint8_t r;
-
-	cli();
-	pin->OutputMode();
-	pin->DigitalWrite(0);
-	delayMicroseconds(3);
-	pin->InputMode();
-	delayMicroseconds(9);
-	r = pin->DigitalRead();
-	sei();
-	delayMicroseconds(53);
-	return r;
-}
-
-//
-// Write a byte. The writing code uses the active drivers to raise the
-// pin high, if you need power after the write (e.g. DS18S20 in
-// parasite power mode) then set 'power' to 1, otherwise the pin will
-// go tri-state at the end of the write to avoid heating in a short or
-// other mishap.
-//
-void OneWirePinController::Write(uint8_t v, uint8_t power /* = 0 */) {
-	uint8_t bitMask;
-
-	for (bitMask = 0x01; bitMask; bitMask <<= 1) {
-		WriteBit((bitMask & v) ? 1 : 0);
-	}
-	if (!power) {
-		cli();
-		pin->InputMode();
-		pin->DigitalWrite(0);
-		sei();
-	}
-}
-
-//
-// Read a byte
-//
-uint8_t OneWirePinController::Read() {
-	uint8_t bitMask;
-	uint8_t r = 0;
-
-	for (bitMask = 0x01; bitMask; bitMask <<= 1) {
-		if (ReadBit())
-			r |= bitMask;
-	}
-	return r;
-}
-
-//
-// Do a ROM select
-//
-void OneWirePinController::Select(uint8_t rom[8]) {
-	int i;
-
-	Write(0x55); // Choose ROM
-
-	for (i = 0; i < 8; i++)
-		Write(rom[i]);
-}
-
-//
-// Do a ROM skip
-//
-void OneWirePinController::Skip() {
-	Write(0xCC); // Skip ROM
-}
-
-void OneWirePinController::Depower() {
-	cli();
-	pin->InputMode();
-	sei();
-}
-
-#if ONEWIRE_SEARCH
 
 //
 // Perform a search. If this function returns a '1' then it has
@@ -226,7 +89,7 @@ void OneWirePinController::Depower() {
 //--------------------------------------------------------------------------
 // Perform the 1-Wire Search Algorithm on the 1-Wire bus using the existing
 // search state.
-uint8_t OneWirePinController::Search(OneWireSensorFactory* factory) {
+uint8_t OneWirePinController::Search() {
 	// global search state
 	unsigned char ROM_NO[8];
 	uint8_t LastDiscrepancy;
@@ -258,18 +121,18 @@ uint8_t OneWirePinController::Search(OneWireSensorFactory* factory) {
 		rom_byte_mask = 1;
 		// if the last call was not the last one
 		// 1-Wire reset
-		if (!Reset()) {
+		if (!pin->Reset()) {
 			// Stop and return;
 			return found;
 //			Serial.println("RESET FAILED");
 		}
 		// issue the search command
-		Write(0xF0);
+		pin->Write(0xF0);
 		// loop to do the search
 		do {
 			// read a bit and its complement
-			id_bit = ReadBit();
-			cmp_id_bit = ReadBit();
+			id_bit = pin->ReadBit();
+			cmp_id_bit = pin->ReadBit();
 
 			// check for no devices on 1-wire
 			if ((id_bit == 1) && (cmp_id_bit == 1))
@@ -306,7 +169,7 @@ uint8_t OneWirePinController::Search(OneWireSensorFactory* factory) {
 					ROM_NO[rom_byte_number] &= ~rom_byte_mask;
 
 				// serial number search direction write bit
-				WriteBit(search_direction);
+				pin->WriteBit(search_direction);
 
 				// increment the byte counter id_bit_number
 				// and shift the mask rom_byte_mask
@@ -332,7 +195,17 @@ uint8_t OneWirePinController::Search(OneWireSensorFactory* factory) {
 
 			if (ROM_NO[0]) {
 				// Create the device from the ROM.
-				factory->Create(this, ROM_NO);
+				switch ((int) ROM_NO[0]) {
+				case DS18S20MODEL:
+				case DS18B20MODEL:
+				case DS1822MODEL:
+					pin = new DallasTemperatureSensor(pin, ROM_NO);
+					break;
+				case 0:
+					return found;
+				//default:
+					// Unknown sensor type found!
+				}
 				found++;
 				if ( LastDeviceFlag )
 					return found;
@@ -345,9 +218,17 @@ uint8_t OneWirePinController::Search(OneWireSensorFactory* factory) {
 	return 0;
 }
 
-#endif
 
-#if ONEWIRE_CRC
+uint8_t OneWirePinController::InitSensorRead() {
+	return pin->InitReadSensor();
+}
+
+void OneWirePinController::Read(MeasurementHandler* handler) {
+	pin->ReadSensor(handler);
+}
+
+
+#if ONEWIRE_CRC8
 // The 1-Wire CRC scheme is described in Maxim Application Note 27:
 // "Understanding and Using Cyclic Redundancy Checks with Maxim iButton Products"
 //
@@ -409,7 +290,7 @@ uint8_t OneWirePinController::crc8(uint8_t *addr, uint8_t len) {
 	return crc;
 }
 #endif
-
+#endif
 #if ONEWIRE_CRC16
 static short oddparity[16] = {0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0};
 
@@ -439,7 +320,6 @@ unsigned short OneWirePinController::crc16(unsigned short *data, unsigned short 
 }
 #endif
 
-#endif
 
 OneWirePinController::~OneWirePinController() {
 

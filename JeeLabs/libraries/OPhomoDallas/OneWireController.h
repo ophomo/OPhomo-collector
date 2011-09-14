@@ -18,15 +18,17 @@ class OneWireController: public OPhomo::ConfigurationController {
 public:
 	OneWireController(SensorNode& node);
 
-	virtual byte Handle(byte* message, byte length);
+	virtual byte HandleConfig(byte* message, byte length);
 
-	virtual ~OneWireController();
+	byte Perform();
 
 	byte getType() {
 		return type;
 	}
 
 	byte ConfigReply();
+
+	virtual ~OneWireController();
 
 	DallasPlug* dallasPlugs[MAX_DALLAS_PLUGS];
 protected:

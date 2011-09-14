@@ -10,7 +10,6 @@
 #ifndef DALLASTEMPERATURESENSOR_H_
 #define DALLASTEMPERATURESENSOR_H_
 
-#include "TemperatureSensor.h"
 #include "OneWireSensor.h"
 #include "wiring.h"
 // Model IDs
@@ -35,115 +34,106 @@
 #define TEMP_11_BIT 0x5F // 11 bit
 #define TEMP_12_BIT 0x7F // 12 bit
 
-
 namespace OPhomo {
 
-class DallasTemperatureSensor: TemperatureSensor, public OneWireSensor {
+class DallasTemperatureSensor:  public OneWireSensor {
 public:
-	DallasTemperatureSensor();
+	DallasTemperatureSensor(OneWireSensorChainInterface* inWrappee, DeviceAddress& address);
 
-	void Initialize(OneWirePinController* pinController,
-			DeviceAddress& deviceAddress);
-
-	inline bool isParasite() {
+	bool isParasite() {
 		return ReadPowerSupply();
 	}
 
-	inline bool ReadPowerSupply() {
-		bool ret = false;
-		pinController->Reset();
-		pinController->Select(deviceAddress);
-		pinController->Write(READPOWERSUPPLY);
-		if (pinController->ReadBit() == 0)
-			ret = true;
-		pinController->Reset();
-		return ret;
-	}
+#ifdef DALLAS_GETRESOLUTION
+	uint8_t GetResolution();
 
-	inline void ReadScratchPad() {
+	// set resolution of a device to 9, 10, 11, or 12 bits
+	void SetResolution(uint8_t newResolution);
+#endif
+
+	virtual void ReadSensor(MeasurementHandler* handler);
+
+	virtual ~DallasTemperatureSensor();
+
+protected:
+	virtual uint8_t GetConversionDelay();
+
+	static uint8_t* scratchPad;
+
+	void ReadScratchPad() {
 		// send the command
-		pinController->Reset();
-		pinController->Select(deviceAddress);
-		pinController->Write(READSCRATCH);
+		wrappee->Reset();
+		Select();
+		wrappee->Write(READSCRATCH);
 
 		// read the response
 
 		// byte 0: temperature LSB
-		scratchPad[TEMP_LSB] = pinController->Read();
+		scratchPad[TEMP_LSB] = wrappee->Read();
 
 		// byte 1: temperature MSB
-		scratchPad[TEMP_MSB] = pinController->Read();
+		scratchPad[TEMP_MSB] = wrappee->Read();
 
 		// byte 2: high alarm temp
-		scratchPad[HIGH_ALARM_TEMP] = pinController->Read();
+		scratchPad[HIGH_ALARM_TEMP] = wrappee->Read();
 
 		// byte 3: low alarm temp
-		scratchPad[LOW_ALARM_TEMP] = pinController->Read();
+		scratchPad[LOW_ALARM_TEMP] = wrappee->Read();
 
 		// byte 4:
 		// DS18S20: store for crc
 		// DS18B20 & DS1822: configuration register
-		scratchPad[CONFIGURATION] = pinController->Read();
+		scratchPad[CONFIGURATION] = wrappee->Read();
 
 		// byte 5:
 		// internal use & crc
-		scratchPad[INTERNAL_BYTE] = pinController->Read();
+		scratchPad[INTERNAL_BYTE] = wrappee->Read();
 
 		// byte 6:
 		// DS18S20: COUNT_REMAIN
 		// DS18B20 & DS1822: store for crc
-		scratchPad[COUNT_REMAIN] = pinController->Read();
+		scratchPad[COUNT_REMAIN] = wrappee->Read();
 
 		// byte 7:
 		// DS18S20: COUNT_PER_C
 		// DS18B20 & DS1822: store for crc
-		scratchPad[COUNT_PER_C] = pinController->Read();
+		scratchPad[COUNT_PER_C] = wrappee->Read();
 
 		// byte 8:
 		// SCTRACHPAD_CRC
-		scratchPad[SCRATCHPAD_CRC] = pinController->Read();
+		scratchPad[SCRATCHPAD_CRC] = wrappee->Read();
 
-		pinController->Reset();
+		wrappee->Reset();
 	}
 
-	inline void WriteScratchPad(bool parasite) {
-		pinController->Reset();
-		pinController->Select(deviceAddress);
-		pinController->Write(WRITESCRATCH);
+	void WriteScratchPad(bool parasite) {
+		wrappee->Reset();
+		Select();
+		wrappee->Write(WRITESCRATCH);
 		//Currently we don't use the alarms, but if you want, you need to do it here...
 		//		pinController->Write(scratchPad[HIGH_ALARM_TEMP]); // high alarm temp
 		//		pinController->write(scratchPad[LOW_ALARM_TEMP]); // low alarm temp
 		// DS18S20 does not use the configuration register
 		if (deviceAddress[0] != DS18S20MODEL)
-			pinController->Write(scratchPad[CONFIGURATION]); // configuration
-		pinController->Reset();
+			wrappee->Write(scratchPad[CONFIGURATION]); // configuration
+		wrappee->Reset();
 		// save the newly written values to eeprom
-		pinController->Write(COPYSCRATCH, parasite);
+		wrappee->Write(COPYSCRATCH, parasite);
 		if (parasite)
 			delay(10); // 10ms delay
-		pinController->Reset();
+		wrappee->Reset();
 	}
 
-
-	uint8_t GetResolution();
-
-	// set resolution of a device to 9, 10, 11, or 12 bits
-	void SetResolution( uint8_t newResolution);
-
-
-	uint8_t GetConversionDelay();
-
-
-	bool isConnected();
-
-	void  RequestTemperatures();
-
-	TemperatureSensorData ReadTemperature();
-
-	virtual ~DallasTemperatureSensor();
-
-protected:
-	static uint8_t* scratchPad;
+	bool ReadPowerSupply() {
+		bool ret = false;
+		wrappee->Reset();
+		Select();
+		wrappee->Write(READPOWERSUPPLY);
+		if (wrappee->ReadBit() == 0)
+			ret = true;
+		wrappee->Reset();
+		return ret;
+	}
 
 };
 

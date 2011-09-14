@@ -8,7 +8,7 @@
  */
 
 #include "DallasPlug.h"
-
+#include "OneWireSensorPin.h"
 namespace OPhomo {
 
 DallasPlug::DallasPlug(JeePort* port) :
@@ -20,7 +20,8 @@ DallasPlug::DallasPlug(JeePort* port) :
 
 void DallasPlug::EnableDigitalPin() {
 	if (digitalController == NULL) {
-		digitalController = new OneWirePinController(&(port->getDigitalPin()));
+		digitalController = new OneWirePinController(
+				new OneWireSensorPin(&(port->getDigitalPin())));
 	}
 }
 
@@ -33,7 +34,8 @@ void DallasPlug::DisableDigitalPin() {
 
 void DallasPlug::EnableAnalogPin() {
 	if (analogController == NULL) {
-		analogController = new OneWirePinController(&(port->getAnalogPin()));
+		analogController = new OneWirePinController(
+				new OneWireSensorPin(&(port->getAnalogPin())));
 	}
 }
 
@@ -45,51 +47,36 @@ void DallasPlug::DisableAnalogPin() {
 }
 
 uint8_t DallasPlug::Search() {
-	this->ClearSensors();
 	// Try the digital pin first
+	uint8_t result = 0;
 	if (digitalController) {
-		digitalController->Search(this);
+		result += digitalController->Search();
 	}
 	if (analogController) {
-		analogController->Search(this);
+		result += analogController->Search();
 	}
-	//	// Parasite or not ?
-	//	if (analogController) {
-	//		analogController->ResetSearch();
-	//		while (analogController->Search(deviceAddress) && foundDevices
-	//				< MAXDALLASSENSORS) {
-	//			if (OneWirePinController::ValidAddress(deviceAddress)) {
-	//				DallasTemperatureSensor& newSensor = sensors[foundDevices];
-	//				newSensor.Initialize(analogController, deviceAddress);
-	//				if (!parasite && newSensor.ReadPowerSupply())
-	//					parasite = true;
-	//
-	//				uint8_t newConversionDelay = newSensor.GetConversionDelay();
-	//				if (newConversionDelay > conversionDelay) {
-	//					conversionDelay = newConversionDelay;
-	//				}
-	//				foundDevices++;
-	//			}
-	//		}
-	//	}
-	return position;
+	return result;
 }
 
-void DallasPlug::RequestTemperatures() {
+void DallasPlug::RequestTemperatures(MeasurementHandler* handler) {
+	uint8_t wait = 0;
 	if (digitalController) {
-		digitalController->Reset();
-		digitalController->Skip();
-		digitalController->Write(STARTCONVO, false /*parasite*/);
+		wait = digitalController->InitSensorRead();
 	}
 	if (analogController) {
-		analogController->Reset();
-		analogController->Skip();
-		analogController->Write(STARTCONVO, parasite);
+		uint8_t analogResult = analogController->InitSensorRead();
+		wait = wait > analogResult ? wait : analogResult;
+	}
+	delay(wait);
+	if (digitalController) {
+		digitalController->Read(handler);
+	}
+	if (analogController) {
+		analogController->Read(handler);
 	}
 }
 
 DallasPlug::~DallasPlug() {
-	// TODO Auto-generated destructor stub
 }
 
 }

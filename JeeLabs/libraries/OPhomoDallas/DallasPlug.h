@@ -11,14 +11,11 @@
 #define DALLASPLUG_H_
 
 #include "Plug.h"
-#include "OneWireSensorFactory.h"
-#include "DallasTemperatureSensor.h"
-// This defines the maximum number of sensors we support per port. This is low by default, but if you want, just increase it...
-#define MAXDALLASSENSORS 8
+#include "OneWirePinController.h"
 
 namespace OPhomo {
 
-class DallasPlug: public OPhomo::Plug, public OneWireSensorFactory {
+class DallasPlug: public OPhomo::Plug {
 public:
 	DallasPlug(JeePort* port);
 
@@ -32,15 +29,21 @@ public:
 
 	uint8_t Search();
 
-	inline uint8_t GetDeviceCount() {
-		return position;
+	OneWireSensor* analogSensor(uint8_t i) {
+		if ( analogController )
+			return (*analogController)[i];
+		else
+			return NULL;
+	}
+	OneWireSensor* digitalSensor(uint8_t i) {
+		if ( digitalController )
+			return (*digitalController)[i];
+		else
+			return NULL;
+
 	}
 
-	OneWireSensor** GetSensors() {
-		return sensors;
-	}
-
-	void RequestTemperatures();
+	void RequestTemperatures(MeasurementHandler* handler);
 
 	virtual ~DallasPlug();
 protected:

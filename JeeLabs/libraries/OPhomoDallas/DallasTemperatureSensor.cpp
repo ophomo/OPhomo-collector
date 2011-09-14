@@ -8,6 +8,7 @@
  */
 
 #include "DallasTemperatureSensor.h"
+#include "TemperatureSensorMeasurement.h"
 #include "string.h"
 
 // 273.15 << 4
@@ -16,46 +17,49 @@ namespace OPhomo {
 
 uint8_t* DallasTemperatureSensor::scratchPad = new uint8_t[9];
 
-DallasTemperatureSensor::DallasTemperatureSensor() :
-	TemperatureSensor(), OneWireSensor() {
-	pinController = NULL;
-}
-
-void DallasTemperatureSensor::Initialize(OneWirePinController* pinController,
-		DeviceAddress& deviceAddress) {
-	this->pinController = pinController;
-	memcpy(this->deviceAddress, &deviceAddress, 8);
+DallasTemperatureSensor::DallasTemperatureSensor(
+		OneWireSensorChainInterface* inWrappee, DeviceAddress& address) :
+	OneWireSensor(inWrappee, address) {
+	if (deviceAddress[0] != DS18S20MODEL) {
+		scratchPad[CONFIGURATION] = TEMP_12_BIT;
+		WriteScratchPad(false);
+	}
 }
 
 uint8_t DallasTemperatureSensor::GetConversionDelay() {
+	uint8_t scaledResult;
 	if (deviceAddress[0] == DS18S20MODEL)
-		return TEMP_12_BIT;
-	ReadScratchPad();
-	return scratchPad[CONFIGURATION];
+		scaledResult = TEMP_12_BIT;
+	else {
+		ReadScratchPad();
+		scaledResult = scratchPad[CONFIGURATION];
+	}
+	return (94 << ((scaledResult - TEMP_9_BIT) >> 5));
 }
-
+/*
 bool DallasTemperatureSensor::isConnected() {
 	ReadScratchPad();
 	return OneWirePinController::crc8(scratchPad, 8)
 			== scratchPad[SCRATCHPAD_CRC];
-}
+}*/
 
+#ifdef DALLAS_RESOLUTION
 uint8_t DallasTemperatureSensor::GetResolution() {
 	if (deviceAddress[0] == DS18S20MODEL)
-		return 9; // this model has a fixed resolution
+	return 9; // this model has a fixed resolution
 
 	ReadScratchPad();
 	switch (scratchPad[CONFIGURATION]) {
-	case TEMP_12_BIT:
+		case TEMP_12_BIT:
 		return 12;
 		break;
-	case TEMP_11_BIT:
+		case TEMP_11_BIT:
 		return 11;
 		break;
-	case TEMP_10_BIT:
+		case TEMP_10_BIT:
 		return 10;
 		break;
-	case TEMP_9_BIT:
+		case TEMP_9_BIT:
 		return 9;
 		break;
 	}
@@ -68,17 +72,17 @@ void DallasTemperatureSensor::SetResolution(uint8_t newResolution) {
 		// DS18S20 has a fixed 9-bit resolution
 		if (deviceAddress[0] != DS18S20MODEL) {
 			switch (newResolution) {
-			case 12:
+				case 12:
 				scratchPad[CONFIGURATION] = TEMP_12_BIT;
 				break;
-			case 11:
+				case 11:
 				scratchPad[CONFIGURATION] = TEMP_11_BIT;
 				break;
-			case 10:
+				case 10:
 				scratchPad[CONFIGURATION] = TEMP_10_BIT;
 				break;
-			case 9:
-			default:
+				case 9:
+				default:
 				scratchPad[CONFIGURATION] = TEMP_9_BIT;
 				break;
 			}
@@ -86,31 +90,9 @@ void DallasTemperatureSensor::SetResolution(uint8_t newResolution) {
 		}
 	}
 }
+#endif
 
-void DallasTemperatureSensor::RequestTemperatures() {
-	bool parasite = false; //isParasite();
-	pinController->Reset();
-	pinController->Select(deviceAddress);
-	pinController->Write(STARTCONVO, parasite);
-
-	switch (GetConversionDelay()) {
-	case TEMP_9_BIT:
-		delay(94);
-		break;
-	case TEMP_10_BIT:
-		delay(188);
-		break;
-	case TEMP_11_BIT:
-		delay(375);
-		break;
-	case TEMP_12_BIT:
-	default:
-		delay(750);
-		break;
-	}
-}
-
-TemperatureSensorData DallasTemperatureSensor::ReadTemperature() {
+void DallasTemperatureSensor::ReadSensor(MeasurementHandler* handler) {
 	ReadScratchPad();
 	int16_t rawTemperature = (((int16_t) scratchPad[TEMP_MSB]) << 8)
 			| scratchPad[TEMP_LSB];
@@ -145,9 +127,9 @@ TemperatureSensorData DallasTemperatureSensor::ReadTemperature() {
 		rawTemperature += (int) (rest);
 		break;
 	}
-	TemperatureSensorData result;
+	TemperatureSensorMeasurement result;
 	result.Set(rawTemperature);
-	return result;
+	handler->Handle(result);
 }
 
 DallasTemperatureSensor::~DallasTemperatureSensor() {
