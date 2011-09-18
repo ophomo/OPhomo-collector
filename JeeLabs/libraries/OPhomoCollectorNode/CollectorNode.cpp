@@ -6,17 +6,22 @@
  *
  * http://opensource.org/licenses/mit-license.php
  */
-
+#include "SerialLogger.h"
 #include "CollectorNode.h"
 #include "OPhomoProtocolHeader.h"
 #include "HardwareSerial.h"
 #include "SerialConfigEncoder.h"
+#include "log.h"
+
 namespace OPhomo {
 
 // This function must be implemented to handle config solicitations.
 extern void handleConfigSolicit(byte node);
-extern void handleConfigAccept(byte node, byte*, byte );
-extern void handleConfigReject(byte node, byte*, byte );
+extern void handleConfigAccept(byte node, byte*, byte);
+extern void handleConfigReject(byte node, byte*, byte);
+extern void handleReport(byte node, byte*, byte);
+extern void handleInternalMessage( byte*, byte);
+
 
 CollectorNode::CollectorNode() {
 	SerialConfigEncoder::transmitter.SetRF12Module(&rf12);
@@ -33,7 +38,8 @@ void CollectorNode::loop() {
 	// Receive data...
 	byte* messagePtr;
 	byte len = rf12.TryReceive(messagePtr);
-	OPhomoProtocolHeader* header = (OPhomoProtocolHeader*) (messagePtr + RF12_HDR_SIZE);
+	OPhomoProtocolHeader* header = (OPhomoProtocolHeader*) (messagePtr
+			+ RF12_HDR_SIZE);
 	if (len) {
 		switch (header->MessageType) {
 		case CONFIG_SOLICIT_TYPE: {
@@ -41,18 +47,28 @@ void CollectorNode::loop() {
 		}
 			break;
 		case CONFIG_ACCEPT_TYPE: {
-			handleConfigAccept(header->SourceNode /*& 0x1F */, messagePtr + RF12_HDR_SIZE + sizeof(OPhomoProtocolHeader), len - sizeof(OPhomoProtocolHeader) );
+			handleConfigAccept(header->SourceNode /*& 0x1F */,
+					messagePtr + RF12_HDR_SIZE + sizeof(OPhomoProtocolHeader),
+					len - sizeof(OPhomoProtocolHeader));
 		}
 			break;
 		case CONFIG_REJECT_TYPE: {
-			handleConfigReject(header->SourceNode /*& 0x1F */, messagePtr + RF12_HDR_SIZE + sizeof(OPhomoProtocolHeader), len - sizeof(OPhomoProtocolHeader) );
+			handleConfigReject(header->SourceNode /*& 0x1F */,
+					messagePtr + RF12_HDR_SIZE + sizeof(OPhomoProtocolHeader),
+					len - sizeof(OPhomoProtocolHeader));
 		}
+			break;
+		case REPORT_TYPE: {
+			handleReport(header->SourceNode /*& 0x1F */,
+					messagePtr + RF12_HDR_SIZE + sizeof(OPhomoProtocolHeader),
+					len - sizeof(OPhomoProtocolHeader));
 
+		}
 			break;
 		default: {
 			//
-			LOG("UNKNOWN TYPE ");
-			Serial.println((int) header->MessageType);
+			WARNING("UNKNOWN TYPE ");
+			WARNINGLN((int) header->MessageType);
 		}
 
 		}

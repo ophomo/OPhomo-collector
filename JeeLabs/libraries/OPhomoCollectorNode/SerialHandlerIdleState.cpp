@@ -10,12 +10,13 @@
 #include "SerialHandlerConfigState.h"
 #include "SerialHandler.h"
 
+
 namespace OPhomo {
 
 
 
 SerialHandlerIdleState::SerialHandlerIdleState(SerialHandler* handler) :  SerialHandlerState(handler) {
-LOGLN("<IDLE>")
+INFOLN("<IDLE>")
 }
 
 void SerialHandlerIdleState::handle() {

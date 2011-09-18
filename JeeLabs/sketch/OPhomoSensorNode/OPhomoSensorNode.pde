@@ -13,7 +13,7 @@
 #include "DallasPlug.h"
 #include "OneWireController.h"
 
-#define VERSION "0.2.1"
+#define VERSION "0.3.1"
 
 using namespace OPhomo;
 
@@ -24,7 +24,7 @@ OneWireController oneWireController(node);
 
 void setup(void) {
 	Serial.begin(57600);
-	Serial.print("\n[OPHOMO JEENODE v");
+	Serial.print("\n[OPHOMO SENSORNODE v");
 	Serial.print(VERSION);
 	Serial.println( "]");
 	node.setup();

@@ -33,6 +33,9 @@ protected:
 	void handleConfigSolicit( byte node );
 	void handleConfigAccept (byte node, byte*, byte );
 	void handleConfigReject (byte node, byte*, byte );
+	void handleReport(byte node, byte*,byte);
+
+	void handleInternalMessage(byte*, byte);
 
 };
 

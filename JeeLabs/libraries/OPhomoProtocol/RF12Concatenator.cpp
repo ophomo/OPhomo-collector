@@ -55,8 +55,8 @@ void RF12Concatenator::Send(byte* newPart, byte length) {
  */
 void RF12Concatenator::LastPartSend() {
 	// We end with a 0 option.
-	LOG("LPS::Pos:");
-	Serial.println((int)pos);
+	DEBUG("LPS::Pos:");
+	DEBUGLN((int)pos);
 	buffer[pos++] = 0;
 	buffer[pos++] = 0;
 	this->SendPartNow();

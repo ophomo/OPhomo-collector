@@ -9,6 +9,7 @@
 #include "SerialHandler.h"
 #include "OPhomoProtocolHeader.h"
 #include "SerialHandlerIdleState.h"
+#include "log.h"
 #define SH_IDLE 0
 #define SH_CONFIGURING 1
 

@@ -14,8 +14,7 @@ namespace OPhomo {
 
 SensorNodeSolicitState::SensorNodeSolicitState(SensorNode* inNode) :
 	SensorNodeState(inNode) {
-	LOGLN("<SOL>");
-
+	INFOLN("<SOL>");
 }
 
 void SensorNodeSolicitState::handleMessage(byte* message, byte length) {
@@ -25,13 +24,9 @@ void SensorNodeSolicitState::handleMessage(byte* message, byte length) {
 	bool handled;
 	// This is probably a config message ?
 	if (header->MessageType == CONFIG_ADVERTISE_TYPE) {
-		LOGLN((int)length);
+		INFOLN((int)length);
 		while (1) {
 			// ASSERT LENGTH
-			Serial.print("Message type : ");
-			Serial.println((int) message[pos]);
-			Serial.print("Length ");
-			Serial.println((int) message[pos + 1]);
 			handled = false;
 			if (message[pos] == 0 && message[pos + 1] == 0) {
 				// We reached the end of the configuration.
@@ -40,12 +35,11 @@ void SensorNodeSolicitState::handleMessage(byte* message, byte length) {
 				node->setStateHandler(new SensorNodeConfigAcceptState(node));
 				return;
 			}
-			Serial.println("Searching a controller...");
 			for (byte controllerIndex = 0; controllerIndex
 					< data->controllersSize; controllerIndex++) {
 				if (message[pos]
 						== data->controllers[controllerIndex]->getType()) {
-					if ((data->controllers[controllerIndex]->Handle(
+					if ((data->controllers[controllerIndex]->HandleConfig(
 							message + pos + 2, message[pos + 1]) == 0))
 						return;
 					handled = true;
@@ -53,24 +47,18 @@ void SensorNodeSolicitState::handleMessage(byte* message, byte length) {
 				}
 			}
 			if (!handled) {
-				Serial.println("Can't handle configuration.");
 				return;
 			}
 			pos += 2 + message[pos + 1];
 			if (pos >= length  ) {
-				LOGLN("BR");
 				break;
 			}
 		}
-	} else {
-		Serial.print("Ignoring ");
-		Serial.println((int) header->MessageType);
 	}
 }
 
 void SensorNodeSolicitState::tick() {
 	if (data->timer.idle()) {
-		Serial.print(".");
 		SolicitConfig();
 		data->timer.set(5000);
 	}

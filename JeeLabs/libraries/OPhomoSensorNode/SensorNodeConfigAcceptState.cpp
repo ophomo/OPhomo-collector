@@ -12,22 +12,20 @@ namespace OPhomo {
 
 SensorNodeConfigAcceptState::SensorNodeConfigAcceptState(SensorNode* inNode) :
 	SensorNodeState(inNode) {
-	LOGLN("<ACCEPT>");
+	INFOLN("<ACCEPT>");
 	sendAccept();
 }
 
 void SensorNodeConfigAcceptState::handleMessage(byte* message, byte length) {
 	OPhomoProtocolHeader* header = (OPhomoProtocolHeader*) (message
 			+ RF12_HDR_SIZE);
-	byte pos = RF12_HDR_SIZE + sizeof(OPhomoProtocolHeader);
-	bool handled;
 	// This is probably a config message ?
 	if (header->MessageType == CONFIG_ACK_TYPE) {
 		node->setStateHandler(new SensorNodeActiveState(node));
 		return;
 	} else {
-		Serial.print("Ignoring ");
-		Serial.println((int) header->MessageType);
+		INFO("Ignoring message type");
+		INFOLN(header->MessageType);
 	}
 }
 

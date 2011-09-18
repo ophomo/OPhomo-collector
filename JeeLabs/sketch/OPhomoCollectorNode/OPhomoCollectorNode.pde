@@ -13,6 +13,7 @@
 #include "SerialHandler.h"
 #include "SerialRF12ConfigEncoder.h"
 #include "SerialOneWireConfigEncoder.h"
+#include "log.h"
 
 #define VERSION "0.2.2"
 
@@ -28,18 +29,8 @@ void printAction(const char* action, byte inNode) {
 	Serial.println((int) inNode);
 }
 
-void CollectorNode::handleConfigSolicit(byte inNode) {
-	// Here, we will need to send a reply base on the information we have on this node.
-	// To get this information from the application, we send the request on the Serial port interface.
-	printAction("CS", inNode);
-}
-
-void CollectorNode::handleConfigAccept(byte inNode, byte* message,
-		byte totalLen) {
-	// Here, we will need to send a reply base on the information we have on this node.
-	// To get this information from the application, we send the request on the Serial port interface.
-	printAction("CY", inNode);
-	// Walk the message and the decoders.
+void CollectorNode::handleInternalMessage(byte* message, byte totalLen) {
+	// Walk the message and the decoders
 	byte len, type;
 	byte pos = 0;
 	char serialBuffer[64];
@@ -47,8 +38,8 @@ void CollectorNode::handleConfigAccept(byte inNode, byte* message,
 	for (;;) {
 		type = message[pos];
 		len = message[pos + 1];
-		LOGLN((int) type);
-		LOGLN((int) len);
+		INFOLN((int) type);
+		INFOLN((int) len);
 		if (type == 0 && len == 0)
 			break;
 		for (byte i = 0; i < serialHandler.data.encoderSize; i++) {
@@ -67,13 +58,26 @@ void CollectorNode::handleConfigAccept(byte inNode, byte* message,
 		}
 		pos += 2 + len;
 		if (pos >= totalLen) {
-			Serial.print((int) pos);
-			;
-			Serial.print(" <-> ");
-			Serial.println((int) totalLen);
+			ERROR((int)pos);
+			ERROR("<->");
+			ERRORLN((int)totalLen);
 			break;
 		}
 	}
+}
+
+void CollectorNode::handleConfigSolicit(byte inNode) {
+	// Here, we will need to send a reply base on the information we have on this node.
+	// To get this information from the application, we send the request on the Serial port interface.
+	printAction("CS", inNode);
+}
+
+void CollectorNode::handleConfigAccept(byte inNode, byte* message,
+		byte totalLen) {
+	// Here, we will need to send a reply base on the information we have on this node.
+	// To get this information from the application, we send the request on the Serial port interface.
+	printAction("CY", inNode);
+	handleInternalMessage(message,totalLen);
 	Serial.print("/");
 	printAction("CY", inNode);
 }
@@ -82,13 +86,23 @@ void CollectorNode::handleConfigReject(byte inNode, byte* message, byte len) {
 	// Here, we will need to send a reply base on the information we have on this node.
 	// To get this information from the application, we send the request on the Serial port interface.
 	printAction("CN", inNode);
+	handleInternalMessage(message,len);
+	Serial.print("/");
+	printAction("CN", inNode);
+}
+
+void CollectorNode::handleReport(byte inNode, byte* message, byte len) {\
+	printAction("RP", inNode);
+	handleInternalMessage(message,len);
+	Serial.print("/");
+	printAction("RP", inNode);
 }
 
 void setup(void) {
 	Serial.begin(57600);
-	Serial.print("\n[OPHOMO COLLECTOR NODE v");
-	Serial.print(VERSION);
-	Serial.println("]");
+	INFO("\n[OPHOMO COLLECTOR NODE v");
+	INFO(VERSION);
+	INFOLN("]");
 	node.setup();
 	serialHandler.RegisterEncoder(SerialRF12ConfigEncoder::type, &rf12encoder);
 	serialHandler.RegisterEncoder(SerialOneWireConfigEncoder::type,

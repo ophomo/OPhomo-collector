@@ -10,6 +10,7 @@
 
 #include "SerialHandlerState.h"
 
+
 namespace OPhomo {
 
 class SerialHandlerConfigState: public OPhomo::SerialHandlerState {

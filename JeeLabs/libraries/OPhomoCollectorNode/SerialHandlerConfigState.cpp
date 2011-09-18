@@ -52,7 +52,7 @@ void SerialHandlerConfigState::handle() {
 
 SerialHandlerConfigState::SerialHandlerConfigState(SerialHandler* handler) :
 	SerialHandlerState(handler) {
-	LOGLN("<CONF>");
+	INFOLN("<CONF>");
 	// TODO Auto-generated constructor stub
 }
 

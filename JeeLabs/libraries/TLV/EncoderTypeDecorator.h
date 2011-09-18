@@ -23,6 +23,7 @@ public:
 		CHARP,
 		BYTEP
 	};
+
 	EncoderTypeDecorator(EncoderInterface *c);
 
 	byte Encode(byte* to, int value );

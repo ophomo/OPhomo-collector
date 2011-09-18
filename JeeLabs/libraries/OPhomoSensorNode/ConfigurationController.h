@@ -21,13 +21,19 @@ public:
 	 * If success, the number of bytes processed will be returned.
 	 * If failed, 0 is returned.
 	 */
-	virtual byte Handle(byte* message, byte length) = 0;
+	virtual byte HandleConfig(byte* message, byte length) = 0;
 
 	/**
 	 * This will reply to the configuration with details about e.g. sensors, ...
 	 * It will return the number of bytes stored in the message.
 	 */
 	virtual byte ConfigReply() = 0;
+
+	/**
+	 * This will perform wathever the controlled object must do...
+	 * Sensors will measure, others do nothing...
+	 */
+	virtual byte Perform() = 0;
 
 	// This returns the type of the Controller.
 	virtual byte getType() = 0;

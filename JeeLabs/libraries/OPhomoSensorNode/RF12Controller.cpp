@@ -20,7 +20,7 @@ byte RF12Controller::ConfigReply() {
 }
 
 
-byte RF12Controller::Handle(byte* message, byte length) {
+byte RF12Controller::HandleConfig(byte* message, byte length) {
 	byte pos;
 	for ( pos = 0; pos < length; pos++) {
 		Serial.print("P");
@@ -32,7 +32,7 @@ byte RF12Controller::Handle(byte* message, byte length) {
 			byte decodedLength = ConfigurationController::DecodeInt(message
 					+ pos + 1, length - pos - 2, nodeId);
 			if (decodedLength == 0) {
-				ERRORLN()("RF12::NodeID");
+				ERRORLN("RF12::NodeID");
 				return 0;
 			} else {
 				sensorNode->getRF12().setNodeId((byte) nodeId);

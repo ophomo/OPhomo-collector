@@ -23,10 +23,6 @@ byte ConfigurationController::DecodeInt(byte* message, byte maxLength,
 		int& value) {
 	// Check the length first.
 	if (message[0] > maxLength) {
-		Serial.print("Length > maxLength:");
-/*		Serial.print((int)message[0]);
-		Serial.print(" vs " );
-		Serial.println((int) maxLength);*/
 		value = 0;
 		return 0;
 	} else {

@@ -7,12 +7,13 @@
 
 #include "SensorNodeActiveState.h"
 #include "ConfigurationController.h"
+#include "log.h"
 
 namespace OPhomo {
 
 SensorNodeActiveState::SensorNodeActiveState(SensorNode* inNode) :
 	SensorNodeState(inNode) {
-	LOGLN("<ACTIVE>");
+	INFOLN("<ACTIVE>");
 }
 
 void SensorNodeActiveState::handleMessage(byte* message, byte length) {
@@ -27,7 +28,15 @@ void SensorNodeActiveState::tick() {
 	if (data->timer.idle()) {
 		//		sendMeasurement();
 		data->timer.set(5000);
+		// -- Perform the actions on the controllers.
+		node->rf12Transmitter.SetMessageType(REPORT_TYPE);
+		for (byte controllerIndex = 0; controllerIndex < data->controllersSize; controllerIndex++) {
+			data->controllers[controllerIndex]->Perform();
+		}
+		node->rf12Transmitter.LastPartSend();
+
 	}
+
 }
 
 SensorNodeActiveState::~SensorNodeActiveState() {

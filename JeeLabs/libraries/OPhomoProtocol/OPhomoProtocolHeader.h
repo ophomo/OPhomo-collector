@@ -10,12 +10,7 @@
 #ifndef OPHOMOPROTOCOLHEADER_H_
 #define OPHOMOPROTOCOLHEADER_H_
 #include "wiring.h"
-
-#define LOG(...) Serial.print("L "); Serial.print(__VA_ARGS__);
-#define LOGLN(...) Serial.print("L "); Serial.println(__VA_ARGS__);
-#define ERROR(...) Serial.print("E "); Serial.print(__VA_ARGS__);
-#define ERRORLN(...) Serial.print("E "); Serial.println(__VA_ARGS__);
-
+#include "log.h"
 
 
 enum ProtocolStatus {
@@ -31,6 +26,7 @@ enum ProtocolStatus {
 #define	CONFIG_REJECT_TYPE 2
 #define	CONFIG_ACCEPT_TYPE 3
 #define CONFIG_ACK_TYPE 4
+#define REPORT_TYPE 5
 
 #define CONFIG_SOLICIT_LENGTH sizeof(OPhomoProtocolHeader)
 

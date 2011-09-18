@@ -130,6 +130,7 @@ void DallasTemperatureSensor::ReadSensor(MeasurementHandler* handler) {
 	TemperatureSensorMeasurement result;
 	result.Set(rawTemperature);
 	handler->Handle(result);
+	wrappee->ReadSensor(handler);
 }
 
 DallasTemperatureSensor::~DallasTemperatureSensor() {

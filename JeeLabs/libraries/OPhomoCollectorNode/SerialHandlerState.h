@@ -8,18 +8,19 @@
 #ifndef SERIALHANDLERSTATE_H_
 #define SERIALHANDLERSTATE_H_
 
+#include "log.h"
+
 #define SERIAL_BUFFER_SIZE 128
 
 #define ASSERT_MIN_LENGTH(length) if ( data->pos <= length) { \
 	ERROR("Assertion failed: length is smaller then "); \
-	Serial.println(length); \
+	ERRORLN(length); \
 	return; \
 }
 
-#include "HardwareSerial.h"
 #include "wiring.h"
 #include "SerialConfigEncoder.h"
-
+#include "log.h"
 
 namespace OPhomo {
 

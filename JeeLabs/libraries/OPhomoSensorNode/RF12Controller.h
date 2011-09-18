@@ -19,9 +19,13 @@ class RF12Controller: public ConfigurationController {
 public:
 	RF12Controller(SensorNode& sensorNode);
 
-	byte Handle(byte* message, byte length);
+	byte HandleConfig(byte* message, byte length);
 
 	byte ConfigReply();
+
+	byte Perform() {
+		return 0;
+	}
 
 	virtual ~RF12Controller();
 
