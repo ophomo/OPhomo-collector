@@ -40,15 +40,6 @@ public:
 	 */
 	void Register(ConfigurationController* controller);
 
-	/**
-	 * This sends a config accept to the collector.
-	 */
-	void SendConfigAccept(byte* message, byte len);
-
-	void ConfigReplyAppend(byte* reply, byte len);
-
-	void ConfigReplyDone();
-
 	virtual ~SensorNode();
 
 	RF12Concatenator rf12Transmitter;
@@ -61,12 +52,6 @@ protected:
 	SensorNodeData data;
 
 	friend class SensorNodeState;
-
-
-	/**
-	 * This will send a config accept with details about the config, like sensors, ...
-	 */
-	void AcceptConfig();
 
 };
 

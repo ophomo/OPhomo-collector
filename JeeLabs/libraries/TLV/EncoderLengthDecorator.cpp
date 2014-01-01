@@ -32,6 +32,12 @@ byte EncoderLengthDecorator::Encode(byte* to, double value) {
 	return (*to) + 1;
 }
 
+byte EncoderLengthDecorator::Encode(byte* to, TLVEncodableObject& value) {
+	*to = inner->Encode(to+1,value);
+	return (*to) + 1;
+}
+
+
 
 EncoderLengthDecorator::~EncoderLengthDecorator() {
 }

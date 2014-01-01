@@ -41,6 +41,8 @@ public:
 	virtual uint8_t toString(char* text, uint8_t inSize) = 0;
 #endif
 
+	virtual void toBytes(uint8_t* store) = 0;
+
 	virtual ~SensorMeasurement();
 };
 

@@ -24,6 +24,7 @@ public:
 	byte ConfigReply();
 
 	byte Perform() {
+		// We can reply with our statistics of the RF12 module.
 		return 0;
 	}
 

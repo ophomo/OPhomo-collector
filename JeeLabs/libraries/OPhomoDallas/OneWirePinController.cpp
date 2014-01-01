@@ -28,8 +28,7 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *  The CRC code was excerpted and inspired by the Dallas Semiconductor
- * sample code bearing this copyright.
- //---------------------------------------------------------------------------
+ * sample code bearing this copyright. //---------------------------------------------------------------------------
  // Copyright (C) 2000 Dallas Semiconductor Corporation, All Rights Reserved.
  //
  // Permission is hereby granted, free of charge, to any person obtaining a
@@ -64,17 +63,17 @@
 //#include "HardwareSerial.h"
 
 extern "C" {
-#include "WConstants.h"
+#include "Arduino.h"
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
 }
 
 namespace OPhomo {
-OneWirePinController::OneWirePinController(OneWireSensorPin* inPin) {
-	pin = inPin;
+OneWirePinController::OneWirePinController(OneWireSensorPin* inPin) :
+	pin(inPin) {
+	list = NULL;
 }
-
 
 //
 // Perform a search. If this function returns a '1' then it has
@@ -101,6 +100,7 @@ uint8_t OneWirePinController::Search() {
 
 	unsigned char rom_byte_mask, search_direction;
 
+	nrOfSensors = 0;
 	// First, we need to reset everything.
 	LastDiscrepancy = 0;
 	LastDeviceFlag = FALSE;
@@ -110,10 +110,13 @@ uint8_t OneWirePinController::Search() {
 		if (i == 0)
 			break;
 	}
+	if (list) {
+		list->Cleanup();
+		list = NULL;
+	}
 	// The number of devices found during our discovery.
 	uint8_t found = 0;
 	while (1) {
-//		Serial.println((int)found);
 		// initialize for search
 		id_bit_number = 1;
 		last_zero = 0;
@@ -123,21 +126,25 @@ uint8_t OneWirePinController::Search() {
 		// 1-Wire reset
 		if (!pin->Reset()) {
 			// Stop and return;
+			Serial.println("RESET FAILED");
+			nrOfSensors = found;
 			return found;
-//			Serial.println("RESET FAILED");
 		}
 		// issue the search command
 		pin->Write(0xF0);
 		// loop to do the search
 		do {
+			//			Serial.print("Rom byte number:");
+			//			Serial.println((int)rom_byte_number);
 			// read a bit and its complement
 			id_bit = pin->ReadBit();
 			cmp_id_bit = pin->ReadBit();
 
 			// check for no devices on 1-wire
-			if ((id_bit == 1) && (cmp_id_bit == 1))
+			if ((id_bit == 1) && (cmp_id_bit == 1)) {
+				//				Serial.println("No devices on OneWire pin.");
 				break;
-			else {
+			} else {
 				// all devices coupled have 0 or 1
 				if (id_bit != cmp_id_bit)
 					search_direction = id_bit; // bit write value for search
@@ -199,34 +206,118 @@ uint8_t OneWirePinController::Search() {
 				case DS18S20MODEL:
 				case DS18B20MODEL:
 				case DS1822MODEL:
-					pin = new DallasTemperatureSensor(pin, ROM_NO);
+					//					Serial.print(".");
+					list = new OneWireSensorListItem(
+							new DallasTemperatureSensor(pin, ROM_NO), list);
 					break;
 				case 0:
+					//					Serial.println(" -> 0 type");
+					nrOfSensors = found;
 					return found;
-				//default:
+					//default:
 					// Unknown sensor type found!
 				}
 				found++;
-				if ( LastDeviceFlag )
+				if (LastDeviceFlag) {
+					//					Serial.println(" -> Flagged");
+					nrOfSensors = found;
 					return found;
-			} else
+				}
+			} else {
+				//				Serial.println("No ROM_NO[0]");
+				nrOfSensors = found;
 				return found;
+			}
 		} else {
+			//			Serial.println(" -> id_bit_number > 65");
+			nrOfSensors = found;
 			return found;
 		}
 	}
-	return 0;
+	//	Serial.println(" -> Returning found at the end.");
+	nrOfSensors = found;
+	return found;
 }
 
-
-uint8_t OneWirePinController::InitSensorRead() {
-	return pin->InitReadSensor();
+uint16_t OneWirePinController::InitSensorRead(byte pos) {
+	OneWireSensor* sensor = (*this)[pos];
+	if (sensor) {
+		pin->Reset();
+		sensor->Select();
+		pin->Write(STARTCONVO, true);
+		uint16_t result = sensor->GetConversionDelay();
+		readTimer.set(result);
+		readPos = pos;
+		return result;
+	} else {
+		return 0;
+	}
 }
 
-void OneWirePinController::Read(MeasurementHandler* handler) {
-	pin->ReadSensor(handler);
+uint16_t OneWirePinController::InitSensorReadAll() {
+	byte pos = 0;
+	uint16_t timeout = 0;
+	OneWireSensor* sensor = (*this)[pos];
+	while (sensor) {
+		uint16_t newTimeOut = sensor->GetConversionDelay();
+		timeout = (newTimeOut > timeout ? newTimeOut : timeout);
+		sensor = (*this)[++pos];
+	}
+	if (timeout) {
+		// Now, we know how long to wait.
+		pin->Reset();
+		pin->Skip();
+		pin->Write(STARTCONVO, true);
+		readTimer.set(timeout);
+	}
+	return timeout;
 }
 
+uint16_t OneWirePinController::SensorRead(MeasurementHandler* handler) {
+	if (!readTimer.idle()) {
+		if (readTimer.poll()) {
+			// -- Read the sensor.
+			OneWireSensor* sensor = (*list)[readPos];
+			sensor->ReadNow(handler);
+			return 0;
+		} else {
+			// This must fix the case when the timer will expire next time.
+			uint16_t remaining = readTimer.remaining();
+			if (remaining == 0)
+				++remaining;
+			return remaining;
+		}
+	} else {
+		return 0;
+	}
+}
+
+uint16_t OneWirePinController::SensorReadAll(MeasurementHandler* handler) {
+	if (!readTimer.idle()) {
+		if (readTimer.poll()) {
+			// -- Read the sensors
+			for (byte pos = 0; pos < 0xFF; ++pos) {
+				OneWireSensor* sensor = (*list)[pos];
+				if (sensor) {
+					Serial.print("\t\tRead sensor at pos ");
+					Serial.println(pos);
+					sensor->ReadNow(handler);
+				} else {
+					break;
+				}
+			}
+			return 0;
+		} else {
+			// This must fix the case when the timer will expire next time.
+			uint16_t remaining = readTimer.remaining();
+			if (remaining == 0)
+				++remaining;
+			return remaining;
+		}
+	} else {
+		return 0;
+	}
+}
 
 #if ONEWIRE_CRC8
 // The 1-Wire CRC scheme is described in Maxim Application Note 27:
@@ -283,7 +374,7 @@ uint8_t OneWirePinController::crc8(uint8_t *addr, uint8_t len) {
 			uint8_t mix = (crc ^ inbyte) & 0x01;
 			crc >>= 1;
 			if (mix)
-				crc ^= 0x8C;
+			crc ^= 0x8C;
 			inbyte >>= 1;
 		}
 	}
@@ -291,6 +382,7 @@ uint8_t OneWirePinController::crc8(uint8_t *addr, uint8_t len) {
 }
 #endif
 #endif
+
 #if ONEWIRE_CRC16
 static short oddparity[16] = {0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0};
 
@@ -319,7 +411,6 @@ unsigned short OneWirePinController::crc16(unsigned short *data, unsigned short 
 	return crc;
 }
 #endif
-
 
 OneWirePinController::~OneWirePinController() {
 

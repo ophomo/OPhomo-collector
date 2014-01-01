@@ -16,7 +16,7 @@ class ConsoleMeasurementHandler: public OPhomo::MeasurementHandler {
 public:
 	ConsoleMeasurementHandler();
 
-	void Handle(SensorMeasurement& measurement);
+	uint8_t Handle(SensorMeasurement& measurement);
 
 	virtual ~ConsoleMeasurementHandler();
 };

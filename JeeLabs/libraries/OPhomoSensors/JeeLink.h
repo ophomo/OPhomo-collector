@@ -10,7 +10,6 @@
 #ifndef JEELINK_H_
 #define JEELINK_H_
 #include "RF12Module.h"
-#include "DigitalPin.h"
 #include "LedPinController.h"
 
 namespace OPhomo {
@@ -23,7 +22,7 @@ public:
 
 protected:
 	// Activity Led
-	DigitalPin activityPin;
+	Pin activityPin;
 	LedPinController activityLed;
 
 	// RF12 module

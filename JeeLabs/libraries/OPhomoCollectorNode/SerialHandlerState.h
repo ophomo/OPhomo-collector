@@ -12,13 +12,15 @@
 
 #define SERIAL_BUFFER_SIZE 128
 
-#define ASSERT_MIN_LENGTH(length) if ( data->pos <= length) { \
-	ERROR("Assertion failed: length is smaller then "); \
+#define ASSERT_MIN_LENGTH(length) if ( data->pos <= (byte) length) { \
+	ERROR("Assertion failed: length ("); \
+    ERROR((int)(data->pos)); \
+    ERROR(") is smaller than "); \
 	ERRORLN(length); \
 	return; \
 }
 
-#include "wiring.h"
+#include "Arduino.h"
 #include "SerialConfigEncoder.h"
 #include "log.h"
 

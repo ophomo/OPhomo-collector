@@ -10,7 +10,7 @@ OPhomo::DallasPlug* dallasPlug;
 void setup(void) {
 	Serial.begin(57600);
 	Serial.print("\n[OPHOMO JEENODE]");
-	dallasPlug = new OPhomo::DallasPlug(&node.getPort1());
+	dallasPlug = new OPhomo::DallasPlug(&node.getPort3());
 	Serial.print("\n[Created the DallasPlug]");
 	dallasPlug->EnableDigitalPin();
 	dallasPlug->EnableAnalogPin();
@@ -27,7 +27,12 @@ void loop(void) {
 	// request to all devices on the bus
 	OPhomo::ConsoleMeasurementHandler handler;
 	Serial.println("\n[Requesting temperatures]");
-	dallasPlug->RequestTemperatures(&handler);
+	Serial.println("\tStart conversion");
+	uint16_t timeout = dallasPlug->InitReadAll();
+	while ( timeout ) {
+		timeout = dallasPlug->ReadAllAnalogSensors(&handler);
+		timeout += dallasPlug->ReadAllDigitalSensors(&handler);
+	}
 	delay(5000);
 }
 

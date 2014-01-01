@@ -14,7 +14,7 @@
 #ifndef RF12MODULE_H_
 #define RF12MODULE_H_
 #include <stdint.h>
-#include <wiring.h>
+#include <Arduino.h>
 #include "RF12.h"
 namespace OPhomo {
 
@@ -32,7 +32,7 @@ public:
 	 */
 	bool SaveConfig();
 
-	virtual ~RF12Module();
+	~RF12Module();
 
 	/**
 	 * This method will try to receive data. If possible, a pointer to the message will be set in the variable message.

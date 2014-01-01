@@ -58,16 +58,35 @@ uint8_t DallasPlug::Search() {
 	return result;
 }
 
+uint16_t DallasPlug::InitRead(byte pos) {
+	// Check if there is a sensor at that position
+	uint16_t time2WaitD, time2WaitA;
+	time2WaitD = time2WaitA = 0;
+	if ( digitalController ) {
+		time2WaitD = digitalController->InitSensorRead(pos);
+	};
+	if ( analogController ) {
+		time2WaitA = analogController->InitSensorRead(pos);
+	};
+	return (time2WaitA > time2WaitD ? time2WaitA : time2WaitD);
+}
+
+uint16_t DallasPlug::InitReadAll() {
+	// Check if there is a sensor at that position
+	uint16_t time2WaitD, time2WaitA;
+	time2WaitD = time2WaitA = 0;
+	if ( digitalController ) {
+		time2WaitD = digitalController->InitSensorReadAll();
+	};
+	if ( analogController ) {
+		time2WaitA = analogController->InitSensorReadAll();
+	};
+	return (time2WaitA > time2WaitD ? time2WaitA : time2WaitD);
+}
+
+
+/*
 void DallasPlug::RequestTemperatures(MeasurementHandler* handler) {
-	uint8_t wait = 0;
-	if (digitalController) {
-		wait = digitalController->InitSensorRead();
-	}
-	if (analogController) {
-		uint8_t analogResult = analogController->InitSensorRead();
-		wait = wait > analogResult ? wait : analogResult;
-	}
-	delay(wait);
 	if (digitalController) {
 		digitalController->Read(handler);
 	}
@@ -75,6 +94,7 @@ void DallasPlug::RequestTemperatures(MeasurementHandler* handler) {
 		analogController->Read(handler);
 	}
 }
+*/
 
 DallasPlug::~DallasPlug() {
 }

@@ -12,7 +12,6 @@
 
 #include "JeePort.h"
 #include "RF12Module.h"
-#include "AnalogPin.h"
 
 namespace OPhomo {
 
@@ -51,7 +50,7 @@ protected:
 	/* The IRQ pin is shared on all ports. Therefore, we put it on the JeeNode instead
 	 * of on the port.
 	 */
-	AnalogPin irqPin;
+	Pin irqPin;
 
 	JeePort port1;
 	JeePort port2;

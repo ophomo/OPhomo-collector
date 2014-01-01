@@ -34,6 +34,12 @@ byte EncoderTypeDecorator::Encode(byte* to, double value) {
 	return inner->Encode(to + 1, value) + 1;
 }
 
+byte EncoderTypeDecorator::Encode(byte* to,  TLVEncodableObject& object) {
+	*to = object.getType();
+	return inner->Encode(to + 1, object) + 1;
+}
+
+
 EncoderTypeDecorator::~EncoderTypeDecorator() {
 }
 

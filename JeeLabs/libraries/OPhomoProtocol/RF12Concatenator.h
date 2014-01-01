@@ -13,6 +13,8 @@ namespace OPhomo {
 
 class RF12Concatenator {
 public:
+	static const byte OPhomoListerNodeId = 31;
+
 	RF12Concatenator(RF12Module* rf12);
 
 	RF12Concatenator();

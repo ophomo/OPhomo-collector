@@ -9,7 +9,7 @@
 
 #ifndef MILLITIMER_H_
 #define MILLITIMER_H_
-#include <wiring.h>
+#include <Arduino.h>
 
 // The millisecond timer can be used for timeouts up to 60000 milliseconds.
 // Setting the timeout to zero disables the timer.

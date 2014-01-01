@@ -7,7 +7,7 @@
 
 #ifndef SENSORNODESTATE_H_
 #define SENSORNODESTATE_H_
-#include "wiring.h"
+#include "Arduino.h"
 #include "OPhomoProtocolHeader.h"
 #include "MilliTimer.h"
 #include "RF12Concatenator.h"

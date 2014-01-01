@@ -32,16 +32,16 @@ int pow(int a, unsigned int b) {
 	msg[len] = c;
 
 #define ADD_INT(msg,i) \
-		pos = 0; \
+		pos = 1; \
 		len = strlen(msg); \
 		remainder = i; \
 		while ( remainder > 10 ) { \
 			pos++; \
 			remainder /= 10; \
 		} \
-		msg[len++] = remainder; \
 		while (pos) \
-			msg[len++] = i / pow(10,pos--);
+			msg[len++] = '0' +  (( i / pow(10,--pos) ) % 10);\
+		msg[len++] = '\0';
 
 RF12Module::RF12Module() {
 }
@@ -50,13 +50,15 @@ void RF12Module::init() {
 	if (rf12_config()) {
 		nodeId = eeprom_read_byte(RF12_EEPROM_ADDR);
 		group = eeprom_read_byte(RF12_EEPROM_ADDR + 1);
+
 	} else {
-		nodeId = 0x41; // node A1 @ 433 MHz
-		group = 0xD4;
+		nodeId = ((RF12_868MHZ << 6) + 8); // node 2 @ RF12_868 MHz
+		group = 0xD4; // 212
 		SaveConfig();
+		rf12_initialize(nodeId, nodeId >> 6, group);
 	}
 	// Is this required ?
-	//	rf12_easyInit(5);
+	rf12_easyInit(0);
 }
 
 void RF12Module::SetMinimumSendInterval(int value) {
@@ -71,7 +73,6 @@ bool RF12Module::SaveConfig() {
 	strcpy(msg, " ");
 
 	byte id = nodeId & 0x1F;
-	ADD_CHAR(msg, '@' + id);
 	strcat(msg, " i");
 	ADD_INT(msg, id);
 	if (nodeId & COLLECT)
@@ -95,8 +96,12 @@ bool RF12Module::SaveConfig() {
 		byte b = ((byte*) this)[i];
 		eeprom_write_byte(RF12_EEPROM_ADDR + i, b);
 	}
-	if (!rf12_config())
+	if (!rf12_config()) {
+		Serial.print(RF12_EEPROM_SIZE);
+		Serial.print( " vs ");
+		Serial.println(sizeof(*this));
 		return false;
+	}
 	return true;
 }
 
@@ -118,7 +123,8 @@ void RF12Module::setGroupId(byte group) {
 }
 
 void RF12Module::setNodeId(byte nodeId) {
-	this->nodeId &= (nodeId & 0x1F);
+	this->nodeId &= 0xE0;
+	this->nodeId |= (nodeId & 0x1F);
 	rf12_initialize(nodeId, nodeId >> 6, group);
 }
 
@@ -131,7 +137,7 @@ void RF12Module::setBand(byte band) {
 byte RF12Module::TryReceive(byte *&message) {
 	if (rf12_recvDone()) {
 		if (rf12_crc != 0) {
-			return false;
+			return 0;
 		}
 		// This is a nice idea, but this will ruin our buffer...
 		/*		if (RF12_WANTS_ACK && (nodeId & COLLECT) == 0) {

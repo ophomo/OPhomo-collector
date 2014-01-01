@@ -31,6 +31,8 @@ CollectorNode::CollectorNode() {
 void CollectorNode::setup() {
 	// -- I don't do anything here. Or should I ?
 	rf12.init();
+	rf12.setNodeId(RF12Concatenator::OPhomoListerNodeId);
+	rf12.SaveConfig();
 }
 
 // This mimics the 'loop' method of the arduino program.
@@ -80,13 +82,14 @@ void CollectorNode::SendConfigAdvertise(byte destination, byte* config,
 	// A dirty hack to save memory...
 	byte dest = destination;
 	byte* outMessage = config - 1;
-
+    activityLed.On();
 	OPhomoProtocolHeader* header = (OPhomoProtocolHeader*) outMessage;
 	header->MessageType = CONFIG_ADVERTISE_TYPE;
 	header->SourceNode = rf12.getNodeId();
 	// Send
 	rf12.Send(dest, outMessage, length + 1, 0 /*false*/);
 	outMessage[0] = dest;
+	activityLed.Off();
 }
 
 CollectorNode::~CollectorNode() {

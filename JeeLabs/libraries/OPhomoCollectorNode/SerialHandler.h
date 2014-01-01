@@ -10,7 +10,7 @@
 #ifndef SERIALHANDLER_H_
 #define SERIALHANDLER_H_
 #include "HardwareSerial.h"
-#include "wiring.h"
+#include "Arduino.h"
 #include "SerialConfigEncoder.h"
 #include "SerialHandlerState.h"
 

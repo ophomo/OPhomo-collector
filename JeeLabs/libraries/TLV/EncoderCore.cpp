@@ -39,6 +39,11 @@ byte EncoderCore::Encode(byte* to, double value) {
 }
 
 
+byte EncoderCore::Encode(byte* to, TLVEncodableObject& object)  {
+	memcpy (to, &object, object.getSize() );
+	return object.getSize();
+}
+
 EncoderCore::~EncoderCore() {
 }
 

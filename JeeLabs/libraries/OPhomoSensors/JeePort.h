@@ -11,8 +11,6 @@
 #define JEEPORT_H_
 #include <stdint.h>
 #include "Pin.h"
-#include "AnalogPin.h"
-#include "DigitalPin.h"
 namespace OPhomo {
 
 enum PinType {
@@ -21,28 +19,28 @@ enum PinType {
 
 class JeePort {
 public:
-	JeePort(uint8_t inId, AnalogPin* irq);
+	JeePort(uint8_t inId, Pin* irq);
 
 	virtual ~JeePort();
 
 	// The id is not part of the configuration. We just need it to assign the configuration to the correct pin.
 	uint8_t getId() const;
 
-	inline AnalogPin& getAnalogPin()
+	inline Pin& getAnalogPin()
     {
         return analogPin;
     }
 
-    inline DigitalPin& getDigitalPin()
+    inline Pin& getDigitalPin()
     {
         return digitalPin;
     }
 
 private:
 	uint8_t id;
-	AnalogPin analogPin;
-	DigitalPin digitalPin;
-	AnalogPin* irqPin;
+	Pin analogPin;
+	Pin digitalPin;
+	Pin* irqPin;
 };
 
 }

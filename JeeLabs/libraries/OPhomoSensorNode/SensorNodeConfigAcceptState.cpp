@@ -12,7 +12,8 @@ namespace OPhomo {
 
 SensorNodeConfigAcceptState::SensorNodeConfigAcceptState(SensorNode* inNode) :
 	SensorNodeState(inNode) {
-	INFOLN("<ACCEPT>");
+	Serial.println("<ACCEPT STATE>");
+//	INFOLN("<ACCEPT>");
 	sendAccept();
 }
 
@@ -21,11 +22,12 @@ void SensorNodeConfigAcceptState::handleMessage(byte* message, byte length) {
 			+ RF12_HDR_SIZE);
 	// This is probably a config message ?
 	if (header->MessageType == CONFIG_ACK_TYPE) {
+		Serial.println("Going to state Active!!!");
 		node->setStateHandler(new SensorNodeActiveState(node));
 		return;
 	} else {
-		INFO("Ignoring message type");
-		INFOLN(header->MessageType);
+		Serial.print("Ignoring message type ");
+		Serial.println(header->MessageType);
 	}
 }
 
@@ -38,6 +40,7 @@ void SensorNodeConfigAcceptState::tick() {
 
 void SensorNodeConfigAcceptState::sendAccept() {
 	// Walk the controllers and send the result.
+	node->rf12Transmitter.SetDestinationNode(RF12Concatenator::OPhomoListerNodeId);
 	node->rf12Transmitter.SetMessageType(CONFIG_ACCEPT_TYPE);
 	for (byte controllerIndex = 0; controllerIndex < data->controllersSize; controllerIndex++) {
 		data->controllers[controllerIndex]->ConfigReply();

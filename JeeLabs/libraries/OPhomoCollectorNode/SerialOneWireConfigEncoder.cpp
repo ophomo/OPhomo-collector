@@ -8,7 +8,7 @@
 #include "SerialOneWireConfigEncoder.h"
 #include "OPhomoProtocolHeader.h"
 #include "TemperatureSensorMeasurement.h"
-
+#include "log.h"
 namespace OPhomo {
 const byte SerialOneWireConfigEncoder::type[] = { 'S', 'E', 'O', 'W' };
 SerialOneWireConfigEncoder::SerialOneWireConfigEncoder() {
@@ -93,7 +93,7 @@ byte SerialOneWireConfigEncoder::DecodeBin2Serial(byte* message,
 	switch (message[0]) {
 	case 1: {
 		// Configuration ACK message.
-		if (messageLength != 10) {
+		if (messageLength != 11) {
 			// FAIL
 			ERRORLN("SEOW::DL");
 			return 0;
@@ -105,7 +105,16 @@ byte SerialOneWireConfigEncoder::DecodeBin2Serial(byte* message,
 			pos++;
 		}
 		serialBuffer[pos++] = ' ';
-		for (byte i = 2; i < 10; i++) {
+		// Reuse 'id' as the port number
+		id = message[2];
+		itoa((int) id, serialBuffer + pos++, 10);
+		while (id > 10) {
+			id /= 10;
+			pos++;
+		}
+		serialBuffer[pos++] = ' ';
+		// Print the address
+		for (byte i = 3; i < 11; i++) {
 			if (message[i] <= 16) {
 				serialBuffer[pos++] = '0';
 			}
@@ -114,16 +123,16 @@ byte SerialOneWireConfigEncoder::DecodeBin2Serial(byte* message,
 			if (message[i] > 16) {
 				pos++;
 			}
-			if (i < 9)
+			if (i < 10)
 				serialBuffer[pos++] = ':';
 		}
 		serialBuffer[pos++] = '\0';
 		*serialLength = pos;
-		return 10;
+		return 11;
 	}
 		break;
 	case 2: {
-		if (messageLength != 4) {
+		if (messageLength != 6) {
 			// FAIL
 			ERRORLN("SEOW::DL");
 			return 0;
@@ -138,16 +147,14 @@ byte SerialOneWireConfigEncoder::DecodeBin2Serial(byte* message,
 			pos++;
 		}
 		serialBuffer[pos++] = ' ';
-		// Now, we will have the messurement.
-		memcpy( &value, message + 2,  sizeof(uint16_t));
 		// How are we displaying a temperature.
 		// As degrees Kelvin.
-		double result = (double) value;
-		result *= 1.0 / 64;
-		pos += TemperatureSensorMeasurement::DoubleToString(serialBuffer + pos, result, 2);
+		TemperatureSensorMeasurement result;
+		result.fromBytes(message+4);
+		pos += TemperatureSensorMeasurement::DoubleToString(serialBuffer + pos, result.GetCelsius(), 2);
 		serialBuffer[pos++] = '\0';
 		*serialLength = pos;
-		return 4;
+		return 6;
 	}
 		break;
 	default: {

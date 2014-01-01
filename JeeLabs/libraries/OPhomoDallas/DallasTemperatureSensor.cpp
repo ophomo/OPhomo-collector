@@ -17,31 +17,32 @@ namespace OPhomo {
 
 uint8_t* DallasTemperatureSensor::scratchPad = new uint8_t[9];
 
-DallasTemperatureSensor::DallasTemperatureSensor(
-		OneWireSensorChainInterface* inWrappee, DeviceAddress& address) :
-	OneWireSensor(inWrappee, address) {
+DallasTemperatureSensor::DallasTemperatureSensor( OneWireSensorPin* inPin, DeviceAddress& inAddress) :
+	OneWireSensor(inPin, inAddress) {
 	if (deviceAddress[0] != DS18S20MODEL) {
 		scratchPad[CONFIGURATION] = TEMP_12_BIT;
-		WriteScratchPad(false);
+		WriteScratchPad(true);
 	}
 }
 
-uint8_t DallasTemperatureSensor::GetConversionDelay() {
+uint16_t DallasTemperatureSensor::GetConversionDelay() {
 	uint8_t scaledResult;
 	if (deviceAddress[0] == DS18S20MODEL)
 		scaledResult = TEMP_12_BIT;
 	else {
-		ReadScratchPad();
-		scaledResult = scratchPad[CONFIGURATION];
+		// For the moment, we use a fixed TEMP_13_BIT;
+		scaledResult = TEMP_12_BIT;
+/*		ReadScratchPad();
+		scaledResult = scratchPad[CONFIGURATION]; */
 	}
 	return (94 << ((scaledResult - TEMP_9_BIT) >> 5));
 }
 /*
-bool DallasTemperatureSensor::isConnected() {
-	ReadScratchPad();
-	return OneWirePinController::crc8(scratchPad, 8)
-			== scratchPad[SCRATCHPAD_CRC];
-}*/
+ bool DallasTemperatureSensor::isConnected() {
+ ReadScratchPad();
+ return OneWirePinController::crc8(scratchPad, 8)
+ == scratchPad[SCRATCHPAD_CRC];
+ }*/
 
 #ifdef DALLAS_RESOLUTION
 uint8_t DallasTemperatureSensor::GetResolution() {
@@ -92,10 +93,37 @@ void DallasTemperatureSensor::SetResolution(uint8_t newResolution) {
 }
 #endif
 
-void DallasTemperatureSensor::ReadSensor(MeasurementHandler* handler) {
+void DallasTemperatureSensor::Read(MeasurementHandler* handler) {
+	pin->Reset();
+	Select();
+	pin->Write(STARTCONVO, true);
+	delay(750);
+	ReadNow(handler);
+
+}
+
+void DallasTemperatureSensor::ReadNow(MeasurementHandler* handler) {
 	ReadScratchPad();
-	int16_t rawTemperature = (((int16_t) scratchPad[TEMP_MSB]) << 8)
-			| scratchPad[TEMP_LSB];
+	uint8_t crc = 0;
+	uint8_t len = 8;
+	uint8_t* addr = scratchPad;
+
+	while (len--) {
+		uint8_t inbyte = *addr++;
+		for (uint8_t i = 8; i; i--) {
+			uint8_t mix = (crc ^ inbyte) & 0x01;
+			crc >>= 1;
+			if (mix)
+				crc ^= 0x8C;
+			inbyte >>= 1;
+		}
+	};
+
+	int16_t rawTemperature = 0;
+
+	if (crc == scratchPad[SCRATCHPAD_CRC])
+		rawTemperature = (((int16_t) scratchPad[TEMP_MSB]) << 8)
+				| scratchPad[TEMP_LSB];
 
 	// K = C + 273
 	switch (deviceAddress[0]) {
@@ -130,7 +158,6 @@ void DallasTemperatureSensor::ReadSensor(MeasurementHandler* handler) {
 	TemperatureSensorMeasurement result;
 	result.Set(rawTemperature);
 	handler->Handle(result);
-	wrappee->ReadSensor(handler);
 }
 
 DallasTemperatureSensor::~DallasTemperatureSensor() {

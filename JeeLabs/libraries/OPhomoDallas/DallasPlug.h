@@ -30,20 +30,42 @@ public:
 	uint8_t Search();
 
 	OneWireSensor* analogSensor(uint8_t i) {
-		if ( analogController )
+		if (analogController)
 			return (*analogController)[i];
 		else
 			return NULL;
 	}
 	OneWireSensor* digitalSensor(uint8_t i) {
-		if ( digitalController )
+		if (digitalController)
 			return (*digitalController)[i];
 		else
 			return NULL;
 
 	}
 
-	void RequestTemperatures(MeasurementHandler* handler);
+//	void RequestTemperatures(MeasurementHandler* handler);
+
+	uint16_t InitRead(byte pos);
+
+	uint16_t ReadAnalogSensor(MeasurementHandler* handler) {
+		return analogController ? analogController->SensorRead(handler) : 0;
+	}
+
+	uint16_t ReadDigitalSensor(MeasurementHandler* handler) {
+		return digitalController ? digitalController->SensorRead(handler) : 0;
+	}
+
+	uint16_t InitReadAll();
+
+
+	uint16_t ReadAllAnalogSensors(MeasurementHandler* handler) {
+		return analogController ? analogController->SensorReadAll(handler) : 0;
+	}
+
+	uint16_t ReadAllDigitalSensors(MeasurementHandler* handler) {
+		return digitalController ? digitalController->SensorReadAll(handler) : 0;
+	}
+
 
 	virtual ~DallasPlug();
 protected:

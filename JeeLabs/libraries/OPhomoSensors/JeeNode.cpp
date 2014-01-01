@@ -26,7 +26,11 @@ struct genConfigHeader {
 	uint8_t more :5;
 };
 */
-JeeNode::JeeNode() : irqPin(3), port1(1, &irqPin), port2(2, &irqPin), port3(3, &irqPin), port4(4, &irqPin)  {
+JeeNode::JeeNode() : irqPin(3, false), port1(1, &irqPin), port2(2, &irqPin), port3(3, &irqPin), port4(4, &irqPin)  {
+/*	rf12.setBand(RF12_868MHZ);
+	rf12.setGroupId(212);
+	rf12.setNodeId(7);
+	rf12.SaveConfig();*/
 }
 
 /* bool JeeNode::Configure(uint8_t* message, uint16_t length) {

@@ -14,7 +14,7 @@
 #include "SensorMeasurementTypes.h"
 
 #include <string.h>
-#include "wiring.h"
+#include "Arduino.h"
 namespace OPhomo {
 
 class TemperatureSensorMeasurement : public SensorMeasurement {
@@ -48,12 +48,20 @@ public:
 #endif
 
     uint8_t getSize() {
-    	return sizeof(TemperatureSensorMeasurement);
+    	return sizeof(uint16_t);
     }
 
     uint8_t getType() {
     	return TemperatureSensorType;
     }
+
+	void toBytes(uint8_t* store) {
+		memcpy(store, &measurement, sizeof(uint16_t));
+	}
+
+	void fromBytes(uint8_t* store) {
+		memcpy(&measurement, store, sizeof(uint16_t));
+	}
 
 protected:
 	uint16_t measurement;

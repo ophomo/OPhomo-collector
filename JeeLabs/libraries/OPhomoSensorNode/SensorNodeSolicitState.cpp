@@ -14,7 +14,8 @@ namespace OPhomo {
 
 SensorNodeSolicitState::SensorNodeSolicitState(SensorNode* inNode) :
 	SensorNodeState(inNode) {
-	INFOLN("<SOL>");
+	// We start in band 2
+	//	INFOLN("<SOL>");
 }
 
 void SensorNodeSolicitState::handleMessage(byte* message, byte length) {
@@ -24,7 +25,7 @@ void SensorNodeSolicitState::handleMessage(byte* message, byte length) {
 	bool handled;
 	// This is probably a config message ?
 	if (header->MessageType == CONFIG_ADVERTISE_TYPE) {
-		INFOLN((int)length);
+		//		INFOLN((int)length);
 		while (1) {
 			// ASSERT LENGTH
 			handled = false;
@@ -50,7 +51,7 @@ void SensorNodeSolicitState::handleMessage(byte* message, byte length) {
 				return;
 			}
 			pos += 2 + message[pos + 1];
-			if (pos >= length  ) {
+			if (pos >= length) {
 				break;
 			}
 		}
@@ -65,13 +66,21 @@ void SensorNodeSolicitState::tick() {
 }
 
 void SensorNodeSolicitState::SolicitConfig() {
+	static byte iteration = 0;
 	RF12Module* rf12 = getRF12Module();
+	// Solicit on all bands;
+	if (++iteration % 10 == 0) {
+		rf12->setBand((rf12->getBand()) + 1);
+		Serial.print("Solicit on band ");
+		Serial.println(rf12->getBand());
+	}
 	// Configure the message.
 	OPhomoProtocolHeader* header = (OPhomoProtocolHeader*) data->message;
-	header->MessageType = CONFIG_SOLICIT_TYPE;
+	header ->MessageType = CONFIG_SOLICIT_TYPE;
 	header->SourceNode = rf12->getNodeId();
 	// Send
-	rf12->Send((byte) 0, data->message, (uint8_t) CONFIG_SOLICIT_LENGTH, 0 /*false*/);
+	rf12->Send(RF12Concatenator::OPhomoListerNodeId, data->message,
+			(uint8_t) CONFIG_SOLICIT_LENGTH, 0 /*false*/);
 }
 
 SensorNodeSolicitState::~SensorNodeSolicitState() {

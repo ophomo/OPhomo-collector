@@ -10,6 +10,7 @@
 #ifndef MEASUREMENTHANDLER_H_
 #define MEASUREMENTHANDLER_H_
 
+
 #include "SensorMeasurement.h"
 namespace OPhomo {
 
@@ -18,7 +19,7 @@ public:
 	MeasurementHandler();
 
 	// The method which will handle a measurement.
-	virtual void Handle(SensorMeasurement& measurement) = 0;
+	virtual uint8_t Handle(SensorMeasurement& measurement) = 0;
 
 	virtual ~MeasurementHandler();
 };

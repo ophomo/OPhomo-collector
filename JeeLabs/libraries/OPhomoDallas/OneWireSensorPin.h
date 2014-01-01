@@ -8,11 +8,9 @@
 #ifndef ONEWIRESENSORCHAINSTUB_H_
 #define ONEWIRESENSORCHAINSTUB_H_
 
-
-#include "OneWireSensorChainInterface.h"
 #include "Pin.h"
 namespace OPhomo {
-class OneWireSensorPin: public OneWireSensorChainInterface {
+class OneWireSensorPin {
 public:
 	OneWireSensorPin(Pin* inPin);
 
@@ -22,7 +20,7 @@ public:
 
 	uint8_t ReadBit(void);
 
-	void Write(uint8_t v, uint8_t power = 0);
+	void Write(uint8_t v, uint8_t power = 1);
 
 	uint8_t Read();
 
@@ -30,15 +28,7 @@ public:
 
 	void Depower();
 
-	virtual OneWireSensor* operator[] (uint8_t) ;
-
-	virtual ~OneWireSensorPin();
-
-	virtual uint8_t InitReadSensor();
-
-	virtual void ReadSensor(MeasurementHandler* handler) {
-		return;
-	}
+	~OneWireSensorPin();
 
 protected:
 	Pin* pin;

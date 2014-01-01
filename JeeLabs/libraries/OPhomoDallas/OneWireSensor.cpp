@@ -11,39 +11,23 @@
 
 namespace OPhomo {
 
-OneWireSensor::OneWireSensor(OneWireSensorChainInterface* inWrappee , DeviceAddress& inDeviceAddress) {
-	wrappee = inWrappee;
+OneWireSensor::OneWireSensor(OneWireSensorPin* inPin, DeviceAddress& inDeviceAddress) : pin(inPin) {
 	memcpy(this->deviceAddress, &inDeviceAddress, 8);
 }
 
 void OneWireSensor::Select() {
 	int i;
 
-	wrappee->Write(0x55); // Choose ROM
+	pin->Write(0x55); // Choose ROM
 
 	for (i = 0; i < 8; i++)
-		wrappee->Write(deviceAddress[i]);
+		pin->Write(deviceAddress[i]);
 }
 
-uint8_t OneWireSensor::InitReadSensor() {
-	uint8_t otherDelay = wrappee->InitReadSensor();
-	uint8_t myDelay = GetConversionDelay();
-	return myDelay > otherDelay ? myDelay  : otherDelay;
-}
 
 
 OneWireSensor::~OneWireSensor() {
-	delete wrappee;
-
 }
 
-OneWireSensor* OneWireSensor::operator[] (uint8_t i) {
-	if ( i == 0 ) {
-		return this;
-	} else {
-		return (*wrappee)[--i];
-
-};
-}
 
 }

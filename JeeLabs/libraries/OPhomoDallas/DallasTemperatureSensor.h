@@ -11,7 +11,7 @@
 #define DALLASTEMPERATURESENSOR_H_
 
 #include "OneWireSensor.h"
-#include "wiring.h"
+#include "Arduino.h"
 // Model IDs
 #define DS18S20MODEL 0x10
 #define DS18B20MODEL 0x28
@@ -33,15 +33,15 @@
 #define TEMP_10_BIT 0x3F // 10 bit
 #define TEMP_11_BIT 0x5F // 11 bit
 #define TEMP_12_BIT 0x7F // 12 bit
-
 namespace OPhomo {
 
-class DallasTemperatureSensor:  public OneWireSensor {
+class DallasTemperatureSensor: public OneWireSensor {
 public:
-	DallasTemperatureSensor(OneWireSensorChainInterface* inWrappee, DeviceAddress& address);
+	DallasTemperatureSensor(OneWireSensorPin* inPin, DeviceAddress& address);
 
 	bool isParasite() {
-		return ReadPowerSupply();
+		return true;
+		//		return ReadPowerSupply();
 	}
 
 #ifdef DALLAS_GETRESOLUTION
@@ -51,87 +51,91 @@ public:
 	void SetResolution(uint8_t newResolution);
 #endif
 
-	virtual void ReadSensor(MeasurementHandler* handler);
+	void Read(MeasurementHandler* handler);
 
-	virtual ~DallasTemperatureSensor();
+	void ReadNow(MeasurementHandler* handler);
+
+
+	~DallasTemperatureSensor();
+
+	uint16_t GetConversionDelay();
 
 protected:
-	virtual uint8_t GetConversionDelay();
 
 	static uint8_t* scratchPad;
 
 	void ReadScratchPad() {
 		// send the command
-		wrappee->Reset();
+		pin->Reset();
 		Select();
-		wrappee->Write(READSCRATCH);
+		pin->Write(READSCRATCH);
 
 		// read the response
 
 		// byte 0: temperature LSB
-		scratchPad[TEMP_LSB] = wrappee->Read();
+		scratchPad[TEMP_LSB] = pin->Read();
 
 		// byte 1: temperature MSB
-		scratchPad[TEMP_MSB] = wrappee->Read();
+		scratchPad[TEMP_MSB] = pin->Read();
 
 		// byte 2: high alarm temp
-		scratchPad[HIGH_ALARM_TEMP] = wrappee->Read();
+		scratchPad[HIGH_ALARM_TEMP] = pin->Read();
 
 		// byte 3: low alarm temp
-		scratchPad[LOW_ALARM_TEMP] = wrappee->Read();
+		scratchPad[LOW_ALARM_TEMP] = pin->Read();
 
 		// byte 4:
 		// DS18S20: store for crc
 		// DS18B20 & DS1822: configuration register
-		scratchPad[CONFIGURATION] = wrappee->Read();
+		scratchPad[CONFIGURATION] = pin->Read();
 
 		// byte 5:
 		// internal use & crc
-		scratchPad[INTERNAL_BYTE] = wrappee->Read();
+		scratchPad[INTERNAL_BYTE] = pin->Read();
 
 		// byte 6:
 		// DS18S20: COUNT_REMAIN
 		// DS18B20 & DS1822: store for crc
-		scratchPad[COUNT_REMAIN] = wrappee->Read();
+		scratchPad[COUNT_REMAIN] = pin->Read();
 
 		// byte 7:
 		// DS18S20: COUNT_PER_C
 		// DS18B20 & DS1822: store for crc
-		scratchPad[COUNT_PER_C] = wrappee->Read();
+		scratchPad[COUNT_PER_C] = pin->Read();
 
 		// byte 8:
 		// SCTRACHPAD_CRC
-		scratchPad[SCRATCHPAD_CRC] = wrappee->Read();
+		scratchPad[SCRATCHPAD_CRC] = pin->Read();
 
-		wrappee->Reset();
+		pin->Reset();
 	}
 
 	void WriteScratchPad(bool parasite) {
-		wrappee->Reset();
+		pin->Reset();
 		Select();
-		wrappee->Write(WRITESCRATCH);
+		pin->Write(WRITESCRATCH);
 		//Currently we don't use the alarms, but if you want, you need to do it here...
 		//		pinController->Write(scratchPad[HIGH_ALARM_TEMP]); // high alarm temp
 		//		pinController->write(scratchPad[LOW_ALARM_TEMP]); // low alarm temp
 		// DS18S20 does not use the configuration register
 		if (deviceAddress[0] != DS18S20MODEL)
-			wrappee->Write(scratchPad[CONFIGURATION]); // configuration
-		wrappee->Reset();
+			pin->Write(scratchPad[CONFIGURATION]); // configuration
+		pin->Reset();
 		// save the newly written values to eeprom
-		wrappee->Write(COPYSCRATCH, parasite);
+		pin->Write(COPYSCRATCH, parasite);
 		if (parasite)
 			delay(10); // 10ms delay
-		wrappee->Reset();
+		pin->Reset();
 	}
 
 	bool ReadPowerSupply() {
 		bool ret = false;
-		wrappee->Reset();
+		pin->Reset();
 		Select();
-		wrappee->Write(READPOWERSUPPLY);
-		if (wrappee->ReadBit() == 0)
+		pin->Write(READPOWERSUPPLY);
+		if (pin->ReadBit() == 0)
 			ret = true;
-		wrappee->Reset();
+		pin->Reset();
 		return ret;
 	}
 

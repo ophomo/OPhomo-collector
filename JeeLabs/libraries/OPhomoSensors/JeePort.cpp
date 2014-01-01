@@ -11,7 +11,7 @@
 
 namespace OPhomo {
 
-JeePort::JeePort(uint8_t inId, AnalogPin* irq): id(inId), analogPin(inId-1), digitalPin(inId+3) {
+JeePort::JeePort(uint8_t inId, Pin* irq): id(inId), analogPin(inId-1,false), digitalPin(inId+3,true) {
 	irqPin = irq;
 }
 

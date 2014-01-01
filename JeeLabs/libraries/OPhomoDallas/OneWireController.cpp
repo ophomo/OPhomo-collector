@@ -8,6 +8,8 @@
 #include "SensorNode.h"
 #include "OneWireSensor.h"
 #include "ConsoleMeasurementHandler.h"
+#include "OneWireStructures.h"
+
 namespace OPhomo {
 
 OneWireController::OneWireController(SensorNode& node) :
@@ -21,7 +23,6 @@ OneWireController::OneWireController(SensorNode& node) :
 byte OneWireController::HandleConfig(byte* message, byte length) {
 	//	DallasPlug* nullPlug = NULL;
 	DallasPlug* plug = NULL;
-
 	byte pos;
 	for (pos = 0; pos < length; pos++) {
 		Serial.print("P:");
@@ -32,7 +33,6 @@ byte OneWireController::HandleConfig(byte* message, byte length) {
 			byte decodedLength = ConfigurationController::DecodeInt(
 					message + pos + 1, length - pos - 2, portId);
 			if (decodedLength == 0) {
-				ERRORLN("Decoding::OneWire::portID");
 				return 0;
 			} else {
 				pos += decodedLength;
@@ -54,8 +54,9 @@ byte OneWireController::HandleConfig(byte* message, byte length) {
 					port = &(sensorNode->getPort4());
 					plug = dallasPlugs[3];
 					break;
-				default:
-					ERRORLN("Decoding::OneWire::portID");
+				default: {
+				}
+
 				}
 				if (port) {
 					// If we have a port, we can do something.
@@ -73,14 +74,11 @@ byte OneWireController::HandleConfig(byte* message, byte length) {
 			byte decodedLength = ConfigurationController::DecodeInt(
 					message + pos + 1, length - pos - 2, analog);
 			if (decodedLength == 0) {
-				ERRORLN("Decoding::OneWire::analog");
 				return 0;
 			} else {
 				if (plug) {
 					if (analog > 0) {
-						INFOLN("A1");
 						plug->EnableAnalogPin();
-						INFOLN("A1DONE");
 					} else {
 						plug->DisableAnalogPin();
 					}
@@ -95,7 +93,6 @@ byte OneWireController::HandleConfig(byte* message, byte length) {
 			byte decodedLength = ConfigurationController::DecodeInt(
 					message + pos + 1, length - pos - 2, digital);
 			if (decodedLength == 0) {
-				ERRORLN("Decoding::OneWire::digital");
 				return 0;
 			} else {
 				if (plug) {
@@ -115,57 +112,63 @@ byte OneWireController::HandleConfig(byte* message, byte length) {
 		}
 		}
 	}
-	INFOLN("OW::END");
-	INFOLN((int) pos);
 	return pos;
 }
 
 byte OneWireController::ConfigReply() {
 	byte pos = 0;
-	byte sensorId = 1;
-	byte message[sizeof(DeviceAddress) + 4];
-	message[0] = getType();
-	message[1] = sizeof(DeviceAddress) + 2;
-	message[2] = 1; // Config message
+	OneWireConfigReply reply;
+	reply.state = 1;
+	reply.id.value = 0;
+
 	// First, search all OneWire
 	for (byte i = 0; i < MAX_DALLAS_PLUGS; i++) {
-		DEBUGLN((int) i);
 		if (this->dallasPlugs[i] != NULL) {
+			// Set the port
+			reply.id.port = reply.port_port = i;
 			byte nrOfSensors = dallasPlugs[i]->Search();
 			/*
 			 * Each sensor will be encoded as:
 			 * _________________________________
 			 * |   0   |   1   |   2   |   3   |
 			 * =================================
-			 * |  SEOW |   L:7 |  id   |  ADD  |
-			 * |          RESS OF SENSOR       |
-			 * |                       |
+			 * |  SEOW |  L    |  ST:1 |  id   |
+			 * | port  |       ADDRESS OF      |
+			 * |        SENSOR                 |
+			 * |       |
 			 * Where :
 			 * SEOW is the type of the message.
-			 * L:7 is the length being 7 bytes.
+			 * L  is the length being 7 bytes.
 			 * id is the id used for the sensor.
+			 * port is the port ( 4 bits ) and pin ( 2 bits ).
 			 * ADDRESS OF SENSOR is the physical hardware address of the sensor.
 			 */
+			reply.id.pin = reply.port_pin = ANALOG;
 			for (byte j = 0; j < nrOfSensors; j++) {
 				OneWireSensor* sensor = dallasPlugs[i]->analogSensor(j);
 				if (sensor) {
-					message[3] = sensorId++;
+					reply.id.value = j;
 					// Now, append the address;
 					byte* address = sensor->GetDeviceAddress();
 					for (byte k = 0; k < sizeof(DeviceAddress); k++) {
-						message[k + 4] = address[k];
+						reply.address[k] = address[k];
 					}
+					sensorNode->rf12Transmitter.Send((byte*) (&reply),
+							sizeof(OneWireConfigReply));
 				}
 			}
+			reply.id.pin = reply.port_pin = DIGITAL;
 			for (byte j = 0; j < nrOfSensors; j++) {
 				OneWireSensor* sensor = dallasPlugs[i]->digitalSensor(j);
 				if (sensor) {
-					message[3] = sensorId++;
+					reply.id.value = j;
 					// Now, append the address;
 					byte* address = sensor->GetDeviceAddress();
 					for (byte k = 0; k < sizeof(DeviceAddress); k++) {
-						message[k + 4] = address[k];
+						reply.address[k] = address[k];
 					}
+					sensorNode->rf12Transmitter.Send((byte*) (&reply),
+							sizeof(OneWireConfigReply));
 				}
 			}
 		}
@@ -173,24 +176,101 @@ byte OneWireController::ConfigReply() {
 	return pos;
 }
 
-byte OneWireController::Perform() {
-	ConsoleMeasurementHandler handler;
-	// -- Measure and send.
-	byte pos = 0;
-	byte sensorId = 1;
-	byte message[sizeof(uint16_t) + 4];
-	message[0] = getType();
-	message[1] = sizeof(uint16_t) + 2;
-	message[2] = 2; // Report
-	// First, search all OneWire
-	for (byte i = 0; i < MAX_DALLAS_PLUGS; i++) {
-		DEBUGLN((int) i);
-		if (this->dallasPlugs[i] != NULL) {
-			this->dallasPlugs[i]->RequestTemperatures(&handler);
+// Helper class
 
+class OneWireMeasurementHandler: public MeasurementHandler {
+public:
+	OneWireMeasurementHandler(byte type, RF12Concatenator& concatenator) :
+		rf12(&concatenator) {
+		message[0] = type;
+		// 		message[1] is the length
+		message[2] = 2; // Report type
+	}
+	;
+
+	/**
+	 * This will store the measurement in a Type Length Value encoding.
+	 * @param measurement Measurement which will be stored.
+	 */
+	uint8_t Handle(SensorMeasurement& measurement) {
+		/**
+		 * We report for each temperature this:
+		 * _________________________________
+		 * |   0   |   1   |   2   |   3   |
+		 * =================================
+		 * |  SEOW |   L   |  ST=2 |  id   |
+		 * |   MT  |  L:2  |   Measurement |
+		 *
+		 * Where
+		 *  SEOW is the type
+		 *  ST: 2 : This is a report
+		 *  L is the lenght, for temperature this is 5.
+		 *  id is the ID of the sensor.
+		 *  MT is the Measurement type ( Temperature, .... )
+		 *  L is the length, normally 2
+		 *  Measurement is ...
+		 *
+		 */
+		memcpy(message + 3, &id, 1);
+		++(id.value);
+		uint8_t innerSize = measurement.getSize();
+		uint8_t totalLenght = innerSize + 4;
+		message[1] = totalLenght;
+		if (totalLenght <= maxSize - 2) {
+			message[4] = measurement.getType();
+			message[5] = innerSize;
+			measurement.toBytes(message + 6);
+			// Send out this message
+			rf12->Send(message, totalLenght + 2);
+			return totalLenght;
+		} else {
+			Serial.println("RF12Measurement::Failed::Message to long.");
+			Serial.println(totalLenght);
+			return 0;
 		}
 	}
-	return pos;
+
+	virtual ~OneWireMeasurementHandler() {
+	}
+
+	// We have made this one public, because it will be 'tweaked'
+	OneWireID id;
+protected:
+	const static uint8_t maxSize = 10;
+	byte message[maxSize];
+	RF12Concatenator* rf12;
+};
+
+byte OneWireController::Perform() {
+	//ConsoleMeasurementHandler handler;
+	// -- Measure and send.
+	OneWireMeasurementHandler rf12Handler(getType(),
+			sensorNode->rf12Transmitter);
+	// We start reading all the sensors.
+	// Start initiating
+	uint16_t time2wait = 0;
+	for (byte plug = 0; plug < MAX_DALLAS_PLUGS; plug++) {
+		if (this->dallasPlugs[plug] != NULL) {
+			uint16_t ttw = dallasPlugs[plug]->InitReadAll();
+			time2wait = ((ttw > time2wait) ? ttw : time2wait);
+		}
+	}
+	while (time2wait) {
+		time2wait = 0;
+		for (byte plug = 0; plug < MAX_DALLAS_PLUGS; plug++) {
+			if (this->dallasPlugs[plug] != NULL) {
+				rf12Handler.id.value = 0;
+				rf12Handler.id.port = plug;
+				rf12Handler.id.pin = ANALOG;
+				time2wait += dallasPlugs[plug]->ReadAllAnalogSensors(
+						&rf12Handler);
+				rf12Handler.id.pin = DIGITAL;
+				time2wait += dallasPlugs[plug]->ReadAllDigitalSensors(
+						&rf12Handler);
+			}
+		}
+	}
+	return 1;
 }
 
 OneWireController::~OneWireController() {

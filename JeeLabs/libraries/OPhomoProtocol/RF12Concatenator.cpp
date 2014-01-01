@@ -38,7 +38,7 @@ void RF12Concatenator::SetMessageType(byte type) {
 void RF12Concatenator::Send(byte* newPart, byte length) {
 	if (length > RF12_MAXDATA - 1) {
 		// Drop this part, it is too long.
-		ERRORLN("ERROR, config too long.");
+//		ERRORLN("ERROR, config too long.");
 		return;
 	}
 	if (pos + length > RF12_MAXDATA) {
@@ -55,8 +55,8 @@ void RF12Concatenator::Send(byte* newPart, byte length) {
  */
 void RF12Concatenator::LastPartSend() {
 	// We end with a 0 option.
-	DEBUG("LPS::Pos:");
-	DEBUGLN((int)pos);
+	//DEBUG("LPS::Pos:");
+	//DEBUGLN((int)pos);
 	buffer[pos++] = 0;
 	buffer[pos++] = 0;
 	this->SendPartNow();
@@ -68,7 +68,17 @@ void RF12Concatenator::SendPartNow() {
 	//	header->MessageType = type;
 	header->SourceNode = rf12Module->getNodeId();
 	// Send
-	rf12Module->Send(destination, buffer, pos, 0 /*false*/);
+	bool result = false;
+	uint8_t maxretries = 8;
+	while(!result && maxretries--) {
+		result = rf12Module->Send(destination, buffer, pos, 0 /*false*/);
+		if ( !result ) {
+			Serial.print("Can't send on RF12: length ");
+			Serial.println(pos);
+			delay(200);
+		}
+
+	}
 }
 
 RF12Concatenator::~RF12Concatenator() {

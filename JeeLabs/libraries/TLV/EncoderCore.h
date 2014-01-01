@@ -24,6 +24,8 @@ public:
 
 	byte Encode(byte* to, double value);
 
+	byte Encode(byte* to, TLVEncodableObject& object);
+
 
 	virtual ~EncoderCore();
 };

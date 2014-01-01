@@ -9,7 +9,7 @@
 #include "HardwareSerial.h"
 #include "SerialRF12ConfigEncoder.h"
 #include "OPhomoProtocolHeader.h"
-
+#include "log.h"
 #define RF12_NODEID_TYPE 1
 #define RF12_GROUPID_TYPE 2
 #define RF12_BAND_TYPE 3

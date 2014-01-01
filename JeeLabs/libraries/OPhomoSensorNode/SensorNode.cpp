@@ -28,6 +28,10 @@ void SensorNode::setup() {
 	// this is a good idea.
 
 	rf12.init();
+	Serial.print("NodeID:");
+	Serial.println((int)rf12.getNodeId());
+	Serial.print("Band:");
+	Serial.println((int)rf12.getBand());
 	data.timer.set(0);
 	stateHandler = new SensorNodeSolicitState(this);
 }
@@ -41,8 +45,11 @@ void SensorNode::loop() {
 //		Serial.println("SensorNode::Received a message.");
 		stateHandler->handleMessage(inMessage, len + RF12_HDR_SIZE);
 	}
-	data.timer.poll();
-	stateHandler->tick();
+	if ( data.timer.poll() )
+		stateHandler->tick();
+	// This check makes sure that the timer is always armed.
+	if ( data.timer.idle() )
+		data.timer.set(500);
 }
 
 
@@ -58,18 +65,6 @@ void SensorNode::Register(ConfigurationController* controller) {
 		data.controllers[data.controllersSize++] = controller;
 	}
 
-}
-
-void SensorNode::SendConfigAccept(byte* message, byte len) {
-	byte dest = data.collectorNodeId;
-	byte* outMessage = message - 1;
-
-	OPhomoProtocolHeader* header = (OPhomoProtocolHeader*) outMessage;
-	header->MessageType = CONFIG_ACCEPT_TYPE;
-	header->SourceNode = rf12.getNodeId();
-	// Send
-	rf12.Send( dest, outMessage, len + 1, 1);
-	outMessage[0] = dest;
 }
 
 SensorNode::~SensorNode() {

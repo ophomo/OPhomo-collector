@@ -47,7 +47,8 @@ void SerialHandlerConfigState::handle() {
 		}
 	}
 	// If we reach this part of the code, no encoder was found.
-	ERRORLN("No Encoder found !");
+	ERRORLN("No Encoder found :");
+	ERRORLN((char*)(data->readBuffer + start));
 }
 
 SerialHandlerConfigState::SerialHandlerConfigState(SerialHandler* handler) :

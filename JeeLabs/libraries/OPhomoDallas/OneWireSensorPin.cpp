@@ -54,11 +54,10 @@
  */
 
 #include "OneWireSensorPin.h"
-#include "OneWireSensorChainInterface.h"
-#include "wiring.h"
+#include "OneWireSensor.h"
+#include "Arduino.h"
 namespace OPhomo {
-OneWireSensorPin::OneWireSensorPin(Pin* inPin) :
-	OneWireSensorChainInterface() {
+OneWireSensorPin::OneWireSensorPin(Pin* inPin) {
 	pin = inPin;
 }
 
@@ -69,27 +68,29 @@ uint8_t OneWireSensorPin::Reset(void) {
 	uint8_t r;
 	uint8_t retries = 125;
 
-	cli();
-	pin->InputMode();
-	sei();
+	noInterrupts();
+	pin->DirectInputMode();
+	interrupts();
+
 	// wait until the wire is high... just in case
 	do {
 		if (--retries == 0)
 			return 0;
 		delayMicroseconds(2);
-	} while (!pin->DigitalRead());
+	} while (!pin->DirectRead());
 
-	cli();
-	pin->DigitalWrite(0);
-	pin->OutputMode();
-	sei();
-	delayMicroseconds(500);
-	cli();
-	pin->InputMode();
-	delayMicroseconds(80);
-	r = !(pin->DigitalRead());
-	sei();
-	delayMicroseconds(420);
+
+	noInterrupts();
+	pin->DirectWrite(0);
+	pin->DirectOutputMode();
+	interrupts();
+	delayMicroseconds(480);
+	noInterrupts();
+	pin->DirectInputMode();
+	delayMicroseconds(70);
+	r = !(pin->DirectRead());
+	interrupts();
+	delayMicroseconds(410);
 	return r;
 }
 
@@ -98,22 +99,21 @@ uint8_t OneWireSensorPin::Reset(void) {
 // more certain timing.
 //
 void OneWireSensorPin::WriteBit(uint8_t v) {
-
 	if (v & 1) {
-		cli();
-		pin->DigitalWrite(0);
-		pin->OutputMode();
+		noInterrupts();
+		pin->DirectWrite(0);
+		pin->DirectOutputMode();
 		delayMicroseconds(10);
-		pin->DigitalWrite(1);
-		sei();
+		pin->DirectWrite(1);
+		interrupts();
 		delayMicroseconds(55);
 	} else {
-		cli();
-		pin->DigitalWrite(0);
-		pin->OutputMode();
+		noInterrupts();
+		pin->DirectWrite(0);
+		pin->DirectOutputMode();
 		delayMicroseconds(65);
-		pin->DigitalWrite(1);
-		sei();
+		pin->DirectWrite(1);
+		interrupts();
 		delayMicroseconds(5);
 	}
 }
@@ -125,18 +125,17 @@ void OneWireSensorPin::WriteBit(uint8_t v) {
 uint8_t OneWireSensorPin::ReadBit(void) {
 	uint8_t r;
 
-	cli();
-	pin->OutputMode();
-	pin->DigitalWrite(0);
+	noInterrupts();
+	pin->DirectOutputMode();
+	pin->DirectWrite(0);
 	delayMicroseconds(3);
-	pin->InputMode();
-	delayMicroseconds(9);
-	r = pin->DigitalRead();
-	sei();
+	pin->DirectInputMode();
+	delayMicroseconds(10);
+	r = pin->DirectRead();
+	interrupts();
 	delayMicroseconds(53);
 	return r;
 }
-
 //
 // Write a byte. The writing code uses the active drivers to raise the
 // pin high, if you need power after the write (e.g. DS18S20 in
@@ -151,10 +150,10 @@ void OneWireSensorPin::Write(uint8_t v, uint8_t power /* = 0 */) {
 		WriteBit((bitMask & v) ? 1 : 0);
 	}
 	if (!power) {
-		cli();
-		pin->InputMode();
-		pin->DigitalWrite(0);
-		sei();
+		noInterrupts();
+		pin->DirectInputMode();
+		pin->DirectWrite(0);
+		interrupts();
 	}
 }
 
@@ -180,21 +179,18 @@ void OneWireSensorPin::Skip() {
 }
 
 void OneWireSensorPin::Depower() {
-	cli();
-	pin->InputMode();
-	sei();
+	noInterrupts();
+	pin->DirectInputMode();
+	interrupts();
 }
 
-uint8_t OneWireSensorPin::InitReadSensor(){
+/*uint16_t OneWireSensorPin::InitReadSensor(){
 	Reset();
 	Skip();
-	Write(STARTCONVO, /*parasite*/ false);
+	Write(STARTCONVO,  true);
+	// Delay
 	return 0;
 }
-
-OneWireSensor* OneWireSensorPin::operator[] (uint8_t) {
-	return NULL;
-}
-
+*/
 
 }

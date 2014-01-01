@@ -1,14 +1,14 @@
 // Streaming I/O layer on top of RF12 driver
-// 2009-05-07 <jcw@equi4.com> http://opensource.org/licenses/mit-license.php
-// $Id: RF12sio.cpp 4727 2009-12-08 21:39:49Z jcw $
-
-// This is what I changed: don't use the Port library of JeeLabs, but just the timer...
-#include <WProgram.h>
-#include"MilliTimer.h"
-// End of change
+// 2009-05-07 <jc@wippler.nl> http://opensource.org/licenses/mit-license.php
+#define ARDUINO 105
+#include "MilliTimer.h"
 #include "RF12.h"
 #include "RF12sio.h"
-#include <WProgram.h>
+#if ARDUINO>=100
+#include <Arduino.h> // Arduino 1.0
+#else
+#include <WProgram.h> // Arduino 0022
+#endif
 
 #define DEBUG 0
 

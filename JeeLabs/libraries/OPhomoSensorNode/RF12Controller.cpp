@@ -19,20 +19,19 @@ byte RF12Controller::ConfigReply() {
 	return 0;
 }
 
-
 byte RF12Controller::HandleConfig(byte* message, byte length) {
 	byte pos;
-	for ( pos = 0; pos < length; pos++) {
+	for (pos = 0; pos < length; pos++) {
 		Serial.print("P");
-		Serial.println((int)pos);
+		Serial.println((int) pos);
 		switch (message[pos]) {
 		case 0x01: {
 			// NodeID
 			int nodeId = 0;
-			byte decodedLength = ConfigurationController::DecodeInt(message
-					+ pos + 1, length - pos - 2, nodeId);
+			byte decodedLength = ConfigurationController::DecodeInt(
+					message + pos + 1, length - pos - 2, nodeId);
 			if (decodedLength == 0) {
-				ERRORLN("RF12::NodeID");
+				//				ERRORLN("RF12::NodeID");
 				return 0;
 			} else {
 				sensorNode->getRF12().setNodeId((byte) nodeId);
@@ -43,10 +42,10 @@ byte RF12Controller::HandleConfig(byte* message, byte length) {
 		case 0x02: {
 			// GroupID
 			int groupId = 0;
-			byte decodedLength = ConfigurationController::DecodeInt(message
-					+ pos + 1, length - pos - 2, groupId);
+			byte decodedLength = ConfigurationController::DecodeInt(
+					message + pos + 1, length - pos - 2, groupId);
 			if (decodedLength == 0) {
-				ERRORLN("RF12::GroupID");
+				//				ERRORLN("RF12::GroupID");
 				return 0;
 			} else {
 				sensorNode->getRF12().setGroupId((byte) groupId);
@@ -57,10 +56,10 @@ byte RF12Controller::HandleConfig(byte* message, byte length) {
 		case 0x03: {
 			// Band
 			int band = 0;
-			byte decodedLength = ConfigurationController::DecodeInt(message
-					+ pos + 1, length - pos - 2, band);
+			byte decodedLength = ConfigurationController::DecodeInt(
+					message + pos + 1, length - pos - 2, band);
 			if (decodedLength == 0) {
-				ERRORLN("RF12::Band");
+				//ERRORLN("RF12::Band");
 				return 0;
 			} else {
 				sensorNode->getRF12().setBand((byte) band);
@@ -71,15 +70,15 @@ byte RF12Controller::HandleConfig(byte* message, byte length) {
 		case 0x04: {
 			// Save config
 			int save = 0;
-			byte decodedLength = ConfigurationController::DecodeInt(message
-					+ pos + 1, length - pos - 2, save);
+			byte decodedLength = ConfigurationController::DecodeInt(
+					message + pos + 1, length - pos - 2, save);
 			if (decodedLength == 0) {
-				ERRORLN("RF12::Decode::Save");
+				//				ERRORLN("RF12::Decode::Save");
 				return 0;
 			} else {
 				if (save > 0) {
 					if (!sensorNode->getRF12().SaveConfig()) {
-						ERRORLN("RF12::Save");
+						//						ERRORLN("RF12::Save");
 						return 0;
 					}
 				}

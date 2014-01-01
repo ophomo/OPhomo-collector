@@ -27,7 +27,7 @@
 #define RESULT_TYPE 6
 
 #include "Logger.h"
-
+#if 1
 extern OPhomo::Logger* logger;
 #define ERROR(...) logger->SetType(ERROR_TYPE); \
 	logger->Append(__VA_ARGS__);
@@ -45,5 +45,15 @@ extern OPhomo::Logger* logger;
 	logger->Append(__VA_ARGS__);
 #define DEBUGLN(...) DEBUG(__VA_ARGS__)\
 		logger->Done();
+#else
+#define ERROR(...)
+#define ERRORLN(...)
+#define WARNING(...)
+#define WARNINGLN(...)
+#define INFO(...)
+#define INFOLN(...)
+#define DEBUG(...)
+#define DEBUGLN(...)
+#endif
 
 #endif /* LOG_H_ */

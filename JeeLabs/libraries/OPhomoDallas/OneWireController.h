@@ -22,6 +22,10 @@ public:
 
 	byte Perform();
 
+	static byte getSType() {
+		return type;
+	}
+
 	byte getType() {
 		return type;
 	}
@@ -31,6 +35,7 @@ public:
 	virtual ~OneWireController();
 
 	DallasPlug* dallasPlugs[MAX_DALLAS_PLUGS];
+
 protected:
 	static const byte type = ONEWIRE_SENSOR_CONFIG_TYPE;
 

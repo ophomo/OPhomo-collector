@@ -52,6 +52,8 @@ void SerialHandlerIdleState::handle() {
 		SerialConfigEncoder::transmitter.SetDestinationNode(destinationNode);
 		SerialConfigEncoder::transmitter.SetMessageType(CONFIG_ACK_TYPE);
 		SerialConfigEncoder::transmitter.LastPartSend();
+		Serial.print("ACK configuration node ");
+		Serial.println((int) destinationNode);
 	} else {
 		ERRORLN("IDLE:UNKNOWN COMMAND!");
 	}

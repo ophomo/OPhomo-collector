@@ -13,10 +13,12 @@ namespace OPhomo {
 ConsoleMeasurementHandler::ConsoleMeasurementHandler() {
 }
 
-void ConsoleMeasurementHandler::Handle(OPhomo::SensorMeasurement& measurement) {
+uint8_t ConsoleMeasurementHandler::Handle(OPhomo::SensorMeasurement& measurement) {
 	char result[10];
 	result[measurement.toString(result,10)] = '\0';
 	Serial.println(result);
+	// This is not a nice way, but good enough at the moment.
+	return 10;
 }
 
 

@@ -8,9 +8,7 @@
 #ifndef ENCODERINTERFACE_H_
 #define ENCODERINTERFACE_H_
 
-#ifndef byte
-#define byte unsigned char
-#endif
+#include "TLVEncodableObject.h"
 
 namespace TLV {
 
@@ -25,6 +23,8 @@ public:
 	virtual byte Encode(byte* to, byte* value, byte length ) = 0;
 
 	virtual byte Encode(byte* to, double value) = 0;
+
+	virtual byte Encode(byte* to, TLVEncodableObject& value) = 0;
 
 	virtual ~EncoderInterface();
 };

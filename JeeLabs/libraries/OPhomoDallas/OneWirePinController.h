@@ -16,7 +16,7 @@
 
 // You can exclude CRC checks altogether by defining this to 0
 #ifndef ONEWIRE_CRC
-#define ONEWIRE_CRC 1
+#define ONEWIRE_CRC 0
 #endif
 
 // Select the table-lookup method of computing the 8-bit CRC
@@ -32,35 +32,46 @@
 #define ONEWIRE_CRC16 0
 #endif
 
-
-#include "OneWireSensorPin.h"
+#include "OneWireSensor.h"
 #include "MeasurementHandler.h"
-namespace OPhomo {
+#include "MilliTimer.h"
 
+namespace OPhomo {
 
 class OneWirePinController {
 public:
 	OneWirePinController(OneWireSensorPin* inPin);
 
-	uint8_t InitSensorRead();
+	uint16_t InitSensorRead(byte pos);
 
-	void Read(MeasurementHandler* handler);
+	uint16_t SensorRead(MeasurementHandler* handler);
 
-	OneWireSensor* operator[] (uint8_t i) {
-		return (*pin)[i];
+	uint16_t InitSensorReadAll();
+
+	uint16_t SensorReadAll(MeasurementHandler* handler);
+
+
+	OneWireSensor* operator[](uint8_t i) {
+		if (list) {
+			return (*list)[i];
+		}
+		return NULL;
 	}
 
+	uint8_t NumberOfSensors() {
+		return nrOfSensors;
+	}
 
-	uint8_t Search( );
+	uint8_t Search();
 
-#ifdef ONEWIRE_CRC8
+#if ONEWIRE_CRC8
 	static uint8_t crc8(uint8_t *addr, uint8_t len);
 #endif
-#ifdef ONEWIRE_CRC16
+#if ONEWIRE_CRC16
 	unsigned short crc16(unsigned short *data, unsigned short len);
 #endif
 
-#ifdef ONEWIRE_VALIDADDRESS
+#if ONEWIRE_VALIDADDRESS
 	static bool ValidAddress(DeviceAddress& deviceAddress) {
 		return (crc8(deviceAddress, 7) == deviceAddress[7]);
 	}
@@ -68,7 +79,14 @@ public:
 
 	virtual ~OneWirePinController();
 private:
-	OneWireSensorChainInterface* pin;
+	OneWireSensorPin* pin;
+	OneWireSensorListItem* list;
+
+	//	OneWireSensorChainInterface* pin;
+	uint8_t nrOfSensors;
+
+	MilliTimer readTimer;
+	byte readPos;
 
 };
 }

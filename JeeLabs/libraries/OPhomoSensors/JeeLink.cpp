@@ -11,7 +11,7 @@
 
 namespace OPhomo {
 
-JeeLink::JeeLink() : activityPin(9), activityLed(&activityPin) {
+JeeLink::JeeLink() : activityPin(9,true), activityLed(&activityPin) {
 	// TODO Auto-generated constructor stub
 }
 
